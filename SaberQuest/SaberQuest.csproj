@@ -5,6 +5,7 @@
         <RootNamespace>SaberQuest</RootNamespace>
         <AssemblyName>SaberQuest</AssemblyName>
         <TargetFramework>net472</TargetFramework>
+        <LangVersion>8.0</LangVersion>
         <DebugSymbols>true</DebugSymbols>
         <LocalRefsDir Condition="Exists('..\Refs')">..\Refs</LocalRefsDir>
         <BeatSaberDir>$(LocalRefsDir)</BeatSaberDir>
@@ -20,6 +21,21 @@
         <DisableCopyToPlugins>True</DisableCopyToPlugins>
         <DisableZipRelease>True</DisableZipRelease>
     </PropertyGroup>
+    <ItemGroup>
+      <Compile Remove="UI\FlowCoordinators\**" />
+      <Compile Remove="UI\ViewControllers\**" />
+      <Compile Remove="UI\Views\**" />
+      <EmbeddedResource Remove="UI\FlowCoordinators\**" />
+      <EmbeddedResource Remove="UI\ViewControllers\**" />
+      <EmbeddedResource Remove="UI\Views\**" />
+      <None Remove="UI\FlowCoordinators\**" />
+      <None Remove="UI\ViewControllers\**" />
+      <None Remove="UI\Views\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="UI\Auth\Views\AuthView.bsml" />
+      <None Remove="UI\SaberQuest\Views\MainView.bsml" />
+    </ItemGroup>
     <ItemGroup>
         <Reference Include="System.Data.DataSetExtensions" />
         <Reference Include="0Harmony, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -102,16 +118,21 @@
         <None Include="SaberQuest.csproj.user" Condition="Exists('SaberQuest.csproj.user')" />
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="Installers" />
-      <Folder Include="Managers" />
-      <Folder Include="UI\FlowCoordinators" />
-      <Folder Include="UI\ViewControllers" />
-      <Folder Include="UI\Views" />
-    </ItemGroup>
-    <ItemGroup>
       <EmbeddedResource Include="manifest.json" />
+      <EmbeddedResource Include="UI\Auth\Views\AuthView.bsml">
+        <DependentUpon>AuthView.cs</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Include="UI\SaberQuest\Views\MainView.bsml">
+        <SubType>Code</SubType>
+      </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="obj\README.md" />
+      <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" />
+      <Publicize Include="BSML" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="UI\SaberQuest\Views\MainView.cs">
+        <SubType>Code</SubType>
+      </Compile>
     </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
-  "id": "QuestSaber",
-  "name": "QuestSaber",
+  "id": "SaberQuest",
+  "name": "SaberQuest",
   "author": "Sirspam",
   "version": "0.0.1",
   "description": "",
