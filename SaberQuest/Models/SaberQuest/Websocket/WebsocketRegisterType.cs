@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.Websocket
 {
-	internal class PacketModel
+	internal enum WebsocketRegisterType
 	{
-		public string EventName { get; set; }
-
-		public string JsonPayLoad { get; set; }
 	}
 }
