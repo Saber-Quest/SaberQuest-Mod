@@ -13,6 +13,7 @@ namespace SaberQuest.Installers
 		{
 			Container.Bind<RefreshTokenStorageProvider>().AsSingle().NonLazy();
 			Container.Bind<SaberQuestApiProvider>().AsSingle().NonLazy();
+			Container.Bind<SaberQuestWebSocketSubProvider>().AsSingle().NonLazy();
 			//Container.Bind<LevelView>().FromNewComponentAsViewController().AsSingle().NonLazy();
 			Container.Bind<MainView>().FromNewComponentAsViewController().AsSingle().NonLazy();
 			Container.Bind<SaberQuestFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();

@@ -13,8 +13,9 @@ namespace SaberQuest
 	public class Plugin
 	{
 		private static Harmony harmony = new Harmony("com.FutureMapper.SaberQuest");
+
 		[Init]
-		public void Init(IPALogger logger, Config config, Zenjector zenjector)
+		public void Init(IPALogger logger, Zenjector zenjector)
 		{
 			harmony.PatchAll(typeof(MenuButtonRedecoratePatch));
 			zenjector.UseSiraSync();
