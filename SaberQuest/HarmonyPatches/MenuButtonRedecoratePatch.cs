@@ -14,7 +14,7 @@ namespace SaberQuest.HarmonyPatches
 {
 	public static class MenuButtonRedecoratePatch
 	{
-		[HarmonyPatch(typeof(MenuButtonsViewController), "OnMainMenuViewControllerActivated")]
+		[HarmonyPatch(typeof(MenuButtonsViewController), nameof(MenuButtonsViewController.RefreshView))]
 		[HarmonyPostfix]
 		public static void Postfix(MenuButtonsViewController __instance)
 		{

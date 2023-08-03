@@ -21,6 +21,7 @@ namespace SaberQuest
 			zenjector.UseSiraSync();
 			zenjector.Install<SaberQuestMenuInstaller>(Location.Menu);
 			zenjector.UseLogger(logger);
+			zenjector.UseHttpService();
 			zenjector.UseMetadataBinder<Plugin>();
 		}
 

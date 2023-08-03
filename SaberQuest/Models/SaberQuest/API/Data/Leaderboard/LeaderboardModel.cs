@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SaberQuest.Models.SaberQuest.API.Data
+namespace SaberQuest.Models.SaberQuest.API.Data.Leaderboard
 {
-	internal class LeaderboardModel
-	{
-	}
+    internal class LeaderboardModel
+    {
+    }
 }

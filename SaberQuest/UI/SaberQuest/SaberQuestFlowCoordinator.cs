@@ -1,7 +1,7 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.MenuButtons;
 using HMUI;
-using SaberQuest.UI.Main.Views;
+using SaberQuest.UI.SaberQuest.Views;
 using Zenject;
 
 namespace SaberQuest.UI.SaberQuest
@@ -9,11 +9,13 @@ namespace SaberQuest.UI.SaberQuest
 	internal class SaberQuestFlowCoordinator : FlowCoordinator
 	{
 		private MainView _mainView;
+		private DailyChallengesView _challengesView;
 
 		[Inject]
-		internal void Construct(MainView mainViewController)
+		internal void Construct(MainView mainViewController, DailyChallengesView challengesView)
 		{
 			_mainView = mainViewController;
+			_challengesView = challengesView;
 		}
 
 		protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
@@ -22,7 +24,7 @@ namespace SaberQuest.UI.SaberQuest
 			{
 				SetTitle("SaberQuest");
 				showBackButton = true;
-				ProvideInitialViewControllers(_mainView);
+				ProvideInitialViewControllers(_mainView, _challengesView);
 			}
 		}
 

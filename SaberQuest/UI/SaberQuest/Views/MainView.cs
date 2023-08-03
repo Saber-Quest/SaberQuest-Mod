@@ -10,14 +10,18 @@ using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
-namespace SaberQuest.UI.Main.Views
+namespace SaberQuest.UI.SaberQuest.Views
 {
 	[HotReload(RelativePathToLayout = @"MainView.bsml")]
-	[ViewDefinition("SaberQuest.UI.Main.Views.MainView")]
+	[ViewDefinition("SaberQuest.UI.SaberQuest.Views.MainView")]
 	internal class MainView : BSMLAutomaticViewController
 	{
+		[UIObject("avatarMask")]
+		private GameObject avatarMask;
+
 		[UIAction("#post-parse")]
 		internal void PostParse()
 		{
@@ -33,6 +37,7 @@ namespace SaberQuest.UI.Main.Views
 				x.SetImage("#RoundRect10BorderFade");
 				x.color = new Color(1f, 1f, 1f, 0.4f);
 			}
+			avatarMask.AddComponent<Mask>().showMaskGraphic = false;
 		}
 	}
 }

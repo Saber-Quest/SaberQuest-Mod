@@ -1,5 +1,16 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
 	>
-
+    <horizontal vertical-fit='PreferredSize' pref-height='13' spacing='0' anchor-pos-y='25' anchor-pos-x='20'>
+      <img pref-width='13' preserve-aspect='true' src='https://i.stack.imgur.com/PYlN8.png' id='avatarMask'>
+        <img src='https://cdn.discordapp.com/attachments/1109205575507640472/1136092819505827961/IMG_2836.png' ignore-layout='true' size-delta-x='13' preserve-aspect='true'/>
+      </img>
+      <img src='https://cdn.discordapp.com/attachments/1061662392171376640/1134164338626801755/NeonCity1.png' pref-width='35' preserve-aspect='true' ignore-layout='true' anchor-pos-x='-53'/>
+      <text text='Welcome, FutureMapper!' font-size='8' ignore-layout='true' anchor-pos-x='-20'/>
+    </horizontal>
+    <bg background='panel-top' size-delta-x='-50' size-delta-y='-30' anchor-pos-y='-10'>
+      <vertical pad-top='1'>
+        <text text='What would you like to do?' font-size='6'/>
+      </vertical>
+    </bg>
 </bg>

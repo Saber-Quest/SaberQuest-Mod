@@ -8,5 +8,6 @@ namespace SaberQuest.Models.SaberQuest.Websocket
 {
 	internal enum WebsocketRegisterType
 	{
+
 	}
 }

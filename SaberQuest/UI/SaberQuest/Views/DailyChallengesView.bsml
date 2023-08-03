@@ -1,0 +1,27 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
+	>
+  <vertical pref-width='120' pref-height='80'>
+    <horizontal bg='panel-top' pref-width='120' pref-height='13' child-align='MiddleCenter'>
+      <text text="Today's Challenges" font-align="Center" font-size="8"/>
+    </horizontal>
+    <horizontal pref-height="60">
+      <vertical bg="panel-top">
+
+      </vertical>
+      <vertical bg="panel-top" pref-width="40" child-expand-height="false" pad-bottom="13" pad-top="13">
+        <text text="#color#03F46B" active="false"/>
+        <vertical ignore-layout="true" anchor-pos-y="28">
+          <text text="Easy" font-align="Center"/>
+        </vertical>
+        <vertical bg="panel-top" pref-width="37" pref-height="7" pad-top="5">
+          <text text="#color#FFFFFFCC" active="false"/>
+          <vertical ignore-layout="true" anchor-pos-y="14" pref-width="35" child-align="UpperCenter">
+            <text text="Get PP on either service" font-align="Center" font-size="4.5" word-wrap="true"/>
+          </vertical>
+          <text text="&lt;color=#FFAAAA&gt;BL: 250 PP&lt;br&gt;&lt;color=#FFFF55&gt;SS: 250 PP" font-size="8" font-align="Center" rich-text="true"/>
+        </vertical>
+      </vertical>
+    </horizontal>
+  </vertical>
+</bg>

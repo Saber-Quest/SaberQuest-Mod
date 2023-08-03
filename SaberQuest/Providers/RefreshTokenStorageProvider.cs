@@ -14,7 +14,7 @@ namespace SaberQuest.Providers
 			var bytes = Encoding.UTF8.GetBytes(token);
 			using (var memoryStream = new MemoryStream())
 			{
-				using (var gzipStream = new GZipStream(memoryStream, CompressionLevel.Optimal))
+				using (var gzipStream = new GZipStream(memoryStream, CompressionLevel.Fastest))
 				{
 					gzipStream.Write(bytes, 0, bytes.Length);
 				}
