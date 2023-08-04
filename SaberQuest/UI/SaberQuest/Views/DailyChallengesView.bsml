@@ -1,17 +1,19 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
 	>
-  <vertical pref-width='120' pref-height='80'>
-    <horizontal bg='panel-top' pref-width='120' pref-height='13' child-align='MiddleCenter'>
+  <vertical pref-width='120' pref-height='72' spacing='1'>
+    <horizontal bg='panel-top' pref-width='120' pref-height='12' child-align='MiddleCenter'>
       <text text="Today's Challenges" font-align="Center" font-size="8"/>
     </horizontal>
     <horizontal pref-height="60">
       <vertical bg="panel-top">
         <custom-list id="challengesList" contents="challenges" show-scrollbar="true" stick-scrolling="true" pref-width="65" cell-size='15' clickable-cells="true" select-cell="select-challenge">
+          <horizontal bg="panel-top">
 
+          </horizontal>
         </custom-list>
       </vertical>
-      <vertical bg="panel-top" pref-width="40" child-expand-height="false" pad-bottom="13" pad-top="13">
+      <vertical bg="panel-top" pref-width="40" child-expand-height="false" pad-bottom="12" pad-top="12">
         <text text="#color#03F46B" active="false"/>
         <vertical ignore-layout="true" anchor-pos-y="25">
           <text text="Easy" font-align="Center" font-size="6"/>
@@ -21,7 +23,7 @@
           <vertical ignore-layout="true" anchor-pos-y="14" pref-width="35" child-align="UpperCenter">
             <text text="Get PP on either service" font-align="Center" font-size="4.5" word-wrap="true"/>
           </vertical>
-          <text text="&lt;color=#FFAAAA&gt;BL: 250 PP&lt;br&gt;&lt;color=#FFFF55&gt;SS: 250 PP" font-size="8" font-align="Center" rich-text="true"/>
+          <text text="&lt;line-height=80%&gt;&lt;color=#FFAAAA&gt;BL: 250 PP&lt;br&gt;&lt;color=#FFFF55&gt;SS: 250 PP&lt;br&gt;&lt;color=#5555FF&gt;ACC: 90%" font-size="8" font-align="Center" rich-text="true"/>
         </vertical>
       </vertical>
     </horizontal>

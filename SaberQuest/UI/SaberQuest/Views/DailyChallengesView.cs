@@ -30,7 +30,7 @@ namespace SaberQuest.UI.SaberQuest.Views
 		//Challenge List
 		[UIComponent("challengesList")]
 		private CustomCellListTableData list = null;
-		[UIValue("challenges")]
+
 		private List<object> challenges = new List<object>();
 
 		[Inject]
@@ -78,7 +78,7 @@ namespace SaberQuest.UI.SaberQuest.Views
 		}
 
 		[UIAction("select-challenge")]
-		internal void SelectChallenge()
+		internal void SelectChallenge(TableView view, DailyChallengeCell cell)
 		{
 
 		}
@@ -90,18 +90,21 @@ namespace SaberQuest.UI.SaberQuest.Views
 
 		internal void ApplyChallengeSet(ChallengeSetModel challengeSet)
 		{
-			_logger.Info("hola");
-			_logger.Info(challengeSet.Challenges.Count);
-			if (!(challengeSet?.Challenges?.Count > 0))
+			HMMainThreadDispatcher.instance.Enqueue(() =>
 			{
-				_logger.Error("No Daily Challenges Found... Do you need to update?");
-				return;
-			}
-			challenges = challengeSet.Challenges.ConvertAll(x => (object)new DailyChallengeCell(x));
-			list.data = challenges;
-			list.tableView.ReloadData();
-			list.tableView.SelectCellWithIdx(0);
-			ApplyChallenge(challengeSet.Challenges[0]);
+				_logger.Info("hola");
+				_logger.Info(challengeSet.Challenges.Count);
+				if (!(challengeSet?.Challenges?.Count > 0))
+				{
+					_logger.Error("No Daily Challenges Found... Do you need to update?");
+					return;
+				}
+				challenges = challengeSet.Challenges.ConvertAll(x => (object)new DailyChallengeCell(x));
+				list.data = challenges;
+				list.tableView.ReloadData();
+				list.tableView.SelectCellWithIdx(0);
+				ApplyChallenge(challengeSet.Challenges[0]);
+			});
 		}
 	}
 }
