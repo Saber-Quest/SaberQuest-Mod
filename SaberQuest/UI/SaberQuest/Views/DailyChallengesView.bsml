@@ -7,12 +7,14 @@
     </horizontal>
     <horizontal pref-height="60">
       <vertical bg="panel-top">
+        <custom-list id="challengesList" contents="challenges" show-scrollbar="true" stick-scrolling="true" pref-width="65" cell-size='15' clickable-cells="true" select-cell="select-challenge">
 
+        </custom-list>
       </vertical>
       <vertical bg="panel-top" pref-width="40" child-expand-height="false" pad-bottom="13" pad-top="13">
         <text text="#color#03F46B" active="false"/>
-        <vertical ignore-layout="true" anchor-pos-y="28">
-          <text text="Easy" font-align="Center"/>
+        <vertical ignore-layout="true" anchor-pos-y="25">
+          <text text="Easy" font-align="Center" font-size="6"/>
         </vertical>
         <vertical bg="panel-top" pref-width="37" pref-height="7" pad-top="5">
           <text text="#color#FFFFFFCC" active="false"/>

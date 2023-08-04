@@ -47,7 +47,7 @@ namespace SaberQuest.UI.SaberQuest.Views
 				gameObject.AddComponent<Touchable>();
 			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
 			{
-				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
+				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
 					continue;
 				var firstChild = x.transform.GetChild(0);
 				Color targetColor = new Color(1f, 1f, 1f, 0.4f);
@@ -77,6 +77,12 @@ namespace SaberQuest.UI.SaberQuest.Views
 			}
 		}
 
+		[UIAction("select-challenge")]
+		internal void SelectChallenge()
+		{
+
+		}
+
 		internal void ApplyChallenge(ChallengeModel challenge)
 		{
 
@@ -91,7 +97,7 @@ namespace SaberQuest.UI.SaberQuest.Views
 				_logger.Error("No Daily Challenges Found... Do you need to update?");
 				return;
 			}
-			challenges = challengeSet.Challenges.Select(x => (object)new DailyChallengeCell(x)).ToList();
+			challenges = challengeSet.Challenges.ConvertAll(x => (object)new DailyChallengeCell(x));
 			list.data = challenges;
 			list.tableView.ReloadData();
 			list.tableView.SelectCellWithIdx(0);
