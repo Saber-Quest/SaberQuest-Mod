@@ -47,6 +47,9 @@ namespace SaberQuest.UI.SaberQuest.Views
 
 		private DailyChallengesColorController _colorController;
 
+		[UIValue("date")]
+		private string CurrentDate => DateTime.Now.ConvertWithSuffix("MMMM dnn, yyyy", true);
+
 		[Inject]
 		private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
 		{

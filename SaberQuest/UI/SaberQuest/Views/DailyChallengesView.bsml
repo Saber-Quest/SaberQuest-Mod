@@ -5,7 +5,7 @@
     <horizontal bg='panel-top' pref-width='120' pref-height='12' child-align='MiddleCenter'>
       <text text="Today's Challenges" font-align="Center" font-size="8"/>
       <horizontal ignore-layout="true" pad-right="2" pad-bottom="1" pref-height="12">
-        <text text="August 3rd, 2023" font-size="4" font-align="BottomRight"/>
+        <text text="~date" font-size="4" font-align="BottomRight"/>
       </horizontal>
     </horizontal>
     <horizontal pref-height="65">
