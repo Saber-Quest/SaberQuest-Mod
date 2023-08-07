@@ -12,21 +12,25 @@ namespace SaberQuest.UI.Components
 {
 	internal class DailyChallengeCell
 	{
-		private readonly ChallengeModel _challengeModel;
+		internal readonly ChallengeModel _challengeModel;
+		private readonly ChallengeSetModel _challengeSet;
 
 		[UIObject("cell")]
 		private readonly GameObject cell;
 		private ImageView bg;
 
-		internal DailyChallengeCell(ChallengeModel challenge)
+		private string Difficulty => _challengeModel.Name;
+		private string ShortName => _challengeSet.ShortName;
+		internal DailyChallengeCell(ChallengeModel challenge, ChallengeSetModel challengeSet)
 		{
 			_challengeModel = challenge;
+			_challengeSet = challengeSet;
 		}
 
 		[UIAction("#post-parse")]
 		internal void PostParse()
 		{
-			/*CustomCellTableCell tableCell = cell.GetComponentInParent<CustomCellTableCell>();
+			CustomCellTableCell tableCell = cell.GetComponentInParent<CustomCellTableCell>();
 			foreach (var x in cell.GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
 			{
 				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
@@ -39,7 +43,7 @@ namespace SaberQuest.UI.Components
 				bg = x;
 			}
 
-			if (!UIConsts.DailyChallengeColorSet.TryGetValue(_challengeModel.Difficulty, out Color[] colorSet))
+			if (!UIConsts.DailyChallengeColorSet.TryGetValue(_challengeModel.Name, out Color[] colorSet))
 			{
 				colorSet = UIConsts.DailyChallengeColorSet["Easy"];
 			}
@@ -54,7 +58,7 @@ namespace SaberQuest.UI.Components
 				behaviour.highlightedColor = colorSet[1];
 				behaviour.selectedColor = colorSet[2];
 				behaviour.enabled = true;
-			}*/
+			}
 		}
 	}
 }

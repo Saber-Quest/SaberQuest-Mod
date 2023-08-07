@@ -1,4 +1,5 @@
 ﻿using SaberQuest.Providers;
+using SaberQuest.Providers.ApiProvider;
 using SaberQuest.UI.Auth;
 using SaberQuest.UI.Auth.Views;
 using SaberQuest.UI.SaberQuest;
@@ -8,13 +9,16 @@ using Zenject;
 
 namespace SaberQuest.Installers
 {
-	internal class SaberQuestMenuInstaller : Installer
+    internal class SaberQuestMenuInstaller : Installer
 	{
 		public override void InstallBindings()
 		{
 			Container.Bind<RefreshTokenStorageProvider>().AsSingle().NonLazy();
-			Container.Bind<SaberQuestApiProvider>().AsSingle().NonLazy();
-
+#if DEBUG
+			Container.BindInterfacesTo<MockSaberQuestApiProvider>().AsSingle().NonLazy();
+#else
+			Container.BindInterfacesTo<SaberQuestApiProvider>().AsSingle().NonLazy();
+#endif
 			Container.Bind<DailyChallengesView>().FromNewComponentAsViewController().AsSingle().NonLazy();
 			Container.Bind<MainView>().FromNewComponentAsViewController().AsSingle().NonLazy();
 			Container.Bind<SaberQuestFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();

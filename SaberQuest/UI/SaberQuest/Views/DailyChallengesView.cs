@@ -6,8 +6,9 @@ using HMUI;
 using IPA.Config.Data;
 using IPA.Utilities;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
-using SaberQuest.Providers;
+using SaberQuest.Providers.ApiProvider;
 using SaberQuest.UI.Components;
+using SaberQuest.Utils;
 using SiraUtil.Logging;
 using System;
 using System.Collections.Generic;
@@ -19,22 +20,33 @@ using static IPA.Logging.Logger;
 
 namespace SaberQuest.UI.SaberQuest.Views
 {
-	[HotReload(RelativePathToLayout = @"DailyChallengesView.bsml")]
+    [HotReload(RelativePathToLayout = @"DailyChallengesView.bsml")]
 	[ViewDefinition("SaberQuest.UI.SaberQuest.Views.DailyChallengesView.bsml")]
 	internal class DailyChallengesView : BSMLAutomaticViewController
 	{
 		//Dependencies
-		private SaberQuestApiProvider _apiProvider;
+		private ISaberQuestApiProvider _apiProvider;
 		private SiraLog _logger;
 
 		//Challenge List
+		private ChallengeSetModel _selectedChallengeSet;
 		[UIComponent("challengesList")]
 		private CustomCellListTableData list = null;
-
 		private List<object> challenges = new List<object>();
 
+		//Right Side
+		private ChallengeModel _selectedChallenge;
+		[UIObject("difficultyText")]
+		private GameObject _difficultyText;
+		[UIObject("challengeContainer")]
+		private GameObject _challengeContainer;
+		[UIObject("descText")]
+		private GameObject _descText;
+		[UIObject("valueText")]
+		private GameObject _valueText;
+
 		[Inject]
-		private void Construct(SaberQuestApiProvider apiProvider, SiraLog siraLog)
+		private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
 		{
 			_apiProvider = apiProvider;
 			_logger = siraLog;
@@ -80,30 +92,39 @@ namespace SaberQuest.UI.SaberQuest.Views
 		[UIAction("select-challenge")]
 		internal void SelectChallenge(TableView view, DailyChallengeCell cell)
 		{
-
+			ApplyChallenge(cell._challengeModel);
 		}
 
 		internal void ApplyChallenge(ChallengeModel challenge)
 		{
+			_selectedChallenge = challenge;
+			_difficultyText.GetComponent<TextMeshProUGUI>().text = challenge.Name;
+			if (UIConsts.DailyChallengeColorSet.ContainsKey(challenge.Name))
+			{
+				_challengeContainer.GetComponent<ImageView>().color = UIConsts.DailyChallengeColorSet[challenge.Name][1];
+			}
+			_descText.GetComponent<TextMeshProUGUI>().text = _selectedChallengeSet.Description;
+			_valueText.GetComponent<TextMeshProUGUI>().text = challenge.Value;
 
 		}
 
 		internal void ApplyChallengeSet(ChallengeSetModel challengeSet)
 		{
+			_selectedChallengeSet = challengeSet;
 			HMMainThreadDispatcher.instance.Enqueue(() =>
 			{
 				_logger.Info("hola");
-				_logger.Info(challengeSet.Challenges.Count);
-				if (!(challengeSet?.Challenges?.Count > 0))
+				_logger.Info(challengeSet.Difficulties.Count);
+				if (!(challengeSet?.Difficulties?.Count > 0))
 				{
 					_logger.Error("No Daily Challenges Found... Do you need to update?");
 					return;
 				}
-				challenges = challengeSet.Challenges.ConvertAll(x => (object)new DailyChallengeCell(x));
+				challenges = challengeSet.Difficulties.ConvertAll(x => (object)new DailyChallengeCell(x, challengeSet));
 				list.data = challenges;
 				list.tableView.ReloadData();
 				list.tableView.SelectCellWithIdx(0);
-				ApplyChallenge(challengeSet.Challenges[0]);
+				ApplyChallenge(challengeSet.Difficulties[0]);
 			});
 		}
 	}
