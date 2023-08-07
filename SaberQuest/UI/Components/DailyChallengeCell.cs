@@ -57,6 +57,7 @@ namespace SaberQuest.UI.Components
 				behaviour.defaultColor = colorSet[0];
 				behaviour.highlightedColor = colorSet[1];
 				behaviour.selectedColor = colorSet[2];
+				behaviour.gradient = true;
 				behaviour.enabled = true;
 			}
 		}
