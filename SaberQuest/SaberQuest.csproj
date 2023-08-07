@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UI\Auth\Views\AuthView.bsml" />
+    <None Remove="UI\Resources\containerbg.png" />
     <None Remove="UI\SaberQuest\Views\DailyChallengesView.bsml" />
     <None Remove="UI\SaberQuest\Views\MainView.bsml" />
   </ItemGroup>
@@ -64,6 +65,11 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.UI.dll</HintPath>
@@ -120,6 +126,7 @@
     <EmbeddedResource Include="UI\Auth\Views\AuthView.bsml">
       <DependentUpon>AuthView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Resources\containerbg.png" />
     <EmbeddedResource Include="UI\SaberQuest\Views\DailyChallengesView.bsml">
       <DependentUpon>DailyChallengesView.cs</DependentUpon>
     </EmbeddedResource>

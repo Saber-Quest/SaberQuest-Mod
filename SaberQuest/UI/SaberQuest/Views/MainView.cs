@@ -22,6 +22,9 @@ namespace SaberQuest.UI.SaberQuest.Views
 		[UIObject("avatarMask")]
 		private GameObject avatarMask;
 
+		[UIObject("containerBackground")]
+		private GameObject containerBackground;
+
 		[UIAction("#post-parse")]
 		internal void PostParse()
 		{
@@ -38,6 +41,10 @@ namespace SaberQuest.UI.SaberQuest.Views
 				x.color = new Color(1f, 1f, 1f, 0.4f);
 			}
 			avatarMask.AddComponent<Mask>().showMaskGraphic = false;
+
+			var containerImage = containerBackground.AddComponent<ImageView>();
+			containerImage.material = Utilities.ImageResources.NoGlowMat;
+			containerImage.SetImage("SaberQuest.UI.Resources.containerbg.png");
 		}
 	}
 }

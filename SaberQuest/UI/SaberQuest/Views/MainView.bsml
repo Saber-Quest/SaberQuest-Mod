@@ -1,16 +1,34 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
 	>
-    <horizontal vertical-fit='PreferredSize' pref-height='10' spacing='0' anchor-pos-y='25' child-align='MiddleCenter' horizontal-fit='PreferredSize' pad-left='5'>
-      <img pref-width='5' preserve-aspect='true' src='https://i.stack.imgur.com/PYlN8.png' id='avatarMask' anchor-pos-x='-43' ignore-layout='true' size-delta-y='13'>
-        <img src='https://cdn.discordapp.com/attachments/1109205575507640472/1136092819505827961/IMG_2836.png' size-delta-x='13' preserve-aspect='true' anchor-pos-x='0'/>
+    <horizontal vertical-fit='PreferredSize' pref-height='15' spacing='0' anchor-pos-y='25' child-align='MiddleCenter' horizontal-fit='PreferredSize' pad-left='5'>
+      <img pref-width='5' preserve-aspect='true' src='https://i.stack.imgur.com/PYlN8.png' id='avatarMask' anchor-pos-x='-43' ignore-layout='true' size-delta-y='15'>
+        <img src='https://cdn.discordapp.com/attachments/1109205575507640472/1136092819505827961/IMG_2836.png' size-delta-x='15' preserve-aspect='true' anchor-pos-x='0'/>
       </img>
-      <img src='https://cdn.discordapp.com/attachments/1061662392171376640/1134164338626801755/NeonCity1.png' pref-width='35' preserve-aspect='true' ignore-layout='true' anchor-pos-x='-43'/>
+      <img src='https://cdn.discordapp.com/attachments/1061662392171376640/1134164338626801755/NeonCity1.png' size-delta-y='30' preserve-aspect='true' ignore-layout='true' anchor-pos-x='-43'/>
       <text text='Welcome, FutureMapper!' font-size='8'/>
     </horizontal>
-    <bg background='panel-top' size-delta-x='-50' size-delta-y='-30' anchor-pos-y='-10'>
-      <vertical pad-top='1'>
+    <bg bg='panel-top' size-delta-x='-50' size-delta-y='-30' anchor-pos-y='-10'>
+      <vertical pad-top='1' id='containerBackground'>
         <text text='What would you like to do?' font-size='6'/>
+        <vertical ignore-layout='true' anchor-pos-x='-35' pad='7' pad-top='13'>
+          <horizontal>
+            <text text='←   Challenges' font-size='6' font-align='Left'/>
+          </horizontal>
+          <vertical pad-left='21' vertical-fit='PreferredSize'>
+            <text text='Crafting' font-size='6' font-align='Center'/>
+            <button text='Enter'/>
+          </vertical>
+        </vertical>
+        <vertical ignore-layout='true' anchor-pos-x='35' pad='7' pad-top='13'>
+          <horizontal>
+            <text text='Leaderboard   →' font-size='6' font-align='Right'/>
+          </horizontal>
+          <vertical pad-right='21' vertical-fit='PreferredSize'>
+            <text text='Shop' font-size='6' font-align='Center'/>
+            <button text='Enter'/>
+          </vertical>
+        </vertical>
       </vertical>
     </bg>
 </bg>
