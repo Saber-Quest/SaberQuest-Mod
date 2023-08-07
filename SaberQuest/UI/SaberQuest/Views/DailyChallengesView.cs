@@ -45,6 +45,8 @@ namespace SaberQuest.UI.SaberQuest.Views
 		[UIObject("valueText")]
 		private GameObject _valueText;
 
+		private DailyChallengesColorController _colorController;
+
 		[Inject]
 		private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
 		{
@@ -87,6 +89,8 @@ namespace SaberQuest.UI.SaberQuest.Views
 					_logger.Error(await error.Message.Error());
 				});
 			}
+
+			_colorController = _challengeContainer.AddComponent<DailyChallengesColorController>();
 		}
 
 		[UIAction("select-challenge")]
@@ -101,7 +105,7 @@ namespace SaberQuest.UI.SaberQuest.Views
 			_difficultyText.GetComponent<TextMeshProUGUI>().text = challenge.Name;
 			if (UIConsts.DailyChallengeColorSet.ContainsKey(challenge.Name))
 			{
-				_challengeContainer.GetComponent<ImageView>().color = UIConsts.DailyChallengeColorSet[challenge.Name][1];
+				_colorController.targetColor = UIConsts.DailyChallengeColorSet[challenge.Name][1];
 			}
 			_descText.GetComponent<TextMeshProUGUI>().text = _selectedChallengeSet.Description;
 			_valueText.GetComponent<TextMeshProUGUI>().text = challenge.Value;
