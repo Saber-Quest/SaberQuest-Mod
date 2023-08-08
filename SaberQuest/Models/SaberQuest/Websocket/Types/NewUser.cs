@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.Websocket.Types
 {
-	internal class NewUser
-	{
-		public string UserId { get; set; }
-		public string Link { get; set; }
-	}
+    internal class NewUser
+    {
+        public string UserId { get; set; }
+        public string Link { get; set; }
+    }
 }

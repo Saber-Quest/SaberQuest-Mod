@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.API.Auth
 {
-	internal class NamePasswordRequestModel
-	{
-		public string Username { get; set; }
-		public string Password { get; set; }
-	}
+    internal class NamePasswordRequestModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
 }

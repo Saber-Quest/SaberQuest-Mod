@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.API.Data.Deals
 {
-	internal class DealSetModel
-	{
-		public string Message { get; set; }
-		public List<DealModel> Deals { get; set; }
-		public SpecialOfferModel SpecialOffer { get; set; }
-	}
+    internal class DealSetModel
+    {
+        public string Message { get; set; }
+        public List<DealModel> Deals { get; set; }
+        public SpecialOfferModel SpecialOffer { get; set; }
+    }
 }

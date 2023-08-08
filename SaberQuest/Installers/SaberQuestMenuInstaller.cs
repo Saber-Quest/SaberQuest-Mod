@@ -11,26 +11,26 @@ using Zenject;
 namespace SaberQuest.Installers
 {
     internal class SaberQuestMenuInstaller : Installer
-	{
-		public override void InstallBindings()
-		{
-			Container.Bind<RefreshTokenStorageProvider>().AsSingle().NonLazy();
+    {
+        public override void InstallBindings()
+        {
+            Container.Bind<RefreshTokenStorageProvider>().AsSingle().NonLazy();
 #if DEBUG
-			Container.BindInterfacesTo<MockSaberQuestApiProvider>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<MockSaberQuestApiProvider>().AsSingle().NonLazy();
 #else
 			Container.BindInterfacesTo<SaberQuestApiProvider>().AsSingle().NonLazy();
 #endif
-			Container.Bind<ShopView>().FromNewComponentAsViewController().AsSingle().NonLazy();
-			Container.Bind<SaberQuestShopFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+            Container.Bind<ShopView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+            Container.Bind<SaberQuestShopFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
-			Container.Bind<DailyChallengesView>().FromNewComponentAsViewController().AsSingle().NonLazy();
-			Container.Bind<MainView>().FromNewComponentAsViewController().AsSingle().NonLazy();
-			Container.Bind<SaberQuestFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+            Container.Bind<DailyChallengesView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+            Container.Bind<MainView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+            Container.Bind<SaberQuestFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
-			Container.Bind<AuthView>().FromNewComponentAsViewController().AsSingle().NonLazy();
-			Container.Bind<AuthFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+            Container.Bind<AuthView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+            Container.Bind<AuthFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
-			new GameObject().AddComponent<SaberQuestWebSocketSubProvider>();
-		}
-	}
+            new GameObject().AddComponent<SaberQuestWebSocketSubProvider>();
+        }
+    }
 }

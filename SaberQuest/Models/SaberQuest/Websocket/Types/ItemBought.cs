@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.Websocket.Types
 {
-	internal class ItemBought
-	{
-		public string UserId { get; set; }
-		public string Item { get; set; }
-		public int QP { get; set; }
-		public int Value { get; set; }
-	}
+    internal class ItemBought
+    {
+        public string UserId { get; set; }
+        public string Item { get; set; }
+        public int QP { get; set; }
+        public int Value { get; set; }
+    }
 }

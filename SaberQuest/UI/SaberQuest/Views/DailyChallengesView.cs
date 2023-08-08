@@ -19,118 +19,118 @@ using Zenject;
 namespace SaberQuest.UI.SaberQuest.Views
 {
     [HotReload(RelativePathToLayout = @"DailyChallengesView.bsml")]
-	[ViewDefinition("SaberQuest.UI.SaberQuest.Views.DailyChallengesView.bsml")]
-	internal class DailyChallengesView : BSMLAutomaticViewController
-	{
-		//Dependencies
-		private ISaberQuestApiProvider _apiProvider;
-		private SiraLog _logger;
+    [ViewDefinition("SaberQuest.UI.SaberQuest.Views.DailyChallengesView.bsml")]
+    internal class DailyChallengesView : BSMLAutomaticViewController
+    {
+        //Dependencies
+        private ISaberQuestApiProvider _apiProvider;
+        private SiraLog _logger;
 
-		//Challenge List
-		private ChallengeSetModel _selectedChallengeSet;
-		[UIComponent("challengesList")]
-		private CustomCellListTableData list = null;
-		private List<object> challenges = new List<object>();
+        //Challenge List
+        private ChallengeSetModel _selectedChallengeSet;
+        [UIComponent("challengesList")]
+        private CustomCellListTableData list = null;
+        private List<object> challenges = new List<object>();
 
-		//Right Side
-		private ChallengeModel _selectedChallenge;
-		[UIObject("difficultyText")]
-		private GameObject _difficultyText;
-		[UIObject("challengeContainer")]
-		private GameObject _challengeContainer;
-		[UIObject("descText")]
-		private GameObject _descText;
-		[UIObject("valueText")]
-		private GameObject _valueText;
+        //Right Side
+        private ChallengeModel _selectedChallenge;
+        [UIObject("difficultyText")]
+        private GameObject _difficultyText;
+        [UIObject("challengeContainer")]
+        private GameObject _challengeContainer;
+        [UIObject("descText")]
+        private GameObject _descText;
+        [UIObject("valueText")]
+        private GameObject _valueText;
 
-		private DailyChallengesColorController _colorController;
+        private DailyChallengesColorController _colorController;
 
-		[UIValue("date")]
-		private string CurrentDate => DateTime.Now.ConvertWithSuffix("MMMM dnn, yyyy", true);
+        [UIValue("date")]
+        private string CurrentDate => DateTime.Now.ConvertWithSuffix("MMMM dnn, yyyy", true);
 
-		[Inject]
-		private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
-		{
-			_apiProvider = apiProvider;
-			_logger = siraLog;
-		}
+        [Inject]
+        private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
+        {
+            _apiProvider = apiProvider;
+            _logger = siraLog;
+        }
 
-		[UIAction("#post-parse")]
-		internal void PostParse()
-		{
-			if (gameObject.GetComponent<Touchable>() == null)
-				gameObject.AddComponent<Touchable>();
-			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
-			{
-				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
-					continue;
-				var firstChild = x.transform.GetChild(0);
-				Color targetColor = new Color(1f, 1f, 1f, 0.4f);
-				if (firstChild != null)
-				{
+        [UIAction("#post-parse")]
+        internal void PostParse()
+        {
+            if (gameObject.GetComponent<Touchable>() == null)
+                gameObject.AddComponent<Touchable>();
+            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+            {
+                if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
+                    continue;
+                var firstChild = x.transform.GetChild(0);
+                Color targetColor = new Color(1f, 1f, 1f, 0.4f);
+                if (firstChild != null)
+                {
 
-					var childText = firstChild.GetComponent<TextMeshProUGUI>();
-					if (childText != null && childText.text.StartsWith("#color"))
-						ColorUtility.TryParseHtmlString(childText.text.Replace("#color", ""), out targetColor);
-				}
+                    var childText = firstChild.GetComponent<TextMeshProUGUI>();
+                    if (childText != null && childText.text.StartsWith("#color"))
+                        ColorUtility.TryParseHtmlString(childText.text.Replace("#color", ""), out targetColor);
+                }
 
-				ReflectionUtil.SetField(x, "_skew", 0f);
-				x.overrideSprite = null;
-				x.SetImage("#RoundRect10BorderFade");
-				x.color = targetColor;
-			}
-			if (list != null)
-			{
-				_apiProvider.GetDailyChallenges((x) =>
-				{
-					ApplyChallengeSet(x);
-				}, async (error) =>
-				{
-					//TODO: Show Error Modal here
-					_logger.Error(await error.Message.Error());
-				});
-			}
+                ReflectionUtil.SetField(x, "_skew", 0f);
+                x.overrideSprite = null;
+                x.SetImage("#RoundRect10BorderFade");
+                x.color = targetColor;
+            }
+            if (list != null)
+            {
+                _apiProvider.GetDailyChallenges((x) =>
+                {
+                    ApplyChallengeSet(x);
+                }, async (error) =>
+                {
+                    //TODO: Show Error Modal here
+                    _logger.Error(await error.Message.Error());
+                });
+            }
 
-			_colorController = _challengeContainer.AddComponent<DailyChallengesColorController>();
-		}
+            _colorController = _challengeContainer.AddComponent<DailyChallengesColorController>();
+        }
 
-		[UIAction("select-challenge")]
-		internal void SelectChallenge(TableView view, DailyChallengeCell cell)
-		{
-			ApplyChallenge(cell._challengeModel);
-		}
+        [UIAction("select-challenge")]
+        internal void SelectChallenge(TableView view, DailyChallengeCell cell)
+        {
+            ApplyChallenge(cell._challengeModel);
+        }
 
-		internal void ApplyChallenge(ChallengeModel challenge)
-		{
-			_selectedChallenge = challenge;
-			_difficultyText.GetComponent<TextMeshProUGUI>().text = challenge.Name;
-			if (UIConsts.DailyChallengeColorSet.ContainsKey(challenge.Name))
-			{
-				_colorController.targetColor = UIConsts.DailyChallengeColorSet[challenge.Name][1];
-			}
-			_descText.GetComponent<TextMeshProUGUI>().text = _selectedChallengeSet.Description;
-			_valueText.GetComponent<TextMeshProUGUI>().text = challenge.Value;
+        internal void ApplyChallenge(ChallengeModel challenge)
+        {
+            _selectedChallenge = challenge;
+            _difficultyText.GetComponent<TextMeshProUGUI>().text = challenge.Name;
+            if (UIConsts.DailyChallengeColorSet.ContainsKey(challenge.Name))
+            {
+                _colorController.targetColor = UIConsts.DailyChallengeColorSet[challenge.Name][1];
+            }
+            _descText.GetComponent<TextMeshProUGUI>().text = _selectedChallengeSet.Description;
+            _valueText.GetComponent<TextMeshProUGUI>().text = challenge.Value;
 
-		}
+        }
 
-		internal void ApplyChallengeSet(ChallengeSetModel challengeSet)
-		{
-			_selectedChallengeSet = challengeSet;
-			HMMainThreadDispatcher.instance.Enqueue(() =>
-			{
-				_logger.Info("hola");
-				_logger.Info(challengeSet.Difficulties.Count);
-				if (!(challengeSet?.Difficulties?.Count > 0))
-				{
-					_logger.Error("No Daily Challenges Found... Do you need to update?");
-					return;
-				}
-				challenges = challengeSet.Difficulties.ConvertAll(x => (object)new DailyChallengeCell(x, challengeSet));
-				list.data = challenges;
-				list.tableView.ReloadData();
-				list.tableView.SelectCellWithIdx(0);
-				ApplyChallenge(challengeSet.Difficulties[0]);
-			});
-		}
-	}
+        internal void ApplyChallengeSet(ChallengeSetModel challengeSet)
+        {
+            _selectedChallengeSet = challengeSet;
+            HMMainThreadDispatcher.instance.Enqueue(() =>
+            {
+                _logger.Info("hola");
+                _logger.Info(challengeSet.Difficulties.Count);
+                if (!(challengeSet?.Difficulties?.Count > 0))
+                {
+                    _logger.Error("No Daily Challenges Found... Do you need to update?");
+                    return;
+                }
+                challenges = challengeSet.Difficulties.ConvertAll(x => (object)new DailyChallengeCell(x, challengeSet));
+                list.data = challenges;
+                list.tableView.ReloadData();
+                list.tableView.SelectCellWithIdx(0);
+                ApplyChallenge(challengeSet.Difficulties[0]);
+            });
+        }
+    }
 }

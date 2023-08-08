@@ -5,8 +5,8 @@ using IPA.Config.Stores;
 
 namespace SaberQuest.Configuration
 {
-	internal class PluginConfig
-	{
-		// public virtual int MeaningofLife = 42 { get; set; } 
-	}
+    internal class PluginConfig
+    {
+        // public virtual int MeaningofLife = 42 { get; set; } 
+    }
 }

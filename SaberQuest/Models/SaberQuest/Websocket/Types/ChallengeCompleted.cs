@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.Websocket.Types
 {
-	internal class ChallengeCompleted
-	{
-	}
+    internal class ChallengeCompleted
+    {
+    }
 }

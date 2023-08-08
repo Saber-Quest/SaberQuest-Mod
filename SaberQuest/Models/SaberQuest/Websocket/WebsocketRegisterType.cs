@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.Websocket
 {
-	internal enum WebsocketRegisterType
-	{
+    internal enum WebsocketRegisterType
+    {
 
-	}
+    }
 }

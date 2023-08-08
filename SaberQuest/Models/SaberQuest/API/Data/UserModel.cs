@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.API.Data
 {
-	internal class UserModel
-	{
-	}
+    internal class UserModel
+    {
+    }
 }
