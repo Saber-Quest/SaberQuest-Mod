@@ -26,7 +26,7 @@
           </horizontal>
           <vertical pad-right='21' vertical-fit='PreferredSize'>
             <text text='Shop' font-size='6' font-align='Center'/>
-            <button text='Enter'/>
+            <button text='Enter' on-click='present-shop'/>
           </vertical>
         </vertical>
       </vertical>

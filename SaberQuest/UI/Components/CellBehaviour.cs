@@ -1,10 +1,5 @@
 ﻿using BeatSaberMarkupLanguage.Components;
 using HMUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace SaberQuest.UI.Components
@@ -21,7 +16,7 @@ namespace SaberQuest.UI.Components
 		private void Start()
 		{
 			bg.gradient = gradient;
-			if(gradient)
+			if (gradient)
 			{
 				bg.color0 = defaultColor;
 				bg.color = Color.white;
@@ -40,7 +35,7 @@ namespace SaberQuest.UI.Components
 				targetColor1 = highlightedColor;
 			else
 				targetColor1 = defaultColor;
-			if(gradient)
+			if (gradient)
 			{
 				bg.color1 = Color.Lerp(bg.color1, targetColor1, Time.deltaTime * 5f);
 				bg.color0 = Color.Lerp(bg.color0, targetColor0, Time.deltaTime * 5f);

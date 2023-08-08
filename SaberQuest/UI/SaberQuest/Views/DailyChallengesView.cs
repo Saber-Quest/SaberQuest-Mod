@@ -3,7 +3,6 @@ using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
-using IPA.Config.Data;
 using IPA.Utilities;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Providers.ApiProvider;
@@ -16,7 +15,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using Zenject;
-using static IPA.Logging.Logger;
 
 namespace SaberQuest.UI.SaberQuest.Views
 {

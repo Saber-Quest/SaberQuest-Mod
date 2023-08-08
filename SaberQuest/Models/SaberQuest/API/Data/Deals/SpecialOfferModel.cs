@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.Models.SaberQuest.API.Data.Deals
 {
-	internal class DealModel
+	public class SpecialOfferModel
 	{
-		public string Id { get; set; }
-		public int Price { get; set; }
-		public string Rarity { get; set; }
+		public string Title { get; set; }
+		public string Description { get; set; }
+		public string EndTime { get; set; }
 		public string ImageURL { get; set; }
-		public string Name { get; set; }
-		public int Value { get; set; }
 	}
 }

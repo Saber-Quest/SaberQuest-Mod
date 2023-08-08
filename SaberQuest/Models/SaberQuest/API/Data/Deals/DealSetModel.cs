@@ -10,5 +10,6 @@ namespace SaberQuest.Models.SaberQuest.API.Data.Deals
 	{
 		public string Message { get; set; }
 		public List<DealModel> Deals { get; set; }
+		public SpecialOfferModel SpecialOffer { get; set; }
 	}
 }

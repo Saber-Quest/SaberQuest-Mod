@@ -1,4 +1,5 @@
 ﻿using SaberQuest.Models.SaberQuest.API.Data.Challenges;
+using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Models.SaberQuest.Web;
 using SiraUtil.Logging;
 using SiraUtil.Web;
@@ -24,7 +25,7 @@ namespace SaberQuest.Providers.ApiProvider
             _httpService = httpService;
         }
 
-        public void GetDailyChallenges(Action<ChallengeSetModel> callback, Action<ErrorResponseModel> errorCallback)
+		public void GetDailyChallenges(Action<ChallengeSetModel> callback, Action<ErrorResponseModel> errorCallback)
         {
             JsonHttpGetRequest(BASE_URL + "daily-challenges", (res) =>
             {
@@ -32,9 +33,19 @@ namespace SaberQuest.Providers.ApiProvider
                 var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<ChallengeSetModel>(res);
                 callback(obj);
             }, errorCallback);
-        }
+		}
 
-        private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
+		public void GetCurrentDeals(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback)
+		{
+			JsonHttpGetRequest(BASE_URL + "current-deals", (res) =>
+			{
+				_logger.Info(res);
+				var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DealSetModel>(res);
+				callback(obj);
+			}, errorCallback);
+		}
+
+		private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
         {
             Task.Run(async () =>
             {

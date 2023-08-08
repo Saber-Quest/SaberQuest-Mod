@@ -2,13 +2,10 @@
 using BeatSaberMarkupLanguage.MenuButtons;
 using HarmonyLib;
 using HMUI;
-using IPA.Utilities;
-using SiraUtil.Affinity;
 using System;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace SaberQuest.HarmonyPatches
 {

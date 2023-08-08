@@ -1,0 +1,30 @@
+﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
+	>
+  <vertical vertical-fit='PreferredSize' spacing='3'>
+    <horizontal pad-left='65'>
+      <horizontal bg='panel-top' pref-width='25' pref-height='9' vertical-fit='PreferredSize' child-align='MiddleCenter' spacing='1' pad='1' pad-right='3'>
+        <text text="#color#FFFFFFCC" active="false"/>
+        <image src='https://saberquest.xyz/images/other/quest_points_icon.png' pref-width='8' pref-height='8' preserve-aspect='true'/>
+        <text text='QP: 45' font-align='Left'/>
+      </horizontal>
+    </horizontal>
+    <vertical bg='panel-top' pref-height='60' pref-width='95' >
+      <text text="#color#FFFFFFAA" active="false"/>
+      <text text='Current Deals' font-size='7' font-align='Center'/>
+      <vertical pref-width="95" pad-left="3" pad-right="1">
+        <custom-list id="shopList" contents="shopItems" stick-scrolling="true" pref-height="22" list-direction="Horizontal" cell-size='18' clickable-cells="true" >
+          <vertical id="cell" bg="panel-top" pref-height="22" pref-width="16" pad-bottom="2">
+            <text text="~Name" font-align="Center" font-size="3"/>
+            <img src="~ImageUrl" pref-height="10" pref-width="10" preserve-aspect="true"/>
+          </vertical>
+        </custom-list>
+      </vertical>
+      <vertical child-align='MiddleCenter' vertical-fit='PreferredSize' spacing='0'>
+        <text text='Special Offer!' font-align='Center' font-size='4.5'/>
+        <text text='You can spend 20qp to get a random item.' font-align='Center' font-size='2.5' color='#AAAAAA'/>
+        <clickable-image src='https://saberquest.xyz/images/gambling.png' pref-width='80' pref-height='8' preserve-aspect='true'/>
+      </vertical>
+    </vertical>
+  </vertical>
+</bg>

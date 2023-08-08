@@ -1,14 +1,13 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.MenuButtons;
 using HMUI;
-using SaberQuest.Providers.ApiProvider;
 using SaberQuest.UI.Auth.Views;
 using SaberQuest.UI.SaberQuest;
 using Zenject;
 
 namespace SaberQuest.UI.Auth
 {
-    internal class AuthFlowCoordinator : FlowCoordinator
+	internal class AuthFlowCoordinator : FlowCoordinator
 	{
 		private SaberQuestFlowCoordinator _saberQuestFlow;
 		private AuthView _authView;

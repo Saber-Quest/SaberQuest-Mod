@@ -44,5 +44,24 @@ namespace SaberQuest.Utils
 				}
 			}
 		};
+
+		internal static Dictionary<string, Color> RarityColors { get; } = new Dictionary<string, Color>
+		{
+			{
+				"Common", new Color(0.8f, 0.8f, 0.8f)
+			},
+			{
+				"Uncommon", new Color(0f, 1f, 0f)
+			},
+			{
+				"Rare", new Color(0f, 0.8f, 1f)
+			},
+			{
+				"Epic", new Color(0.8f, 0f, 1f)
+			},
+			{
+				"Legendary", new Color(1f, 0.8f, 0f)
+			}
+		};
 	}
 }

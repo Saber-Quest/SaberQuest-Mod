@@ -24,6 +24,7 @@
   <ItemGroup>
     <None Remove="UI\Auth\Views\AuthView.bsml" />
     <None Remove="UI\Resources\containerbg.png" />
+    <None Remove="UI\SaberQuest\Shop\Views\ShopView.bsml" />
     <None Remove="UI\SaberQuest\Views\DailyChallengesView.bsml" />
     <None Remove="UI\SaberQuest\Views\MainView.bsml" />
   </ItemGroup>
@@ -127,11 +128,17 @@
       <DependentUpon>AuthView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Resources\containerbg.png" />
+    <EmbeddedResource Include="UI\SaberQuest\Shop\Views\ShopView.bsml">
+      <DependentUpon>ShopView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\SaberQuest\Views\DailyChallengesView.bsml">
       <DependentUpon>DailyChallengesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SaberQuest\Views\MainView.bsml">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\SaberQuest\Crafting\" />
   </ItemGroup>
 </Project>

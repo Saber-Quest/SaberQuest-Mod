@@ -4,11 +4,7 @@ using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Utilities;
-using SaberQuest.Providers;
-using SaberQuest.Utils;
-using System.Collections;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -21,9 +17,18 @@ namespace SaberQuest.UI.SaberQuest.Views
 	{
 		[UIObject("avatarMask")]
 		private GameObject avatarMask;
-
 		[UIObject("containerBackground")]
 		private GameObject containerBackground;
+
+		private SaberQuestFlowCoordinator _mainFlow;
+		private SaberQuestShopFlowCoordinator _shopFlow;
+
+		[Inject]
+		private void Construct(SaberQuestShopFlowCoordinator shopFlowCoordinator, SaberQuestFlowCoordinator mainFlowCoordinator)
+		{
+			_mainFlow = mainFlowCoordinator;
+			_shopFlow = shopFlowCoordinator;
+		}
 
 		[UIAction("#post-parse")]
 		internal void PostParse()
@@ -45,6 +50,12 @@ namespace SaberQuest.UI.SaberQuest.Views
 			var containerImage = containerBackground.AddComponent<ImageView>();
 			containerImage.material = Utilities.ImageResources.NoGlowMat;
 			containerImage.SetImage("SaberQuest.UI.Resources.containerbg.png");
+		}
+
+		[UIAction("present-shop")]
+		private void EnterShop()
+		{
+			_mainFlow.PresentFlowCoordinator(_shopFlow);
 		}
 	}
 }
