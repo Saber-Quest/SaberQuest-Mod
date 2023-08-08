@@ -17,17 +17,17 @@ namespace SaberQuest.UI.SaberQuest
 			_mainFlow = saberQuestFlowCoordinator;
 		}
 
-		protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
+		public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
 		{
 			if (firstActivation)
 			{
-				SetTitle("SaberQuest");
+				SetTitle("Shop");
 				showBackButton = true;
 				ProvideInitialViewControllers(_shopView);
 			}
 		}
 
-		protected override void BackButtonWasPressed(ViewController topViewController)
+		public override void BackButtonWasPressed(ViewController topViewController)
 		{
 			_mainFlow.DismissFlowCoordinator(this);
 		}

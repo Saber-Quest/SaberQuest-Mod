@@ -12,6 +12,7 @@ using SaberQuest.UI.Components;
 using SaberQuest.Utils;
 using SiraUtil.Logging;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -43,18 +44,14 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
 		[UIAction("#post-parse")]
 		internal void PostParse()
 		{
-			_logger.Info("breh1");
 			if (gameObject.GetComponent<Touchable>() == null)
 				gameObject.AddComponent<Touchable>();
 			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
 			{
-				_logger.Info("breh");
 				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
 					continue;
-				_logger.Info("breh 2");
 
 				var firstChild = x.transform.GetChild(0);
-				_logger.Info("breh 2.5");
 
 				Color targetColor = new Color(1f, 1f, 1f, 0.4f);
 				if (firstChild != null)
@@ -64,49 +61,54 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
 					if (childText != null && childText.text.StartsWith("#color"))
 						ColorUtility.TryParseHtmlString(childText.text.Replace("#color", ""), out targetColor);
 				}
-				_logger.Info("breh 3");
 
 				ReflectionUtil.SetField(x, "_skew", 0f);
 				x.overrideSprite = null;
 				x.SetImage("#RoundRect10BorderFade");
 				x.color = targetColor;
 			}
-			_logger.Info("breh 4");
 
 			if (list != null)
 			{
 				_logger.Info("sdljfasdasdasdadjsdf");
 				_apiProvider.GetCurrentDeals((x) =>
 				{
-					_logger.Info("blud");
 					ApplyShopItems(x);
 				}, async (error) =>
 				{
-					_logger.Info("balls");
-
 					//TODO: Show Error Modal here
 					_logger.Error(await error.Message.Error());
 				});
 			}
+
+			StartCoroutine(ContentCoroutine());
+		}
+
+		private IEnumerator ContentCoroutine()
+		{
+			yield return new WaitForEndOfFrame();
+			var viewport = list.transform.GetChild(0).GetChild(0) as RectTransform;
+			var content = viewport.GetChild(0) as RectTransform;
+
+			viewport.sizeDelta = new Vector2(0f, 10f);
+			yield return new WaitForEndOfFrame();
+			content.anchorMin = new Vector2(0f, 0.15f);
+			content.anchorMax = new Vector2(0f, 0.85f);
 		}
 
 		private void ApplyShopItems(DealSetModel deals)
 		{
 			HMMainThreadDispatcher.instance.Enqueue(() =>
 			{
-				_logger.Info("XD");
 				if (!(deals?.Deals?.Count > 0))
 				{
 					_logger.Error("No Daily Challenges Found... Do you need to update?");
 					return;
 				}
-				_logger.Info("XD 2");
 				shopItems = deals.Deals.ConvertAll(x => (object)new ShopItemCell(x));
 				list.data = shopItems;
 				list.tableView.ReloadData();
-				_logger.Info("XD 3");
 				list.tableView.SelectCellWithIdx(0);
-				_logger.Info("XD 4");
 			});
 		}
 	}

@@ -30,7 +30,6 @@ namespace SaberQuest.UI.Components
 		[UIAction("#post-parse")]
 		internal void PostParse()
 		{
-			Console.WriteLine("x1");
 			CustomCellTableCell tableCell = cell.GetComponentInParent<CustomCellTableCell>();
 			foreach (var x in cell.GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
 			{
@@ -43,27 +42,18 @@ namespace SaberQuest.UI.Components
 				x.color = new Color(0.25f, 0.25f, 1f, 0.4f);
 				bg = x;
 			}
-			Console.WriteLine("x2");
 
 			if (!UIConsts.RarityColors.TryGetValue(_dealModel.Rarity, out Color defaultColor))
 			{
 				defaultColor = UIConsts.RarityColors["Common"];
 			}
-			Console.WriteLine("x3");
 			if (cell.GetComponent<CellBehaviour>() == null)
 			{
 				var behaviour = cell.AddComponent<CellBehaviour>();
 				behaviour.enabled = false;
-				behaviour.bg = bg;
-				behaviour.cell = tableCell;
-				behaviour.defaultColor = defaultColor.ColorWithAlpha(0.6f);
-				behaviour.highlightedColor = defaultColor;
-				behaviour.selectedColor = new Color(1f, 0.3f, 1f);
-				behaviour.gradient = true;
+				behaviour.Construct(tableCell, bg, new Color(0.8f, 0.3f, 1f), defaultColor * 1.2f, defaultColor, true, ImageView.GradientDirection.Vertical);
 				behaviour.enabled = true;
 			}
-
-			Console.WriteLine("x4");
 		}
 	}
 }

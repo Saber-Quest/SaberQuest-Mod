@@ -17,17 +17,17 @@ namespace SaberQuest.UI.SaberQuest
 			_challengesView = challengesView;
 		}
 
-		protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
+		public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
 		{
 			if (firstActivation)
 			{
-				SetTitle("SaberQuest");
+				SetTitle("Saber Quest");
 				showBackButton = true;
 				ProvideInitialViewControllers(_mainView, _challengesView);
 			}
 		}
 
-		protected override void BackButtonWasPressed(ViewController topViewController)
+		public override void BackButtonWasPressed(ViewController topViewController)
 		{
 			BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this);
 		}

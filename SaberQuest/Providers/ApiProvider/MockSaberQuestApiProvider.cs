@@ -32,10 +32,7 @@ namespace SaberQuest.Providers.ApiProvider
 
 		public void GetCurrentDeals(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback)
 		{
-			_logger.Info(MockCurrentDeals);
 			var obj = JsonConvert.DeserializeObject<DealSetModel>(MockCurrentDeals);
-			_logger.Info("sdljfjsdf");
-			_logger.Info(JsonConvert.SerializeObject(obj));
 			callback(obj);
 		}
 	}

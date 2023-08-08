@@ -52,12 +52,7 @@ namespace SaberQuest.UI.Components
 			{
 				var behaviour = cell.AddComponent<CellBehaviour>();
 				behaviour.enabled = false;
-				behaviour.bg = bg;
-				behaviour.cell = tableCell;
-				behaviour.defaultColor = colorSet[0];
-				behaviour.highlightedColor = colorSet[1];
-				behaviour.selectedColor = colorSet[2];
-				behaviour.gradient = true;
+				behaviour.Construct(tableCell, bg, colorSet[2], colorSet[1], colorSet[0], true, 0);
 				behaviour.enabled = true;
 			}
 		}

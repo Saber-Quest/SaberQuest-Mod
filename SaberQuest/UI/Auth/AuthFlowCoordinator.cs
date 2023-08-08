@@ -25,7 +25,7 @@ namespace SaberQuest.UI.Auth
 			));
 		}
 
-		protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
+		public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
 		{
 			if (firstActivation)
 			{
@@ -41,7 +41,7 @@ namespace SaberQuest.UI.Auth
 			BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(_saberQuestFlow, null, ViewController.AnimationDirection.Horizontal, true);
 		}
 
-		protected override void BackButtonWasPressed(ViewController topViewController)
+		public override void BackButtonWasPressed(ViewController topViewController)
 		{
 			BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this);
 		}
