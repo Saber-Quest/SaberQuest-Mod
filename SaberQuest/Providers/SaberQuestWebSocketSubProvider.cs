@@ -16,19 +16,25 @@ namespace SaberQuest.Providers
 
         public void Start()
         {
-            Console.WriteLine("x");
-            //PacketHandler packetHandler = new PacketHandler();
-            //PacketModel packet = packetHandler.OpenPacket(e.Data);
-            //Console.WriteLine(packet.EventName);
-            //Console.WriteLine(packet.JsonPayLoad);
+            Console.WriteLine("Starting Websicjet");
+			//PacketHandler packetHandler = new PacketHandler();
+			//PacketModel packet = packetHandler.OpenPacket(e.Data);
+			//Console.WriteLine(packet.EventName);
+			//Console.WriteLine(packet.JsonPayLoad);
 
-            using (var ws = new WebSocket("ws://localhost:8080"))
-            {
-                ws.OnMessage += (sender, e) =>
-                                  Console.WriteLine("Laputa says: " + e.Data);
+			var socket = new WebSocket("ws://saberquest.xyz:8080");
 
-                ws.Connect();
-            }
-        }
+
+			socket.OnMessage += (sender, e) =>
+			{
+				Console.WriteLine(e.Data);
+				PacketHandler packetHandler = new PacketHandler();
+				PacketModel packet = packetHandler.OpenPacket(e.Data);
+				Console.WriteLine(packet.EventName);
+				Console.WriteLine(packet.JsonPayLoad);
+			};
+
+			socket.Connect();
+		}
     }
 }
