@@ -6,10 +6,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-
       - name: Lint Code Base
         uses: github/super-linter@v5
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
-	  FILTER_REGEX_EXCLUDE: ./SaberQuest/Installers/SaberQuestMenuInstaller.cs
+          FILTER_REGEX_EXCLUDE: ./SaberQuest/Installers/SaberQuestMenuInstaller.cs
