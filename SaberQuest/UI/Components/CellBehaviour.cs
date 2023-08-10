@@ -7,7 +7,7 @@ namespace SaberQuest.UI.Components
 {
     internal class CellBehaviour : MonoBehaviour
     {
-        private CustomCellTableCell cell;
+        private TableCell cell;
         private ImageView bg;
         private Color selectedColor;
         private Color highlightedColor;
@@ -18,7 +18,7 @@ namespace SaberQuest.UI.Components
         private Vector2 startingMin;
         private Vector2 startingMax;
 
-        internal void Construct(CustomCellTableCell cell, ImageView bg, Color selectedColor, Color highlightedColor, Color defaultColor, bool gradient, ImageView.GradientDirection gradientDirection)
+        internal void Construct(TableCell cell, ImageView bg, Color selectedColor, Color highlightedColor, Color defaultColor, bool gradient, ImageView.GradientDirection gradientDirection)
         {
             this.cell = cell;
             this.bg = bg;

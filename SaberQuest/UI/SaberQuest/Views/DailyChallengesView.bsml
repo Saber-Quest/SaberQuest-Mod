@@ -9,14 +9,9 @@
       </horizontal>
     </horizontal>
     <horizontal pref-height="65">
-      <vertical bg="panel-top" pref-width="65" pad="2">
-        <text text="Regular Challenges" font-align="Center"/>
-        <custom-list id="challengesList" contents="challenges" show-scrollbar="true" stick-scrolling="true" pref-width="60" cell-size='14.4' clickable-cells="true" select-cell="select-challenge">
-          <horizontal id="cell" bg="panel-top" pref-height="13" pref-width="10" pad-left="2" pad-right="2">
-            <text text="~Difficulty" font-align="Left" font-size="6"/>
-            <text text="~ShortName" font-align="Right" font-size="5" font-color="#AAAAAA"/>
-          </horizontal>
-        </custom-list>
+      <vertical bg="panel-top" pref-width="65" pad="1" pad-left="2" pad-right="2">
+        <text text="Reset in 6 hours!" font-align="Center"/>
+        <list id="challengesList" select-cell="select-challenge"/>
       </vertical>
       <vertical id="challengeContainer" bg="panel-top" pref-width="40" child-expand-height="false" pad-bottom="12" pad-top="10">
         <vertical ignore-layout="true" anchor-pos-y="27">

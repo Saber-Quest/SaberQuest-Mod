@@ -6,7 +6,7 @@ using HMUI;
 using IPA.Utilities;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Providers.ApiProvider;
-using SaberQuest.UI.Components;
+using SaberQuest.UI.Components.DailyChallenges;
 using SaberQuest.Utils;
 using SiraUtil.Logging;
 using System;
@@ -20,30 +20,27 @@ namespace SaberQuest.UI.SaberQuest.Views
 {
     [HotReload(RelativePathToLayout = @"DailyChallengesView.bsml")]
     [ViewDefinition("SaberQuest.UI.SaberQuest.Views.DailyChallengesView.bsml")]
-    internal class DailyChallengesView : BSMLAutomaticViewController
-    {
+    internal class DailyChallengesView : BSMLAutomaticViewController, TableView.IDataSource
+	{
         //Dependencies
         private ISaberQuestApiProvider _apiProvider;
         private SiraLog _logger;
 
         //Challenge List
-        private ChallengeSetModel _selectedChallengeSet;
-        [UIComponent("challengesList")]
-        private CustomCellListTableData list = null;
-        private List<object> challenges = new List<object>();
+        [UIComponent("challengesList")] private CustomListTableData list = null;
+		private TableView songList => list?.tableView;
 
-        //Right Side
-        private ChallengeModel _selectedChallenge;
-        [UIObject("difficultyText")]
-        private GameObject _difficultyText;
-        [UIObject("challengeContainer")]
-        private GameObject _challengeContainer;
-        [UIObject("descText")]
-        private GameObject _descText;
-        [UIObject("valueText")]
-        private GameObject _valueText;
+		//Data
+		private List<ChallengeModel> challenges = new List<ChallengeModel>();
+		private ChallengeSetModel _selectedChallengeSet;
+		private ChallengeModel _selectedChallenge;
 
-        private DailyChallengesColorController _colorController;
+		//Right Side
+		private DailyChallengesColorController _colorController;
+		[UIObject("difficultyText")] private GameObject _difficultyText;
+        [UIObject("challengeContainer")] private GameObject _challengeContainer;
+        [UIObject("descText")] private GameObject _descText;
+        [UIObject("valueText")] private GameObject _valueText;
 
         [UIValue("date")]
         private string CurrentDate => DateTime.Now.ConvertWithSuffix("MMMM dnn, yyyy", true);
@@ -60,7 +57,10 @@ namespace SaberQuest.UI.SaberQuest.Views
         {
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
-            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+
+			songList.SetDataSource(this, false);
+
+			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
                 if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
                     continue;
@@ -95,9 +95,9 @@ namespace SaberQuest.UI.SaberQuest.Views
         }
 
         [UIAction("select-challenge")]
-        internal void SelectChallenge(TableView view, DailyChallengeCell cell)
+        internal void SelectChallenge(TableView view, int row)
         {
-            ApplyChallenge(cell._challengeModel);
+            ApplyChallenge(challenges[row]);
         }
 
         internal void ApplyChallenge(ChallengeModel challenge)
@@ -125,12 +125,17 @@ namespace SaberQuest.UI.SaberQuest.Views
                     _logger.Error("No Daily Challenges Found... Do you need to update?");
                     return;
                 }
-                challenges = challengeSet.Difficulties.ConvertAll(x => (object)new DailyChallengeCell(x, challengeSet));
-                list.data = challenges;
+                challenges = challengeSet.Difficulties;
                 list.tableView.ReloadData();
                 list.tableView.SelectCellWithIdx(0);
                 ApplyChallenge(challengeSet.Difficulties[0]);
             });
         }
-    }
+
+        public float CellSize() => 14.4f;
+
+        public int NumberOfCells() => challenges.Count;
+
+		public TableCell CellForIdx(TableView tableView, int idx) => DailyChallengesListTableData.GetCell(tableView).PopulateWithChallengeData(challenges[idx], _selectedChallengeSet);
+	}
 }

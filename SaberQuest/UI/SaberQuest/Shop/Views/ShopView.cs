@@ -9,6 +9,7 @@ using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Providers.ApiProvider;
 using SaberQuest.UI.Components;
+using SaberQuest.UI.Components.Shop;
 using SaberQuest.Utils;
 using SiraUtil.Logging;
 using System;
@@ -23,16 +24,19 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
 {
     [HotReload(RelativePathToLayout = @"ShopView.bsml")]
     [ViewDefinition("SaberQuest.UI.SaberQuest.Shop.Views.ShopView.bsml")]
-    internal class ShopView : BSMLAutomaticViewController
+    internal class ShopView : BSMLAutomaticViewController, TableView.IDataSource
     {
         //Dependencies
         private ISaberQuestApiProvider _apiProvider;
         private SiraLog _logger;
 
-        //Challenge List
-        [UIComponent("shopList")]
-        private CustomCellListTableData list = null;
-        private List<object> shopItems = new List<object>();
+		//Challenge List
+		[UIComponent("shopList")] private CustomListTableData list = null;
+		private TableView shopList => list?.tableView;
+
+		//Data
+		private List<DealModel> CurrentDeals = new List<DealModel>();
+        private DealModel _selectedDeal;
 
         [Inject]
         private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
@@ -46,7 +50,10 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
         {
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
-            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+
+			shopList.SetDataSource(this, false);
+
+			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
                 if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
                     continue;
@@ -70,7 +77,6 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
 
             if (list != null)
             {
-                _logger.Info("sdljfasdasdasdadjsdf");
                 _apiProvider.GetCurrentDeals((x) =>
                 {
                     ApplyShopItems(x);
@@ -102,14 +108,19 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
             {
                 if (!(deals?.Deals?.Count > 0))
                 {
-                    _logger.Error("No Daily Challenges Found... Do you need to update?");
+                    _logger.Error("No Shop Items Found... Do you need to update?");
                     return;
                 }
-                shopItems = deals.Deals.ConvertAll(x => (object)new ShopItemCell(x));
-                list.data = shopItems;
+				CurrentDeals = deals.Deals;
                 list.tableView.ReloadData();
                 list.tableView.SelectCellWithIdx(0);
             });
         }
-    }
+
+        public float CellSize() => 18f;
+
+        public int NumberOfCells() => CurrentDeals.Count;
+
+        public TableCell CellForIdx(TableView tableView, int idx) => ShopItemListTableData.GetCell(tableView).PopulateWithShopItemData(CurrentDeals[idx]);
+	}
 }

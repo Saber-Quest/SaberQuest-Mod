@@ -22,6 +22,9 @@
     <DisableZipRelease>True</DisableZipRelease>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="UI\Components\DailyChallenges\DailyChallengeCell.bsml" />
+    <None Remove="UI\Components\Shop\DailyChallengesCell.bsml" />
+    <None Remove="UI\Components\Shop\ShopItemCell.bsml" />
     <None Remove="UI\Resources\containerbg.png" />
     <None Remove="UI\SaberQuest\Crafting\Views\CraftView.bsml" />
     <None Remove="UI\SaberQuest\Shop\Views\ShopView.bsml" />
@@ -124,6 +127,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
+    <EmbeddedResource Include="UI\Components\DailyChallenges\DailyChallengeCell.bsml" />
+    <EmbeddedResource Include="UI\Components\Shop\ShopItemCell.bsml" />
     <EmbeddedResource Include="UI\Resources\containerbg.png" />
     <EmbeddedResource Include="UI\SaberQuest\Crafting\Views\CraftView.bsml">
       <SubType>Code</SubType>
@@ -142,5 +147,8 @@
     <Compile Update="UI\SaberQuest\Crafting\Views\CraftView.cs">
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Components\Crafting\" />
   </ItemGroup>
 </Project>

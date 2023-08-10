@@ -21,7 +21,7 @@ namespace SaberQuest.UI.SaberQuest.Crafting
         {
             if (firstActivation)
             {
-                SetTitle("Shop");
+                SetTitle("Crafting");
                 showBackButton = true;
                 ProvideInitialViewControllers(_shopView);
             }

@@ -1,7 +1,7 @@
 ﻿using HMUI;
 using UnityEngine;
 
-namespace SaberQuest.UI.Components
+namespace SaberQuest.UI.Components.DailyChallenges
 {
     internal class DailyChallengesColorController : MonoBehaviour
     {

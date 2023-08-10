@@ -13,12 +13,7 @@
       <text text="#color#FFFFFFAA" active="false"/>
       <text text='Current Deals' font-size='7' font-align='Center'/>
       <vertical pref-width="95" pad-left="3" pad-right="1">
-        <custom-list id="shopList" contents="shopItems" stick-scrolling="true" pref-height="25" list-height="25" list-direction="Horizontal" cell-size='18' clickable-cells="true" vertical-fit="Unconstrained" >
-          <vertical id="cell" bg="panel-top" pref-height="20" pref-width="16" pad-bottom="2">
-            <text text="~Name" font-align="Center" font-size="3"/>
-            <img src="~ImageUrl" pref-height="10" pref-width="10" preserve-aspect="true"/>
-          </vertical>
-        </custom-list>
+        <list id="shopList" stick-scrolling="true" pref-height="25" list-height="25" list-direction="Horizontal" cell-size='18' clickable-cells="true" vertical-fit="Unconstrained"/>
       </vertical>
       <vertical child-align='MiddleCenter' vertical-fit='PreferredSize' spacing='0'>
         <text text='Special Offer!' font-align='Center' font-size='4.5'/>
