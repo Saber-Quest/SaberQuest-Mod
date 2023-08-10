@@ -4,6 +4,8 @@ using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Utilities;
+using SaberQuest.UI.SaberQuest.Crafting;
+using SaberQuest.UI.SaberQuest.Shop;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,9 +24,10 @@ namespace SaberQuest.UI.SaberQuest.Views
 
         private SaberQuestFlowCoordinator _mainFlow;
         private SaberQuestShopFlowCoordinator _shopFlow;
+        private SaberQuestCraftFlowCoordinator _craftFlow;
 
-        [Inject]
-        private void Construct(SaberQuestShopFlowCoordinator shopFlowCoordinator, SaberQuestFlowCoordinator mainFlowCoordinator)
+		[Inject]
+        private void Construct(SaberQuestFlowCoordinator mainFlowCoordinator, SaberQuestShopFlowCoordinator shopFlowCoordinator)
         {
             _mainFlow = mainFlowCoordinator;
             _shopFlow = shopFlowCoordinator;
@@ -57,5 +60,11 @@ namespace SaberQuest.UI.SaberQuest.Views
         {
             _mainFlow.PresentFlowCoordinator(_shopFlow);
         }
-    }
+
+		[UIAction("present-craft")]
+		private void EnterCraft()
+		{
+			_mainFlow.PresentFlowCoordinator(_craftFlow);
+		}
+	}
 }

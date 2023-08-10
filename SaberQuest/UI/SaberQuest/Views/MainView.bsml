@@ -17,7 +17,7 @@
           </horizontal>
           <vertical pad-left='21' vertical-fit='PreferredSize'>
             <text text='Crafting' font-size='6' font-align='Center'/>
-            <button text='Enter'/>
+            <button text='Enter' on-click='present-craft'/>
           </vertical>
         </vertical>
         <vertical ignore-layout='true' anchor-pos-x='35' pad='7' pad-top='13'>

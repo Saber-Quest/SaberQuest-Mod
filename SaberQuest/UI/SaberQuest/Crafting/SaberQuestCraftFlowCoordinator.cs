@@ -1,17 +1,17 @@
 ﻿using BeatSaberMarkupLanguage;
 using HMUI;
-using SaberQuest.UI.SaberQuest.Shop.Views;
+using SaberQuest.UI.SaberQuest.Crafting.Views;
 using Zenject;
 
-namespace SaberQuest.UI.SaberQuest.Shop
+namespace SaberQuest.UI.SaberQuest.Crafting
 {
-    internal class SaberQuestShopFlowCoordinator : FlowCoordinator
+    internal class SaberQuestCraftFlowCoordinator : FlowCoordinator
     {
-        private ShopView _shopView;
+        private CraftView _shopView;
         private SaberQuestFlowCoordinator _mainFlow;
 
         [Inject]
-        internal void Construct(ShopView shopViewController, SaberQuestFlowCoordinator saberQuestFlowCoordinator)
+        internal void Construct(CraftView shopViewController, SaberQuestFlowCoordinator saberQuestFlowCoordinator)
         {
             _shopView = shopViewController;
             _mainFlow = saberQuestFlowCoordinator;
