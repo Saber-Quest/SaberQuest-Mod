@@ -20,17 +20,17 @@ namespace SaberQuest.Installers
 #else
 			Container.BindInterfacesTo<SaberQuestApiProvider>().AsSingle().NonLazy();
 #endif
-			Container.Bind<CraftView>().FromNewComponentAsViewController().AsSingle().NonLazy();
-			Container.Bind<SaberQuestCraftFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+            Container.Bind<CraftView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+            Container.Bind<SaberQuestCraftFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
-			Container.Bind<ShopView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+            Container.Bind<ShopView>().FromNewComponentAsViewController().AsSingle().NonLazy();
             Container.Bind<SaberQuestShopFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
             Container.Bind<DailyChallengesView>().FromNewComponentAsViewController().AsSingle().NonLazy();
             Container.Bind<MainView>().FromNewComponentAsViewController().AsSingle().NonLazy();
             Container.Bind<SaberQuestFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
-			Container.Bind<SaberQuestWebSocketSubProvider>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+            Container.Bind<SaberQuestWebSocketSubProvider>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
         }
     }
 }

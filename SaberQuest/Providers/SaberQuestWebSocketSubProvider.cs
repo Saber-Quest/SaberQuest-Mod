@@ -17,24 +17,24 @@ namespace SaberQuest.Providers
         public void Start()
         {
             Console.WriteLine("Starting Websicjet");
-			//PacketHandler packetHandler = new PacketHandler();
-			//PacketModel packet = packetHandler.OpenPacket(e.Data);
-			//Console.WriteLine(packet.EventName);
-			//Console.WriteLine(packet.JsonPayLoad);
+            //PacketHandler packetHandler = new PacketHandler();
+            //PacketModel packet = packetHandler.OpenPacket(e.Data);
+            //Console.WriteLine(packet.EventName);
+            //Console.WriteLine(packet.JsonPayLoad);
 
-			var socket = new WebSocket("ws://saberquest.xyz:8080");
+            var socket = new WebSocket("ws://saberquest.xyz:8080");
 
 
-			socket.OnMessage += (sender, e) =>
-			{
-				Console.WriteLine(e.Data);
-				PacketHandler packetHandler = new PacketHandler();
-				PacketModel packet = packetHandler.OpenPacket(e.Data);
-				Console.WriteLine(packet.EventName);
-				Console.WriteLine(packet.JsonPayLoad);
-			};
+            socket.OnMessage += (sender, e) =>
+            {
+                Console.WriteLine(e.Data);
+                PacketHandler packetHandler = new PacketHandler();
+                PacketModel packet = packetHandler.OpenPacket(e.Data);
+                Console.WriteLine(packet.EventName);
+                Console.WriteLine(packet.JsonPayLoad);
+            };
 
-			socket.Connect();
-		}
+            socket.Connect();
+        }
     }
 }

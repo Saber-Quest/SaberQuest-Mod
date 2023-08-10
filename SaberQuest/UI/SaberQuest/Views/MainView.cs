@@ -26,11 +26,12 @@ namespace SaberQuest.UI.SaberQuest.Views
         private SaberQuestShopFlowCoordinator _shopFlow;
         private SaberQuestCraftFlowCoordinator _craftFlow;
 
-		[Inject]
-        private void Construct(SaberQuestFlowCoordinator mainFlowCoordinator, SaberQuestShopFlowCoordinator shopFlowCoordinator)
+        [Inject]
+        private void Construct(SaberQuestFlowCoordinator mainFlowCoordinator, SaberQuestShopFlowCoordinator shopFlowCoordinator, SaberQuestCraftFlowCoordinator craftFlowCoordinator)
         {
             _mainFlow = mainFlowCoordinator;
             _shopFlow = shopFlowCoordinator;
+            _craftFlow = craftFlowCoordinator;
         }
 
         [UIAction("#post-parse")]
@@ -61,10 +62,10 @@ namespace SaberQuest.UI.SaberQuest.Views
             _mainFlow.PresentFlowCoordinator(_shopFlow);
         }
 
-		[UIAction("present-craft")]
-		private void EnterCraft()
-		{
-			_mainFlow.PresentFlowCoordinator(_craftFlow);
-		}
-	}
+        [UIAction("present-craft")]
+        private void EnterCraft()
+        {
+            _mainFlow.PresentFlowCoordinator(_craftFlow);
+        }
+    }
 }
