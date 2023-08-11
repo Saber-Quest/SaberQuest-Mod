@@ -28,7 +28,7 @@ namespace SaberQuest.UI.SaberQuest.Views
 
         //Challenge List
         [UIComponent("challengesList")] private CustomListTableData list = null;
-		private TableView songList => list?.tableView;
+		private TableView challengesList => list?.tableView;
 
 		//Data
 		private List<ChallengeModel> challenges = new List<ChallengeModel>();
@@ -58,7 +58,7 @@ namespace SaberQuest.UI.SaberQuest.Views
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
 
-			songList.SetDataSource(this, false);
+			challengesList.SetDataSource(this, false);
 
 			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
@@ -126,8 +126,8 @@ namespace SaberQuest.UI.SaberQuest.Views
                     return;
                 }
                 challenges = challengeSet.Difficulties;
-                list.tableView.ReloadData();
-                list.tableView.SelectCellWithIdx(0);
+				challengesList.ReloadData();
+				challengesList.SelectCellWithIdx(0);
                 ApplyChallenge(challengeSet.Difficulties[0]);
             });
         }

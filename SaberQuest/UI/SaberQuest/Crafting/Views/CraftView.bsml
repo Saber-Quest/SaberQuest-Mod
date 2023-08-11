@@ -1,7 +1,13 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
 	>
-  <horizontal>
-    
+  <horizontal id='item-parent' size-delta-x='-40'>
+
+  </horizontal>
+  <vertical bg='panel-top' size-delta-y='-45' vertical-fit='Unconstrained' pref-width='120' pad='2' anchor-pos-y='22'>
+    <list visible-cells='1' bg='panel-top' id='craftList' list-direction='Horizontal' pref-width='50'/>
+  </vertical>
+  <horizontal anchor-pos-y='-10'>
+    <text text='+' font-size='40' font-align='Center'/>
   </horizontal>
 </bg>

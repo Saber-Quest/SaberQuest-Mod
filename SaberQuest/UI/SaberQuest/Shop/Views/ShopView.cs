@@ -30,7 +30,7 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
         private ISaberQuestApiProvider _apiProvider;
         private SiraLog _logger;
 
-		//Challenge List
+		//Shop List
 		[UIComponent("shopList")] private CustomListTableData list = null;
 		private TableView shopList => list?.tableView;
 
@@ -112,8 +112,8 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
                     return;
                 }
 				CurrentDeals = deals.Deals;
-                list.tableView.ReloadData();
-                list.tableView.SelectCellWithIdx(0);
+				shopList.ReloadData();
+				shopList.SelectCellWithIdx(0);
             });
         }
 
