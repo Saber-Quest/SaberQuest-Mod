@@ -34,11 +34,11 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
         //Soft Parent Visuals
         [UIObject("item-parent")] private GameObject _itemParent;
 
-		//Shop List
-		[UIComponent("craftList")] private CustomListTableData list = null;
-		private TableView craftList => list?.tableView;
+        //Shop List
+        [UIComponent("craftList")] private CustomListTableData list = null;
+        private TableView craftList => list?.tableView;
 
-		[Inject]
+        [Inject]
         private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
         {
             _apiProvider = apiProvider;
@@ -53,7 +53,7 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 
             craftList.SetDataSource(this, false);
 
-			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
                 if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
                     continue;
@@ -62,47 +62,47 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
                 x.overrideSprite = null;
                 x.SetImage("#RoundRect10BorderFade");
                 x.color = new Color(1f, 1f, 1f, 0.4f);
-			}
+            }
 
-			craftList.ReloadData();
-			craftList.SelectCellWithIdx(0);
+            craftList.ReloadData();
+            craftList.SelectCellWithIdx(0);
 
 
-			GameObject.Destroy(_itemParent.GetComponent<ContentSizeFitter>());
-			GameObject.Destroy(_itemParent.GetComponent<LayoutElement>());
-			GameObject.Destroy(_itemParent.GetComponent<HorizontalLayoutGroup>());
+            GameObject.Destroy(_itemParent.GetComponent<ContentSizeFitter>());
+            GameObject.Destroy(_itemParent.GetComponent<LayoutElement>());
+            GameObject.Destroy(_itemParent.GetComponent<HorizontalLayoutGroup>());
 
             var content = list.transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
             var grid = content.AddComponent<GridLayoutGroup>();
 
             grid.cellSize = new Vector2(15f, 15f);
             grid.spacing = new Vector2(1f, 1f);
-			grid.constraint = GridLayoutGroup.Constraint.FixedRowCount;
+            grid.constraint = GridLayoutGroup.Constraint.FixedRowCount;
             grid.constraintCount = 2;
             grid.startAxis = GridLayoutGroup.Axis.Vertical;
 
             _itemParent.AddComponent<RectMask2D>();
 
-			IVRPlatformHelper platformHelper = null;
-			foreach (var x in Resources.FindObjectsOfTypeAll<ScrollView>())
-			{
-				platformHelper = ReflectionUtil.GetField<IVRPlatformHelper, ScrollView>(x, "_platformHelper");
-				if (platformHelper != null)
-					break;
-			}
-			foreach (var x in GetComponentsInChildren<ScrollView>()) ReflectionUtil.SetField(x, "_platformHelper", platformHelper);
-		}
+            IVRPlatformHelper platformHelper = null;
+            foreach (var x in Resources.FindObjectsOfTypeAll<ScrollView>())
+            {
+                platformHelper = ReflectionUtil.GetField<IVRPlatformHelper, ScrollView>(x, "_platformHelper");
+                if (platformHelper != null)
+                    break;
+            }
+            foreach (var x in GetComponentsInChildren<ScrollView>()) ReflectionUtil.SetField(x, "_platformHelper", platformHelper);
+        }
 
         public float CellSize() => 1f;
 
         public int NumberOfCells() => 50;
 
-		public TableCell CellForIdx(TableView tableView, int idx)
-		{
+        public TableCell CellForIdx(TableView tableView, int idx)
+        {
             var visuals = CraftingCellSoftParentVisuals.GetVisualCell(_itemParent.transform);
             var cell = CraftItemListTableData.GetCell(tableView).PopulateWithItemData(null, visuals, _itemParent.transform);
             visuals.SetCell(cell);
             return cell;
-		}
-	}
+        }
+    }
 }

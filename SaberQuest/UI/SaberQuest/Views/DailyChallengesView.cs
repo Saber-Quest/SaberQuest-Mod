@@ -21,23 +21,23 @@ namespace SaberQuest.UI.SaberQuest.Views
     [HotReload(RelativePathToLayout = @"DailyChallengesView.bsml")]
     [ViewDefinition("SaberQuest.UI.SaberQuest.Views.DailyChallengesView.bsml")]
     internal class DailyChallengesView : BSMLAutomaticViewController, TableView.IDataSource
-	{
+    {
         //Dependencies
         private ISaberQuestApiProvider _apiProvider;
         private SiraLog _logger;
 
         //Challenge List
         [UIComponent("challengesList")] private CustomListTableData list = null;
-		private TableView challengesList => list?.tableView;
+        private TableView challengesList => list?.tableView;
 
-		//Data
-		private List<ChallengeModel> challenges = new List<ChallengeModel>();
-		private ChallengeSetModel _selectedChallengeSet;
-		private ChallengeModel _selectedChallenge;
+        //Data
+        private List<ChallengeModel> challenges = new List<ChallengeModel>();
+        private ChallengeSetModel _selectedChallengeSet;
+        private ChallengeModel _selectedChallenge;
 
-		//Right Side
-		private DailyChallengesColorController _colorController;
-		[UIObject("difficultyText")] private GameObject _difficultyText;
+        //Right Side
+        private DailyChallengesColorController _colorController;
+        [UIObject("difficultyText")] private GameObject _difficultyText;
         [UIObject("challengeContainer")] private GameObject _challengeContainer;
         [UIObject("descText")] private GameObject _descText;
         [UIObject("valueText")] private GameObject _valueText;
@@ -58,9 +58,9 @@ namespace SaberQuest.UI.SaberQuest.Views
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
 
-			challengesList.SetDataSource(this, false);
+            challengesList.SetDataSource(this, false);
 
-			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
                 if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
                     continue;
@@ -126,8 +126,8 @@ namespace SaberQuest.UI.SaberQuest.Views
                     return;
                 }
                 challenges = challengeSet.Difficulties;
-				challengesList.ReloadData();
-				challengesList.SelectCellWithIdx(0);
+                challengesList.ReloadData();
+                challengesList.SelectCellWithIdx(0);
                 ApplyChallenge(challengeSet.Difficulties[0]);
             });
         }
@@ -136,6 +136,6 @@ namespace SaberQuest.UI.SaberQuest.Views
 
         public int NumberOfCells() => challenges.Count;
 
-		public TableCell CellForIdx(TableView tableView, int idx) => DailyChallengesListTableData.GetCell(tableView).PopulateWithChallengeData(challenges[idx], _selectedChallengeSet);
-	}
+        public TableCell CellForIdx(TableView tableView, int idx) => DailyChallengesListTableData.GetCell(tableView).PopulateWithChallengeData(challenges[idx], _selectedChallengeSet);
+    }
 }

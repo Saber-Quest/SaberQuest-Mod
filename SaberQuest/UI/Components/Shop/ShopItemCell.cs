@@ -14,77 +14,77 @@ using UnityEngine;
 
 namespace SaberQuest.UI.Components.Shop
 {
-	static class ShopItemListTableData
-	{
-		const string ReuseIdentifier = "REUSEShopItemListTableCell";
+    static class ShopItemListTableData
+    {
+        const string ReuseIdentifier = "REUSEShopItemListTableCell";
 
-		public static ShopItemListTableCell GetCell(TableView tableView)
-		{
-			var tableCell = tableView.DequeueReusableCellForIdentifier(ReuseIdentifier);
+        public static ShopItemListTableCell GetCell(TableView tableView)
+        {
+            var tableCell = tableView.DequeueReusableCellForIdentifier(ReuseIdentifier);
 
-			if (tableCell == null)
-			{
-				tableCell = new GameObject("ShopItemListTableCell", typeof(Touchable)).AddComponent<ShopItemListTableCell>();
-				tableCell.interactable = true;
+            if (tableCell == null)
+            {
+                tableCell = new GameObject("ShopItemListTableCell", typeof(Touchable)).AddComponent<ShopItemListTableCell>();
+                tableCell.interactable = true;
 
-				tableCell.reuseIdentifier = ReuseIdentifier;
-				BSMLParser.instance.Parse(
-					Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Shop.ShopItemCell.bsml"),
-					tableCell.gameObject, tableCell
-				);
-			}
+                tableCell.reuseIdentifier = ReuseIdentifier;
+                BSMLParser.instance.Parse(
+                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Shop.ShopItemCell.bsml"),
+                    tableCell.gameObject, tableCell
+                );
+            }
 
-			return (ShopItemListTableCell)tableCell;
-		}
-	}
+            return (ShopItemListTableCell)tableCell;
+        }
+    }
 
-	class ShopItemListTableCell : TableCell
-	{
-		internal DealModel _dealModel;
+    class ShopItemListTableCell : TableCell
+    {
+        internal DealModel _dealModel;
 
-		[UIObject("cell")] private readonly GameObject cell;
-		[UIComponent("image")] readonly ImageView image = null;
-		[UIComponent("name-text")] readonly TextMeshProUGUI nameText = null;
+        [UIObject("cell")] private readonly GameObject cell;
+        [UIComponent("image")] readonly ImageView image = null;
+        [UIComponent("name-text")] readonly TextMeshProUGUI nameText = null;
 
-		private ImageView bg;
+        private ImageView bg;
 
-		[UIAction("#post-parse")]
-		void Parsed()
-		{
-			foreach (var x in cell.GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
-			{
-				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
-					continue;
+        [UIAction("#post-parse")]
+        void Parsed()
+        {
+            foreach (var x in cell.GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+            {
+                if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
+                    continue;
 
-				x.SetField("_skew", 0f);
-				x.overrideSprite = null;
-				x.SetImage("#RoundRect10BorderFade");
-				x.color = new Color(0.25f, 0.25f, 1f, 0.4f);
-				bg = x;
-			}
-		}
+                x.SetField("_skew", 0f);
+                x.overrideSprite = null;
+                x.SetImage("#RoundRect10BorderFade");
+                x.color = new Color(0.25f, 0.25f, 1f, 0.4f);
+                bg = x;
+            }
+        }
 
-		public ShopItemListTableCell PopulateWithShopItemData(DealModel deal)
-		{
-			_dealModel = deal;
+        public ShopItemListTableCell PopulateWithShopItemData(DealModel deal)
+        {
+            _dealModel = deal;
 
-			if (!UIConsts.RarityColors.TryGetValue(_dealModel.Rarity, out Color defaultColor))
-			{
-				defaultColor = UIConsts.RarityColors["Common"];
-			}
+            if (!UIConsts.RarityColors.TryGetValue(_dealModel.Rarity, out Color defaultColor))
+            {
+                defaultColor = UIConsts.RarityColors["Common"];
+            }
 
-			if (cell.GetComponent<CellBehaviour>() == null)
-			{
-				var behaviour = cell.AddComponent<CellBehaviour>();
-				behaviour.enabled = false;
-				behaviour.Construct(this, bg, new Color(0.8f, 0.3f, 1f), defaultColor * 1.2f, defaultColor, true, ImageView.GradientDirection.Vertical);
-				behaviour.enabled = true;
-			}
+            if (cell.GetComponent<CellBehaviour>() == null)
+            {
+                var behaviour = cell.AddComponent<CellBehaviour>();
+                behaviour.enabled = false;
+                behaviour.Construct(this, bg, new Color(0.8f, 0.3f, 1f), defaultColor * 1.2f, defaultColor, true, ImageView.GradientDirection.Vertical);
+                behaviour.enabled = true;
+            }
 
-			image.SetImage(_dealModel.ImageURL);
-			nameText.text = _dealModel.Name;
+            image.SetImage(_dealModel.ImageURL);
+            nameText.text = _dealModel.Name;
 
-			return this;
-		}
-	}
+            return this;
+        }
+    }
 }

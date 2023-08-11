@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaberQuest.UI.Components.Crafting
 {
-	internal class CellManager
-	{
-	}
+    internal class CellManager
+    {
+    }
 }

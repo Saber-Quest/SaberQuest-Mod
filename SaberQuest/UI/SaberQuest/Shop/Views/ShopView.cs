@@ -30,12 +30,12 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
         private ISaberQuestApiProvider _apiProvider;
         private SiraLog _logger;
 
-		//Shop List
-		[UIComponent("shopList")] private CustomListTableData list = null;
-		private TableView shopList => list?.tableView;
+        //Shop List
+        [UIComponent("shopList")] private CustomListTableData list = null;
+        private TableView shopList => list?.tableView;
 
-		//Data
-		private List<DealModel> CurrentDeals = new List<DealModel>();
+        //Data
+        private List<DealModel> CurrentDeals = new List<DealModel>();
         private DealModel _selectedDeal;
 
         [Inject]
@@ -51,9 +51,9 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
 
-			shopList.SetDataSource(this, false);
+            shopList.SetDataSource(this, false);
 
-			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
                 if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10" || x.transform.childCount < 1)
                     continue;
@@ -111,9 +111,9 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
                     _logger.Error("No Shop Items Found... Do you need to update?");
                     return;
                 }
-				CurrentDeals = deals.Deals;
-				shopList.ReloadData();
-				shopList.SelectCellWithIdx(0);
+                CurrentDeals = deals.Deals;
+                shopList.ReloadData();
+                shopList.SelectCellWithIdx(0);
             });
         }
 
@@ -122,5 +122,5 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
         public int NumberOfCells() => CurrentDeals.Count;
 
         public TableCell CellForIdx(TableView tableView, int idx) => ShopItemListTableData.GetCell(tableView).PopulateWithShopItemData(CurrentDeals[idx]);
-	}
+    }
 }
