@@ -1,7 +1,7 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
 	>
-  <vertical vertical-fit='PreferredSize' spacing='3'>
+  <vertical vertical-fit='PreferredSize' spacing='1'>
     <horizontal pad-left='65'>
       <horizontal bg='panel-top' pref-width='25' pref-height='9' vertical-fit='PreferredSize' child-align='MiddleCenter' spacing='1' pad='1' pad-right='3' hover-hint='Quest Points allow you to purchase things through the shop or special offers. They can be gained by completing challenges or from events.'>
         <text text="#color#FFFFFFCC" active="false"/>
@@ -9,8 +9,11 @@
         <text text='QP: 45' font-align='Left'/>
       </horizontal>
     </horizontal>
-    <vertical bg='panel-top' pref-height='60' pref-width='95' >
+    <vertical bg='panel-top' pref-height='60' pref-width='95'>
       <text text="#color#FFFFFFAA" active="false"/>
+      <horizontal ignore-layout="true" anchor-pos-x="34" anchor-pos-y="24.5">
+        <action-button text="purchase" font-size="4" click-event="show-purchase-modal"/>
+      </horizontal>
       <text text='Current Deals' font-size='7' font-align='Center'/>
       <vertical pref-width="95" pad-left="3" pad-right="1">
         <list id="shopList" stick-scrolling="true" pref-height="25" list-height="25" list-direction="Horizontal" cell-size='18' clickable-cells="true" vertical-fit="Unconstrained"/>
@@ -22,4 +25,19 @@
       </vertical>
     </vertical>
   </vertical>
+  <modal show-event='show-purchase-modal' hide-event='close-purchase-modal' size-delta-x='80' size-delta-y='40' clickerino-offerino-closerino='true'>
+    <vertical pad-top='2'>
+      <text text='Do you really want to purchase &lt;color=#FF5555&gt;Red Slider &lt;color=#FFFFFF&gt;for &lt;color=#FFFF88&gt;15 QP?'/>
+      <horizontal vertical-fit='PreferredSize' spacing='10'>
+        <button text="Yes" font-size="4" pref-width="15" click-event="show-purchasing-modal"/>
+        <action-button text="No" font-size="4" pref-width="20" click-event="close-purchase-modal"/>
+      </horizontal>
+    </vertical>
+  </modal>
+  <modal show-event='show-purchasing-modal' hide-event='close-purchasing-modal' size-delta-x='60' size-delta-y='45' clickerino-offerino-closerino='true'>
+    <vertical pad-top='2'>
+      <text text='PURCHASING...' font-size='8'/>
+      <loading size-delta-x='10' size-dela-y='10'/>
+    </vertical>
+  </modal>
 </bg>
