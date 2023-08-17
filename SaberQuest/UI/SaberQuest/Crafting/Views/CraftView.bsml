@@ -1,13 +1,19 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
 	>
-  <horizontal id='item-parent' pref-width='70' pref-height='80' anchor-pos-x='-45'>
+  <horizontal id='item-parent' pref-width='70' pref-height='80' anchor-pos-x='-45' size-delta-x='100'>
 
   </horizontal>
   <vertical bg='panel-top' vertical-fit='Unconstrained' pref-width='85' pad='2' anchor-pos-x='-40'>
-    <list bg='panel-top' id='craft-list' list-direction='Vertical' pref-width='55'/>
+    <list bg='panel-top' id='craft-list' list-direction='Vertical' pref-width='55' selectable-cells='true'/>
   </vertical>
-  <horizontal anchor-pos-y='-5' anchor-pos-x='35'>
+  <vertical anchor-pos-y='-5' anchor-pos-x='35'>
+    <div id='first-slot'>
+
+    </div>
     <text text='+' font-size='40' font-align='Center'/>
-  </horizontal>
+    <div id='second-slot'>
+
+    </div>
+  </vertical>
 </bg>

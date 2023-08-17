@@ -21,6 +21,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VRUIControls;
 using Zenject;
 
 namespace SaberQuest.UI.SaberQuest.Crafting.Views
@@ -40,7 +41,12 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
         [UIComponent("craft-list")] private CustomListTableData list = null;
         private TableView craftList => list?.tableView;
 
-        [Inject]
+		//Crafting
+		[UIObject("first-slot")] private GameObject _firstSlot;
+		[UIObject("second-slot")] private GameObject _secondSlot;
+
+
+		[Inject]
         private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
         {
             _apiProvider = apiProvider;
@@ -82,6 +88,11 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
                     break;
             }
             foreach (var x in GetComponentsInChildren<ScrollView>()) ReflectionUtil.SetField(x, "_platformHelper", platformHelper);
+
+            craftList.transform.parent.parent.gameObject.GetComponent<ImageView>().raycastTarget = false;
+
+            _itemParent.transform.SetParent(craftList.transform, false);
+
         }
 
         public float CellSize() => 32f;

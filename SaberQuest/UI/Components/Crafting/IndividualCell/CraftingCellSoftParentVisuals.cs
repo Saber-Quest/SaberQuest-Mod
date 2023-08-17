@@ -19,7 +19,10 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
         private Selectable selectable;
 
-        internal static CraftingCellSoftParentVisuals GetVisualCell(Transform itemsParent)
+        private Color normal = Color.white.ColorWithAlpha(0.4f);
+        private Color highlight = new Color(0.25f, 0.4f, 0.5f).ColorWithAlpha(1.0f);
+
+		internal static CraftingCellSoftParentVisuals GetVisualCell(Transform itemsParent)
         {
             var cell = new GameObject("CraftingCellSoftParentVisuals");
             cell.transform.SetParent(itemsParent, false);
@@ -44,9 +47,10 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
 
-            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
-            {
-                if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
+			var images = GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>());
+			foreach (var x in images)
+			{
+				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
                     continue;
 
                 x._skew = 0f;
@@ -55,8 +59,17 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
                 x.color = new Color(1f, 1f, 1f, 0.4f);
                 bg = x;
             }
+			foreach (var x in images)
+			{
+				if ((x != null) && x.sprite.name == "RoundRect10")
+				{
+					x.color0 = new Color(0.5f, 0.25f, 1f);
+					x.color1 = new Color(0.23f, 0f, 0.58f);
+				}
+                x._skew = 0f;
+			}
 
-            selectable = gameObject.AddComponent<Selectable>();
+			selectable = gameObject.AddComponent<Selectable>();
             selectable.targetGraphic = bg;
         }
 
@@ -70,11 +83,35 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
             if (_linkedCell != null && _linkedCell.targetObject != null)
             {
                 var target = _overrideObject ? _overrideObject : _linkedCell.targetObject;
-                transform.position = _linkedCell.crafting ? Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * 7f) : new Vector3(Mathf.Lerp(transform.position.x, target.transform.position.x, Time.deltaTime * 7f), target.transform.position.y, target.transform.position.z);
+				float lerpValue = Time.deltaTime * 7f;
+				Vector3 targetPosition = target.transform.position;
+
+                //Plane position
+				if (_linkedCell.crafting)
+				{
+					transform.position = Vector3.Lerp(transform.position, targetPosition, lerpValue);
+				}
+				else
+				{
+					transform.position = new Vector3(
+						Mathf.Lerp(transform.position.x, targetPosition.x, lerpValue),
+						targetPosition.y,
+						transform.position.z);
+				}
+                //Z offset
+				float targetZ = selectable.isPointerInside && !_linkedCell.crafting ? targetPosition.z - 0.08f : targetPosition.z;
+				var position = transform.position;
+                position.z = Mathf.Lerp(position.z, targetZ, lerpValue);
+                transform.position = position;
+
+                //Look Rotation
+                var camera = Camera.current;
+                var x = Quaternion.LookRotation(transform.position - camera.transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, selectable.isPointerInside ? x : Quaternion.identity, lerpValue);
             }
             if (bg != null && selectable != null)
             {
-                bg.color = Color.Lerp(bg.color, selectable.isPointerInside ? Color.red : Color.white.ColorWithAlpha(0.4f), Time.deltaTime * 6f);
+                bg.color = Color.Lerp(bg.color, selectable.isPointerInside ? highlight : normal, Time.deltaTime * 6f);
             }
         }
 
