@@ -5,11 +5,13 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Config.Data;
 using IPA.Utilities;
+using SaberQuest.Models.SaberQuest.API.Data;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Providers.ApiProvider;
 using SaberQuest.UI.Components;
-using SaberQuest.UI.Components.Crafting;
+using SaberQuest.UI.Components.Crafting.GroupCell;
+using SaberQuest.UI.Components.Crafting.IndividualCell;
 using SaberQuest.Utils;
 using SiraUtil.Logging;
 using System;
@@ -35,7 +37,7 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
         [UIObject("item-parent")] private GameObject _itemParent;
 
         //Shop List
-        [UIComponent("craftList")] private CustomListTableData list = null;
+        [UIComponent("craft-list")] private CustomListTableData list = null;
         private TableView craftList => list?.tableView;
 
         [Inject]
@@ -63,27 +65,16 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
                 x.SetImage("#RoundRect10BorderFade");
                 x.color = new Color(1f, 1f, 1f, 0.4f);
             }
+			Destroy(_itemParent.GetComponent<HorizontalLayoutGroup>());
 
-            craftList.ReloadData();
+			craftList.ReloadData();
             craftList.SelectCellWithIdx(0);
 
+            var mask = _itemParent.AddComponent<RectMask2D>();
 
-            GameObject.Destroy(_itemParent.GetComponent<ContentSizeFitter>());
-            GameObject.Destroy(_itemParent.GetComponent<LayoutElement>());
-            GameObject.Destroy(_itemParent.GetComponent<HorizontalLayoutGroup>());
+            mask.padding = new Vector4(0f, 2f, 0f, 2f);
 
-            var content = list.transform.GetChild(0).GetChild(0).GetChild(0).gameObject;
-            var grid = content.AddComponent<GridLayoutGroup>();
-
-            grid.cellSize = new Vector2(15f, 15f);
-            grid.spacing = new Vector2(1f, 1f);
-            grid.constraint = GridLayoutGroup.Constraint.FixedRowCount;
-            grid.constraintCount = 2;
-            grid.startAxis = GridLayoutGroup.Axis.Vertical;
-
-            _itemParent.AddComponent<RectMask2D>();
-
-            IVRPlatformHelper platformHelper = null;
+			IVRPlatformHelper platformHelper = null;
             foreach (var x in Resources.FindObjectsOfTypeAll<ScrollView>())
             {
                 platformHelper = ReflectionUtil.GetField<IVRPlatformHelper, ScrollView>(x, "_platformHelper");
@@ -93,16 +84,10 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
             foreach (var x in GetComponentsInChildren<ScrollView>()) ReflectionUtil.SetField(x, "_platformHelper", platformHelper);
         }
 
-        public float CellSize() => 1f;
+        public float CellSize() => 32f;
 
-        public int NumberOfCells() => 50;
+        public int NumberOfCells() => 10;
 
-        public TableCell CellForIdx(TableView tableView, int idx)
-        {
-            var visuals = CraftingCellSoftParentVisuals.GetVisualCell(_itemParent.transform);
-            var cell = CraftItemListTableData.GetCell(tableView).PopulateWithItemData(null, visuals, _itemParent.transform);
-            visuals.SetCell(cell);
-            return cell;
-        }
-    }
+        public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(tableView, new List<ItemModel>(4) { null, null, null, null }, _itemParent.transform);
+	}
 }

@@ -1,0 +1,6 @@
+﻿<vertical bg='panel-top' pref-width='19' pref-height='30' vertical-fit='PreferredSize'>
+  <vertical pad-top='1' horizontal-fit='Unconstrained'>
+    <text text='Red Note Pieces' font-align='Center' word-wrapping='true'/>
+    <image src='https://saberquest.xyz/images/red_cube_pieces_icon.png' preserver-aspect='true' pref-width='19' pref-height='19' min-height='19' min-width='19'/>
+  </vertical>
+</vertical>

@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="UI\Components\Crafting\CraftingCell.bsml" />
+    <None Remove="UI\Components\Crafting\GroupCell\CraftingGroupCell.bsml" />
     <None Remove="UI\Components\DailyChallenges\DailyChallengeCell.bsml" />
     <None Remove="UI\Components\Shop\DailyChallengesCell.bsml" />
     <None Remove="UI\Components\Shop\ShopItemCell.bsml" />
@@ -128,7 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />
-    <EmbeddedResource Include="UI\Components\Crafting\CraftingCell.bsml" />
+    <EmbeddedResource Include="UI\Components\Crafting\GroupCell\CraftingGroupCell.bsml">
+      <SubType>Code</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Components\Crafting\IndividualCell\CraftingCell.bsml" />
     <EmbeddedResource Include="UI\Components\DailyChallenges\DailyChallengeCell.bsml" />
     <EmbeddedResource Include="UI\Components\Shop\ShopItemCell.bsml" />
     <EmbeddedResource Include="UI\Resources\containerbg.png" />

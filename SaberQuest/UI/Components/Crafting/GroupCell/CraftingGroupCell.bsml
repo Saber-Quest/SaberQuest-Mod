@@ -1,0 +1,6 @@
+﻿<horizontal pref-width='80' pref-height='30' id ='cell' spacing='1'>
+  <macro.for-each hosts='cells'>
+    <horizontal id='cell' pref-width='19' pref-height='30'>
+    </horizontal>
+  </macro.for-each>
+</horizontal>

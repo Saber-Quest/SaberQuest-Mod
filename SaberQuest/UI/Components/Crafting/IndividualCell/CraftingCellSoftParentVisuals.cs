@@ -8,11 +8,11 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SaberQuest.UI.Components.Crafting
+namespace SaberQuest.UI.Components.Crafting.IndividualCell
 {
     internal class CraftingCellSoftParentVisuals : MonoBehaviour
     {
-        private CraftItemListTableCell _linkedCell;
+        private CraftItemCell _linkedCell;
         private GameObject _overrideObject;
 
         private ImageView bg;
@@ -25,8 +25,14 @@ namespace SaberQuest.UI.Components.Crafting
             cell.transform.SetParent(itemsParent, false);
             var visuals = cell.AddComponent<CraftingCellSoftParentVisuals>();
 
-            BSMLParser.instance.Parse(
-                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.CraftingCell.bsml"),
+            var layout = cell.AddComponent<LayoutElement>();
+            layout.preferredWidth = 19f;
+            layout.preferredHeight = 30f;
+
+            (cell.transform as RectTransform).sizeDelta = new Vector2(19f, 30f);
+
+			BSMLParser.instance.Parse(
+                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.IndividualCell.CraftingCell.bsml"),
                     cell, visuals);
 
             return visuals;
@@ -50,28 +56,35 @@ namespace SaberQuest.UI.Components.Crafting
                 bg = x;
             }
 
-            (transform as RectTransform).sizeDelta = new Vector2(15f, 15f);
-
             selectable = gameObject.AddComponent<Selectable>();
             selectable.targetGraphic = bg;
         }
 
-        internal void SetCell(CraftItemListTableCell cell)
+        internal void SetCell(CraftItemCell cell)
         {
             _linkedCell = cell;
         }
 
         private void Update()
         {
-            if (_linkedCell != null)
+            if (_linkedCell != null && _linkedCell.targetObject != null)
             {
-                var target = _overrideObject ? _overrideObject : _linkedCell.gameObject;
-                transform.position = Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * 7f);
+                var target = _overrideObject ? _overrideObject : _linkedCell.targetObject;
+                transform.position = _linkedCell.crafting ? Vector3.Lerp(transform.position, target.transform.position, Time.deltaTime * 7f) : new Vector3(Mathf.Lerp(transform.position.x, target.transform.position.x, Time.deltaTime * 7f), target.transform.position.y, target.transform.position.z);
             }
             if (bg != null && selectable != null)
             {
                 bg.color = Color.Lerp(bg.color, selectable.isPointerInside ? Color.red : Color.white.ColorWithAlpha(0.4f), Time.deltaTime * 6f);
             }
         }
+
+        private void OnEnable()
+        {
+            if (_linkedCell != null && _linkedCell.targetObject != null)
+            {
+                var target = _overrideObject ? _overrideObject : _linkedCell.targetObject;
+                transform.position = target.transform.position;
+            }
+		}
     }
 }

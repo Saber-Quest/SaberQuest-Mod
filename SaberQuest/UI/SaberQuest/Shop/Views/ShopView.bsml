@@ -29,15 +29,15 @@
     <vertical pad-top='2'>
       <text text='Do you really want to purchase &lt;color=#FF5555&gt;Red Slider &lt;color=#FFFFFF&gt;for &lt;color=#FFFF88&gt;15 QP?'/>
       <horizontal vertical-fit='PreferredSize' spacing='10'>
-        <button text="Yes" font-size="4" pref-width="15" click-event="show-purchasing-modal"/>
+        <button text="Yes" font-size="4" pref-width="15" click-event="show-purchasing-modal,close-purchase-modal"/>
         <action-button text="No" font-size="4" pref-width="20" click-event="close-purchase-modal"/>
       </horizontal>
     </vertical>
   </modal>
-  <modal show-event='show-purchasing-modal' hide-event='close-purchasing-modal' size-delta-x='60' size-delta-y='45' clickerino-offerino-closerino='true'>
-    <vertical pad-top='2'>
+  <modal show-event='show-purchasing-modal' hide-event='close-purchasing-modal' size-delta-x='60' size-delta-y='45'>
+    <vertical pad-top='2' pad-bottom='8'>
       <text text='PURCHASING...' font-size='8'/>
-      <loading size-delta-x='10' size-dela-y='10'/>
+      <loading pref-width='25' pref-height='25' preserve-aspect='true'/>
     </vertical>
   </modal>
 </bg>
