@@ -13,11 +13,14 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
     internal class CraftingCellSoftParentVisuals : MonoBehaviour
     {
         private CraftItemCell _linkedCell;
-        private GameObject _overrideObject;
 
-        private ImageView bg;
+        internal GameObject overrideObject;
 
-        private Selectable selectable;
+        internal CellManager cellManager;
+
+		private ImageView bg;
+
+        private NoTransitionsButton button;
 
         private Color normal = Color.white.ColorWithAlpha(0.4f);
         private Color highlight = new Color(0.25f, 0.4f, 0.5f).ColorWithAlpha(1.0f);
@@ -66,11 +69,11 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 					x.color0 = new Color(0.5f, 0.25f, 1f);
 					x.color1 = new Color(0.23f, 0f, 0.58f);
 				}
-                x._skew = 0f;
 			}
 
-			selectable = gameObject.AddComponent<Selectable>();
-            selectable.targetGraphic = bg;
+			button = gameObject.AddComponent<NoTransitionsButton>();
+			button.targetGraphic = bg;
+            button.onClick.AddListener(OnClick);
         }
 
         internal void SetCell(CraftItemCell cell)
@@ -78,11 +81,24 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
             _linkedCell = cell;
         }
 
+        private void OnDestroy()
+        {
+			button.onClick.RemoveListener(OnClick);
+		}
+
+        private void OnClick()
+        {
+            if(cellManager != null)
+            {
+                cellManager.CellClicked(_linkedCell);
+			}
+        }
+
         private void Update()
         {
             if (_linkedCell != null && _linkedCell.targetObject != null)
             {
-                var target = _overrideObject ? _overrideObject : _linkedCell.targetObject;
+                var target = overrideObject ? overrideObject : _linkedCell.targetObject;
 				float lerpValue = Time.deltaTime * 7f;
 				Vector3 targetPosition = target.transform.position;
 
@@ -99,7 +115,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 						transform.position.z);
 				}
                 //Z offset
-				float targetZ = selectable.isPointerInside && !_linkedCell.crafting ? targetPosition.z - 0.08f : targetPosition.z;
+				float targetZ = button.isPointerInside && !_linkedCell.crafting ? targetPosition.z - 0.08f : targetPosition.z;
 				var position = transform.position;
                 position.z = Mathf.Lerp(position.z, targetZ, lerpValue);
                 transform.position = position;
@@ -107,11 +123,11 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
                 //Look Rotation
                 var camera = Camera.current;
                 var x = Quaternion.LookRotation(transform.position - camera.transform.position);
-                transform.rotation = Quaternion.Slerp(transform.rotation, selectable.isPointerInside ? x : Quaternion.identity, lerpValue);
+                transform.rotation = Quaternion.Slerp(transform.rotation, button.isPointerInside ? x : Quaternion.identity, lerpValue);
             }
-            if (bg != null && selectable != null)
+            if (bg != null && button != null)
             {
-                bg.color = Color.Lerp(bg.color, selectable.isPointerInside ? highlight : normal, Time.deltaTime * 6f);
+                bg.color = Color.Lerp(bg.color, button.isPointerInside ? highlight : normal, Time.deltaTime * 6f);
             }
         }
 
@@ -119,7 +135,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
         {
             if (_linkedCell != null && _linkedCell.targetObject != null)
             {
-                var target = _overrideObject ? _overrideObject : _linkedCell.targetObject;
+                var target = overrideObject ? overrideObject : _linkedCell.targetObject;
                 transform.position = target.transform.position;
             }
 		}

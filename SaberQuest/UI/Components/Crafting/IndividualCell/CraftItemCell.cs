@@ -18,9 +18,10 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
     class CraftItemCell
     {
         //For the sole purpose of creating a new visual object when a reused cell is enabled
-        internal Transform _itemParent;
-        internal ItemModel _itemModel;
-        internal CraftingCellSoftParentVisuals _linkedVisuals;
+        private Transform _itemParent;
+		private ItemModel _itemModel;
+
+        internal CraftingCellSoftParentVisuals linkedVisuals;
 
         internal bool crafting;
 
@@ -29,7 +30,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
         public CraftItemCell PopulateWithItemData(ItemModel item, CraftingCellSoftParentVisuals visuals, Transform itemParent)
         {
             _itemModel = item;
-            _linkedVisuals = visuals;
+            linkedVisuals = visuals;
             _itemParent = itemParent;
             return this;
         }
@@ -38,7 +39,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
         void Parsed()
         {
             var updater = targetObject.AddComponent<CraftItemCellUpdater>();
-			updater.LinkedVisuals = _linkedVisuals;
+			updater.LinkedVisuals = linkedVisuals;
 		}
     }
 }

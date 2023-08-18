@@ -10,6 +10,7 @@ using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Providers.ApiProvider;
 using SaberQuest.UI.Components;
+using SaberQuest.UI.Components.Crafting;
 using SaberQuest.UI.Components.Crafting.GroupCell;
 using SaberQuest.UI.Components.Crafting.IndividualCell;
 using SaberQuest.Utils;
@@ -44,6 +45,7 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 		//Crafting
 		[UIObject("first-slot")] private GameObject _firstSlot;
 		[UIObject("second-slot")] private GameObject _secondSlot;
+        private CellManager cellManager;
 
 
 		[Inject]
@@ -59,7 +61,11 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
 
-            craftList.SetDataSource(this, false);
+            cellManager = gameObject.AddComponent<CellManager>();
+            cellManager.firstSlot = _firstSlot;
+            cellManager.secondSlot = _secondSlot;
+
+			craftList.SetDataSource(this, false);
 
             foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
@@ -99,6 +105,6 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 
         public int NumberOfCells() => 10;
 
-        public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(tableView, new List<ItemModel>(4) { null, null, null, null }, _itemParent.transform);
+        public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(idx, tableView, new List<ItemModel>(4) { null, null, null, null }, _itemParent.transform, cellManager);
 	}
 }
