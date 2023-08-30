@@ -19,15 +19,9 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 
 		public static CraftItemGroupListTableCell GetCell(int idx, TableView tableView, List<ItemModel> items, Transform itemParent, CellManager manager)
 		{
-			var tableCell = tableView.DequeueReusableCellForIdentifier(ReuseIdentifier);
+			var tableCell = DequeueReusableCellForIdentifierWCheck(tableView, ReuseIdentifier);
 
-			bool pickReuse;
-			if(tableCell != null)
-			{
-				Console.WriteLine(idx + " - " + tableCell.idx);
-
-			}
-			if (tableCell == null || ((tableCell as CraftItemGroupListTableCell).cells.Any(x=>x.crafting) && tableCell.idx != idx)) //gross check I know
+			if (tableCell == null) //gross check I know
 			{
 				tableCell = new GameObject("CraftItemGroupListTableCell", typeof(Touchable)).AddComponent<CraftItemGroupListTableCell>();
 
@@ -40,8 +34,25 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 					tableCell.gameObject, tableCell
 				);
 			}
+			else
+			{
+				(tableCell as CraftItemGroupListTableCell).PopulateWithItems(items, itemParent, manager);
+			}
 
 			return (CraftItemGroupListTableCell)tableCell;
+		}
+
+		public static TableCell DequeueReusableCellForIdentifierWCheck(TableView view, string identifier)
+		{
+			TableCell tableCell = null;
+			List<TableCell> list;
+			if (view._reusableCells.TryGetValue(identifier, out list) && list.Count > 0)
+			{
+				var cells = list.Where(x => !(x as CraftItemGroupListTableCell).cells.Any(x=>x.itemModel.usedInCrafting));
+				tableCell = list[0];
+				list.RemoveAt(0);
+			}
+			return tableCell;
 		}
 	}
 
@@ -50,23 +61,61 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 		private Transform _itemParent;
 		private List<ItemModel> _items;
 
-		[UIValue("cells")] internal List<CraftItemCell> cells = new List<CraftItemCell>();
-
-		[UIObject("cell")] private readonly GameObject cell;
+		[UIValue("cells")] internal List<CraftItemCell> cells;
 
 		public CraftItemGroupListTableCell PopulateWithItems(List<ItemModel> items, Transform itemParent, CellManager manager)
 		{
 			_itemParent = itemParent;
 			_items = items;
-			Console.WriteLine(items.Count);
-			cells = items.ConvertAll(x =>
+			if (cells == null)
 			{
-				var visuals = CraftingCellSoftParentVisuals.GetVisualCell(itemParent);
-				visuals.cellManager = manager;
-				var cell = new CraftItemCell().PopulateWithItemData(x, visuals, itemParent);
-				visuals.SetCell(cell);
-				return cell;
-			});
+				cells = items.ConvertAll(x =>
+				{
+					var visuals = CraftingCellSoftParentVisuals.GetVisualCell(itemParent);
+					visuals.cellManager = manager;
+					var cell = new CraftItemCell().PopulateWithItemData(x, visuals);
+					visuals.SetCell(cell);
+					return cell;
+				});
+			}
+			else
+			{
+				for (int i = 0; i < items.Count; i++)
+				{
+					if (i < cells.Count && cells[i] != null)
+					{
+						if (!cells[i].itemModel.usedInCrafting && cells[i].linkedVisuals != null)
+						{
+							Console.WriteLine("test");
+							var cellVisuals = cells[i].linkedVisuals;
+							var row = cells[i].itemModel.row;
+							if (manager.firstCraftingCellRow != row && manager.secondCraftingCellRow != row)
+							{
+								if (manager.firstCraftingCellVisuals == cellVisuals || manager.secondCraftingCellVisuals == cellVisuals)
+								{
+									cellVisuals = CraftingCellSoftParentVisuals.GetVisualCell(itemParent);
+									cellVisuals.cellManager = manager;
+								}
+							}
+							else
+							{
+								cellVisuals = manager.firstCraftingCellItem == items[i] ? manager.firstCraftingCellVisuals : manager.secondCraftingCellVisuals;
+							}
+							var cell = cells[i].PopulateWithItemData(items[i], cellVisuals);
+							cellVisuals.SetCell(cell);
+							cells[i] = cell;
+						}
+						else
+						{
+							Console.WriteLine("ghj");
+							var visuals = manager.firstCraftingCellItem == items[i] ? manager.firstCraftingCellVisuals : manager.secondCraftingCellVisuals;
+							var cell = cells[i].PopulateWithItemData(items[i], visuals);
+							visuals.SetCell(cell);
+							cells[i] = cell;
+						}
+					}
+				}
+			}
 			return this;
 		}
 

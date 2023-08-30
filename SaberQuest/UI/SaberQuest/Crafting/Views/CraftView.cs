@@ -5,6 +5,7 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Config.Data;
 using IPA.Utilities;
+using SaberQuest.Extensions;
 using SaberQuest.Models.SaberQuest.API.Data;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
@@ -19,6 +20,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,13 +49,15 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 		[UIObject("second-slot")] private GameObject _secondSlot;
         private CellManager cellManager;
 
+        private List<ItemModel> items;
+        private List<List<ItemModel>> chunkedItems;
 
 		[Inject]
         private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
         {
             _apiProvider = apiProvider;
             _logger = siraLog;
-        }
+		}
 
         [UIAction("#post-parse")]
         internal void PostParse()
@@ -67,7 +71,14 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 
 			craftList.SetDataSource(this, false);
 
-            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+			items = new List<ItemModel>().Populate(50, () => new ItemModel());
+			chunkedItems = items.ChunkBy(4);
+            for (int row = 0; row < chunkedItems.Count; row++)
+            {
+                chunkedItems[row].ForEach(x => x.row = row);
+            }
+
+			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
                 if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
                     continue;
@@ -103,8 +114,8 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 
         public float CellSize() => 32f;
 
-        public int NumberOfCells() => 10;
+        public int NumberOfCells() => chunkedItems.Count;
 
-        public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(idx, tableView, new List<ItemModel>(4) { null, null, null, null }, _itemParent.transform, cellManager);
+        public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(idx, tableView, chunkedItems[idx], _itemParent.transform, cellManager);
 	}
 }

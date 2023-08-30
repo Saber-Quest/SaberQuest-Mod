@@ -4,7 +4,7 @@
     <ProjectGuid>{21C376A8-B1CD-4CA4-A54D-EBAB802859DF}</ProjectGuid>
     <RootNamespace>SaberQuest</RootNamespace>
     <AssemblyName>SaberQuest</AssemblyName>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <LangVersion>8.0</LangVersion>
     <DebugSymbols>true</DebugSymbols>
     <LocalRefsDir Condition="Exists('..\Refs')">..\Refs</LocalRefsDir>

@@ -23,7 +23,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
 		private void OnEnable()
 		{
-			if (LinkedVisuals != null)
+			if (LinkedVisuals != null && LinkedVisuals.linkedCell.itemModel.usedInCrafting)
 			{
 				LinkedVisuals.transform.position = transform.position;
 			}

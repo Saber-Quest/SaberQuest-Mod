@@ -12,7 +12,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 {
     internal class CraftingCellSoftParentVisuals : MonoBehaviour
     {
-        private CraftItemCell _linkedCell;
+        internal CraftItemCell linkedCell;
 
         internal GameObject overrideObject;
 
@@ -78,7 +78,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
         internal void SetCell(CraftItemCell cell)
         {
-            _linkedCell = cell;
+			linkedCell = cell;
         }
 
         private void OnDestroy()
@@ -90,20 +90,20 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
         {
             if(cellManager != null)
             {
-                cellManager.CellClicked(_linkedCell);
+                cellManager.CellClicked(linkedCell);
 			}
         }
 
         private void Update()
         {
-            if (_linkedCell != null && _linkedCell.targetObject != null)
+            if (linkedCell != null && linkedCell.targetObject != null)
             {
-                var target = overrideObject ? overrideObject : _linkedCell.targetObject;
+                var target = overrideObject ? overrideObject : linkedCell.targetObject;
 				float lerpValue = Time.deltaTime * 7f;
 				Vector3 targetPosition = target.transform.position;
 
                 //Plane position
-				if (_linkedCell.crafting)
+				if (linkedCell.itemModel.usedInCrafting)
 				{
 					transform.position = Vector3.Lerp(transform.position, targetPosition, lerpValue);
 				}
@@ -115,7 +115,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 						transform.position.z);
 				}
                 //Z offset
-				float targetZ = button.isPointerInside && !_linkedCell.crafting ? targetPosition.z - 0.08f : targetPosition.z;
+				float targetZ = button.isPointerInside && !linkedCell.itemModel.usedInCrafting ? targetPosition.z - 0.08f : targetPosition.z;
 				var position = transform.position;
                 position.z = Mathf.Lerp(position.z, targetZ, lerpValue);
                 transform.position = position;
@@ -133,9 +133,9 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
         private void OnEnable()
         {
-            if (_linkedCell != null && _linkedCell.targetObject != null)
+            if (linkedCell != null && linkedCell.targetObject != null)
             {
-                var target = overrideObject ? overrideObject : _linkedCell.targetObject;
+                var target = overrideObject ? overrideObject : linkedCell.targetObject;
                 transform.position = target.transform.position;
             }
 		}
