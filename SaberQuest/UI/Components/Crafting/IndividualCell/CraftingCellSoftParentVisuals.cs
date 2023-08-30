@@ -117,7 +117,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
                 //Z offset
 				float targetZ = button.isPointerInside && !linkedCell.itemModel.usedInCrafting ? targetPosition.z - 0.08f : targetPosition.z;
 				var position = transform.position;
-                position.z = Mathf.Lerp(position.z, targetZ, lerpValue);
+                position.z = Mathf.Lerp(position.z, targetZ, lerpValue / 2f);
                 transform.position = position;
 
                 //Look Rotation

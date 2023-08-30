@@ -19,7 +19,7 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 
 		public static CraftItemGroupListTableCell GetCell(int idx, TableView tableView, List<ItemModel> items, Transform itemParent, CellManager manager)
 		{
-			var tableCell = DequeueReusableCellForIdentifierWCheck(tableView, ReuseIdentifier);
+			var tableCell = tableView.DequeueReusableCellForIdentifier(ReuseIdentifier);
 
 			if (tableCell == null) //gross check I know
 			{
@@ -40,19 +40,6 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 			}
 
 			return (CraftItemGroupListTableCell)tableCell;
-		}
-
-		public static TableCell DequeueReusableCellForIdentifierWCheck(TableView view, string identifier)
-		{
-			TableCell tableCell = null;
-			List<TableCell> list;
-			if (view._reusableCells.TryGetValue(identifier, out list) && list.Count > 0)
-			{
-				var cells = list.Where(x => !(x as CraftItemGroupListTableCell).cells.Any(x=>x.itemModel.usedInCrafting));
-				tableCell = list[0];
-				list.RemoveAt(0);
-			}
-			return tableCell;
 		}
 	}
 
@@ -86,19 +73,21 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 					{
 						if (!cells[i].itemModel.usedInCrafting && cells[i].linkedVisuals != null)
 						{
-							Console.WriteLine("test");
 							var cellVisuals = cells[i].linkedVisuals;
-							var row = cells[i].itemModel.row;
+							var row = items[i].row;
 							if (manager.firstCraftingCellRow != row && manager.secondCraftingCellRow != row)
 							{
+								Console.WriteLine("test1");
 								if (manager.firstCraftingCellVisuals == cellVisuals || manager.secondCraftingCellVisuals == cellVisuals)
 								{
+									Console.WriteLine("test2");
 									cellVisuals = CraftingCellSoftParentVisuals.GetVisualCell(itemParent);
 									cellVisuals.cellManager = manager;
 								}
 							}
 							else
 							{
+								Console.WriteLine("test3");
 								cellVisuals = manager.firstCraftingCellItem == items[i] ? manager.firstCraftingCellVisuals : manager.secondCraftingCellVisuals;
 							}
 							var cell = cells[i].PopulateWithItemData(items[i], cellVisuals);

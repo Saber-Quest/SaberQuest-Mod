@@ -13,6 +13,6 @@ namespace SaberQuest.Models.SaberQuest.API.Data
         public string Name { get; set; }
 
         internal bool usedInCrafting;
-        internal int row;
+        internal int row = 0;
 	}
 }

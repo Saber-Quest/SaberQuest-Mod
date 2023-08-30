@@ -18,12 +18,12 @@ namespace SaberQuest.UI.Components.Crafting
 		public CraftItemCell firstCraftingCell;
 		public CraftingCellSoftParentVisuals firstCraftingCellVisuals;
 		public ItemModel firstCraftingCellItem;
-		public int firstCraftingCellRow;
+		public int firstCraftingCellRow = -1;
 
 		public CraftItemCell secondCraftingCell;
 		public CraftingCellSoftParentVisuals secondCraftingCellVisuals;
 		public ItemModel secondCraftingCellItem;
-		public int secondCraftingCellRow;
+		public int secondCraftingCellRow = -1;
 
 		public void CellClicked(CraftItemCell cell)
 		{
