@@ -8,25 +8,25 @@ using UnityEngine.EventSystems;
 
 namespace SaberQuest.UI.Components.Crafting.IndividualCell
 {
-	internal class CraftItemCellUpdater : MonoBehaviour, IPointerEnterHandler
-	{
-		internal CraftingCellSoftParentVisuals LinkedVisuals { get; set; }
+    internal class CraftItemCellUpdater : MonoBehaviour, IPointerEnterHandler
+    {
+        internal CraftingCellSoftParentVisuals LinkedVisuals { get; set; }
 
-		public void OnPointerEnter(PointerEventData eventData)
-		{
-			Console.WriteLine("Breh");
-		}
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Console.WriteLine("Breh");
+        }
 
-		private void OnDisable()
-		{
-		}
+        private void OnDisable()
+        {
+        }
 
-		private void OnEnable()
-		{
-			if (LinkedVisuals != null && LinkedVisuals.linkedCell.itemModel.usedInCrafting)
+        private void OnEnable()
+        {
+            /*if (LinkedVisuals != null && LinkedVisuals.linkedCell.itemModel.usedInCrafting)
 			{
 				LinkedVisuals.transform.position = transform.position;
-			}
-		}
-	}
+			}*/
+        }
+    }
 }

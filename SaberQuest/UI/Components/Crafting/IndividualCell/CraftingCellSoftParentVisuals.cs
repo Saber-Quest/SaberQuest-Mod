@@ -18,14 +18,14 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
         internal CellManager cellManager;
 
-		private ImageView bg;
+        private ImageView bg;
 
         private NoTransitionsButton button;
 
         private Color normal = Color.white.ColorWithAlpha(0.4f);
         private Color highlight = new Color(0.25f, 0.4f, 0.5f).ColorWithAlpha(1.0f);
 
-		internal static CraftingCellSoftParentVisuals GetVisualCell(Transform itemsParent)
+        internal static CraftingCellSoftParentVisuals GetVisualCell(Transform itemsParent)
         {
             var cell = new GameObject("CraftingCellSoftParentVisuals");
             cell.transform.SetParent(itemsParent, false);
@@ -37,7 +37,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
             (cell.transform as RectTransform).sizeDelta = new Vector2(19f, 30f);
 
-			BSMLParser.instance.Parse(
+            BSMLParser.instance.Parse(
                     Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.IndividualCell.CraftingCell.bsml"),
                     cell, visuals);
 
@@ -50,10 +50,10 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
             if (gameObject.GetComponent<Touchable>() == null)
                 gameObject.AddComponent<Touchable>();
 
-			var images = GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>());
-			foreach (var x in images)
-			{
-				if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
+            var images = GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>());
+            foreach (var x in images)
+            {
+                if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
                     continue;
 
                 x._skew = 0f;
@@ -62,36 +62,36 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
                 x.color = new Color(1f, 1f, 1f, 0.4f);
                 bg = x;
             }
-			foreach (var x in images)
-			{
-				if ((x != null) && x.sprite.name == "RoundRect10")
-				{
-					x.color0 = new Color(0.5f, 0.25f, 1f);
-					x.color1 = new Color(0.23f, 0f, 0.58f);
-				}
-			}
+            foreach (var x in images)
+            {
+                if ((x != null) && x.sprite.name == "RoundRect10")
+                {
+                    x.color0 = new Color(0.5f, 0.25f, 1f);
+                    x.color1 = new Color(0.23f, 0f, 0.58f);
+                }
+            }
 
-			button = gameObject.AddComponent<NoTransitionsButton>();
-			button.targetGraphic = bg;
+            button = gameObject.AddComponent<NoTransitionsButton>();
+            button.targetGraphic = bg;
             button.onClick.AddListener(OnClick);
         }
 
         internal void SetCell(CraftItemCell cell)
         {
-			linkedCell = cell;
+            linkedCell = cell;
         }
 
         private void OnDestroy()
         {
-			button.onClick.RemoveListener(OnClick);
-		}
+            button.onClick.RemoveListener(OnClick);
+        }
 
         private void OnClick()
         {
-            if(cellManager != null)
+            if (cellManager != null)
             {
                 cellManager.CellClicked(linkedCell);
-			}
+            }
         }
 
         private void Update()
@@ -99,24 +99,24 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
             if (linkedCell != null && linkedCell.targetObject != null)
             {
                 var target = overrideObject ? overrideObject : linkedCell.targetObject;
-				float lerpValue = Time.deltaTime * 7f;
-				Vector3 targetPosition = target.transform.position;
+                float lerpValue = Time.deltaTime * 7f;
+                Vector3 targetPosition = target.transform.position;
 
                 //Plane position
-				if (linkedCell.itemModel.usedInCrafting)
-				{
-					transform.position = Vector3.Lerp(transform.position, targetPosition, lerpValue);
-				}
-				else
-				{
-					transform.position = new Vector3(
-						Mathf.Lerp(transform.position.x, targetPosition.x, lerpValue),
-						targetPosition.y,
-						transform.position.z);
-				}
+                if (linkedCell.itemModel.usedInCrafting)
+                {
+                    transform.position = Vector3.Lerp(transform.position, targetPosition, lerpValue);
+                }
+                else
+                {
+                    transform.position = new Vector3(
+                        targetPosition.x,
+                        targetPosition.y,
+                        transform.position.z);
+                }
                 //Z offset
-				float targetZ = button.isPointerInside && !linkedCell.itemModel.usedInCrafting ? targetPosition.z - 0.08f : targetPosition.z;
-				var position = transform.position;
+                float targetZ = button.isPointerInside && !linkedCell.itemModel.usedInCrafting ? targetPosition.z - 0.08f : targetPosition.z;
+                var position = transform.position;
                 position.z = Mathf.Lerp(position.z, targetZ, lerpValue / 2f);
                 transform.position = position;
 
@@ -138,6 +138,6 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
                 var target = overrideObject ? overrideObject : linkedCell.targetObject;
                 transform.position = target.transform.position;
             }
-		}
+        }
     }
 }

@@ -18,23 +18,23 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 {
     class CraftItemCell
     {
-		internal ItemModel itemModel;
+        internal ItemModel itemModel;
         internal CraftingCellSoftParentVisuals linkedVisuals;
 
-		[UIObject("cell")] internal GameObject targetObject;
+        [UIObject("cell")] internal GameObject targetObject;
 
         public CraftItemCell PopulateWithItemData(ItemModel item, CraftingCellSoftParentVisuals visuals)
         {
-			itemModel = item;
-			linkedVisuals = visuals;
-			return this;
+            itemModel = item;
+            linkedVisuals = visuals;
+            return this;
         }
 
         [UIAction("#post-parse")]
         void Parsed()
         {
             var updater = targetObject.AddComponent<CraftItemCellUpdater>();
-			updater.LinkedVisuals = linkedVisuals;
-		}
+            updater.LinkedVisuals = linkedVisuals;
+        }
     }
 }

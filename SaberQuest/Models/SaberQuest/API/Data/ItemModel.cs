@@ -14,5 +14,5 @@ namespace SaberQuest.Models.SaberQuest.API.Data
 
         internal bool usedInCrafting;
         internal int row = 0;
-	}
+    }
 }

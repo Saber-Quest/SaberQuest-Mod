@@ -44,20 +44,20 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
         [UIComponent("craft-list")] private CustomListTableData list = null;
         private TableView craftList => list?.tableView;
 
-		//Crafting
-		[UIObject("first-slot")] private GameObject _firstSlot;
-		[UIObject("second-slot")] private GameObject _secondSlot;
+        //Crafting
+        [UIObject("first-slot")] private GameObject _firstSlot;
+        [UIObject("second-slot")] private GameObject _secondSlot;
         private CellManager cellManager;
 
         private List<ItemModel> items;
         private List<List<ItemModel>> chunkedItems;
 
-		[Inject]
+        [Inject]
         private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
         {
             _apiProvider = apiProvider;
             _logger = siraLog;
-		}
+        }
 
         [UIAction("#post-parse")]
         internal void PostParse()
@@ -69,16 +69,16 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
             cellManager.firstSlot = _firstSlot;
             cellManager.secondSlot = _secondSlot;
 
-			craftList.SetDataSource(this, false);
+            craftList.SetDataSource(this, false);
 
-			items = new List<ItemModel>().Populate(50, () => new ItemModel());
-			chunkedItems = items.ChunkBy(4);
+            items = new List<ItemModel>().Populate(50, () => new ItemModel());
+            chunkedItems = items.ChunkBy(4);
             for (int row = 0; row < chunkedItems.Count; row++)
             {
                 chunkedItems[row].ForEach(x => x.row = row);
             }
 
-			foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
+            foreach (var x in GetComponentsInChildren<Backgroundable>().Select(x => x.GetComponent<ImageView>()))
             {
                 if (!x || x.color0 != Color.white || x.sprite.name != "RoundRect10")
                     continue;
@@ -88,16 +88,16 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
                 x.SetImage("#RoundRect10BorderFade");
                 x.color = new Color(1f, 1f, 1f, 0.4f);
             }
-			Destroy(_itemParent.GetComponent<HorizontalLayoutGroup>());
+            Destroy(_itemParent.GetComponent<HorizontalLayoutGroup>());
 
-			craftList.ReloadData();
+            craftList.ReloadData();
             craftList.SelectCellWithIdx(0);
 
             var mask = _itemParent.AddComponent<RectMask2D>();
 
             mask.padding = new Vector4(0f, 2f, 0f, 2f);
 
-			IVRPlatformHelper platformHelper = null;
+            IVRPlatformHelper platformHelper = null;
             foreach (var x in Resources.FindObjectsOfTypeAll<ScrollView>())
             {
                 platformHelper = ReflectionUtil.GetField<IVRPlatformHelper, ScrollView>(x, "_platformHelper");
@@ -117,5 +117,5 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
         public int NumberOfCells() => chunkedItems.Count;
 
         public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(idx, tableView, chunkedItems[idx], _itemParent.transform, cellManager);
-	}
+    }
 }
