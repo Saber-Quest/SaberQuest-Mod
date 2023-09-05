@@ -3,10 +3,15 @@ using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
+using IPA.Loader;
 using IPA.Utilities;
 using SaberQuest.UI.SaberQuest.Crafting;
 using SaberQuest.UI.SaberQuest.Shop;
+using SiraUtil.Web.SiraSync;
+using SiraUtil.Zenject;
 using System.Linq;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -17,21 +22,26 @@ namespace SaberQuest.UI.SaberQuest.Views
     [ViewDefinition("SaberQuest.UI.SaberQuest.Views.MainView")]
     internal class MainView : BSMLAutomaticViewController
     {
-        [UIObject("avatarMask")]
-        private GameObject avatarMask;
-        [UIObject("containerBackground")]
-        private GameObject containerBackground;
+        //Dependencies
+		private SaberQuestFlowCoordinator _mainFlow;
+		private SaberQuestShopFlowCoordinator _shopFlow;
+		private SaberQuestCraftFlowCoordinator _craftFlow;
+		private ISiraSyncService _siraSyncService;
+        private PluginMetadata _metadata;
 
-        private SaberQuestFlowCoordinator _mainFlow;
-        private SaberQuestShopFlowCoordinator _shopFlow;
-        private SaberQuestCraftFlowCoordinator _craftFlow;
+		//UI Objects
+		[UIObject("avatar-mask")] private GameObject avatarMask;
+        [UIObject("container-background")] private GameObject containerBackground;
+        [UIComponent("version-text")] private TextMeshProUGUI versionText;
 
         [Inject]
-        private void Construct(SaberQuestFlowCoordinator mainFlowCoordinator, SaberQuestShopFlowCoordinator shopFlowCoordinator, SaberQuestCraftFlowCoordinator craftFlowCoordinator)
+        private void Construct(SaberQuestFlowCoordinator mainFlowCoordinator, SaberQuestShopFlowCoordinator shopFlowCoordinator, SaberQuestCraftFlowCoordinator craftFlowCoordinator, ISiraSyncService siraSyncService, UBinder<Plugin, PluginMetadata> metadata)
         {
             _mainFlow = mainFlowCoordinator;
             _shopFlow = shopFlowCoordinator;
             _craftFlow = craftFlowCoordinator;
+            _siraSyncService = siraSyncService;
+            _metadata = metadata.Value;
         }
 
         [UIAction("#post-parse")]
@@ -54,7 +64,23 @@ namespace SaberQuest.UI.SaberQuest.Views
             var containerImage = containerBackground.AddComponent<ImageView>();
             containerImage.material = Utilities.ImageResources.NoGlowMat;
             containerImage.SetImage("SaberQuest.UI.Resources.containerbg.png");
-        }
+
+            Task.Run(async () => {
+                var latest = await _siraSyncService.LatestVersion();
+				HMMainThreadDispatcher.instance.Enqueue(() => {
+					if (latest > _metadata.HVersion)
+					{
+                        versionText.text = $"You're version of SaberQuest is out of date! Latest: {latest}, Current {_metadata.HVersion}";
+						versionText.color = Color.red;
+					}
+					else
+                    {
+						versionText.text = $"You're version of SaberQuest is up to date!";
+						versionText.color = Color.green;
+                    }
+				});
+            });
+		}
 
         [UIAction("present-shop")]
         private void EnterShop()

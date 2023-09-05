@@ -18,8 +18,8 @@ namespace SaberQuest
         public void Init(IPALogger logger, Zenjector zenjector)
         {
             harmony.PatchAll(typeof(MenuButtonRedecoratePatch));
-            zenjector.UseSiraSync();
-            zenjector.Install<SaberQuestMenuInstaller>(Location.Menu);
+			zenjector.UseSiraSync(SiraUtil.Web.SiraSync.SiraSyncServiceType.GitHub, "Saber-Quest", "SaberQuest-Mod");
+			zenjector.Install<SaberQuestMenuInstaller>(Location.Menu);
             zenjector.UseLogger(logger);
             zenjector.UseHttpService();
             zenjector.UseMetadataBinder<Plugin>();
