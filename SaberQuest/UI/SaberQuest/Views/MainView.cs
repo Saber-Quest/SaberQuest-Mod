@@ -68,14 +68,14 @@ namespace SaberQuest.UI.SaberQuest.Views
             Task.Run(async () => {
                 var latest = await _siraSyncService.LatestVersion();
 				HMMainThreadDispatcher.instance.Enqueue(() => {
-					if (latest > _metadata.HVersion)
+					if (latest > _metadata.HVersion || true)
 					{
-                        versionText.text = $"You're version of SaberQuest is out of date! Latest: {latest}, Current {_metadata.HVersion}";
+                        versionText.text = $"Your version of SaberQuest is out of date! Latest: v{latest}, Current: v{_metadata.HVersion}";
 						versionText.color = Color.red;
 					}
 					else
                     {
-						versionText.text = $"You're version of SaberQuest is up to date!";
+						versionText.text = $"Your version of SaberQuest is up to date!";
 						versionText.color = Color.green;
                     }
 				});

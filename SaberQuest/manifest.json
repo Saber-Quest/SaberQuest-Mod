@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
   "id": "SaberQuest",
   "name": "SaberQuest",
-  "author": "Sirspam",
-  "version": "0.0.1",
+  "author": "FutureMapper",
+  "version": "1.0.0",
   "description": "",
   "gameVersion": "1.21.0",
   "dependsOn": {
