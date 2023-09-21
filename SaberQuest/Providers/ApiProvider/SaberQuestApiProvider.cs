@@ -27,7 +27,7 @@ namespace SaberQuest.Providers.ApiProvider
 
         public void GetDailyChallenges(Action<ChallengeSetModel> callback, Action<ErrorResponseModel> errorCallback)
         {
-            JsonHttpGetRequest(BASE_URL + "daily-challenges", (res) =>
+            JsonHttpGetRequest(BASE_URL + "challenge/daily/mod", (res) =>
             {
                 _logger.Info(res);
                 var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<ChallengeSetModel>(res);
@@ -35,9 +35,9 @@ namespace SaberQuest.Providers.ApiProvider
             }, errorCallback);
         }
 
-        public void GetCurrentDeals(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback)
+        public void GetShopItems(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback)
         {
-            JsonHttpGetRequest(BASE_URL + "current-deals", (res) =>
+            JsonHttpGetRequest(BASE_URL + "item/shop", (res) =>
             {
                 _logger.Info(res);
                 var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DealSetModel>(res);

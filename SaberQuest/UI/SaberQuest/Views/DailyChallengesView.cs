@@ -109,7 +109,7 @@ namespace SaberQuest.UI.SaberQuest.Views
                 _colorController.targetColor = UIConsts.DailyChallengeColorSet[challenge.Name][1];
             }
             _descText.GetComponent<TextMeshProUGUI>().text = _selectedChallengeSet.Description;
-            _valueText.GetComponent<TextMeshProUGUI>().text = challenge.Value;
+            _valueText.GetComponent<TextMeshProUGUI>().text = challenge.Challenge;
 
         }
 

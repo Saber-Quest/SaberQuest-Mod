@@ -8,8 +8,8 @@ namespace SaberQuest.Models.SaberQuest.API.Data.Challenges
 {
     public class ChallengeModel
     {
-        public string ChallengeSet { get; set; }
         public string Name { get; set; }
-        public string Value { get; set; }
+        public string Challenge { get; set; }
+        public string Color { get; set; }
     }
 }

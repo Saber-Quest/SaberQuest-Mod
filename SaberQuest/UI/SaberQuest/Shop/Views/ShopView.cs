@@ -65,11 +65,11 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
                 {
 
                     var childText = firstChild.GetComponent<TextMeshProUGUI>();
-                    if (childText != null && childText.text.StartsWith("#color"))
-                        ColorUtility.TryParseHtmlString(childText.text.Replace("#color", ""), out targetColor);
+                    if (childText?.text.StartsWith("#color") == true)
+                        ColorUtility.TryParseHtmlString(childText?.text.Replace("#color", ""), out targetColor);
                 }
 
-                ReflectionUtil.SetField(x, "_skew", 0f);
+                x.SetField("_skew", 0f);
                 x.overrideSprite = null;
                 x.SetImage("#RoundRect10BorderFade");
                 x.color = targetColor;
@@ -77,7 +77,7 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
 
             if (list != null)
             {
-                _apiProvider.GetCurrentDeals((x) =>
+                _apiProvider.GetShopItems((x) =>
                 {
                     ApplyShopItems(x);
                 }, async (error) =>
@@ -106,12 +106,12 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
         {
             HMMainThreadDispatcher.instance.Enqueue(() =>
             {
-                if (!(deals?.Deals?.Count > 0))
+                if (!(deals?.Items?.Count > 0))
                 {
                     _logger.Error("No Shop Items Found... Do you need to update?");
                     return;
                 }
-                CurrentDeals = deals.Deals;
+                CurrentDeals = deals.Items;
                 shopList.ReloadData();
                 shopList.SelectCellWithIdx(0);
             });

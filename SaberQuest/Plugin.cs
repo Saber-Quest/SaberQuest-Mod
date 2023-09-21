@@ -17,7 +17,6 @@ namespace SaberQuest
         [Init]
         public void Init(IPALogger logger, Zenjector zenjector)
         {
-            harmony.PatchAll(typeof(MenuButtonRedecoratePatch));
 			zenjector.UseSiraSync(SiraUtil.Web.SiraSync.SiraSyncServiceType.GitHub, "Saber-Quest", "SaberQuest-Mod");
 			zenjector.Install<SaberQuestMenuInstaller>(Location.Menu);
             zenjector.UseLogger(logger);
@@ -28,7 +27,8 @@ namespace SaberQuest
         [OnStart]
         public void OnApplicationStart()
         {
-        }
+			harmony.PatchAll(typeof(MenuButtonRedecoratePatch));
+		}
 
         [OnExit]
         public void OnApplicationExit()

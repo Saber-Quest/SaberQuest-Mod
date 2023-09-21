@@ -30,7 +30,7 @@ namespace SaberQuest.Providers.ApiProvider
             callback(obj);
         }
 
-        public void GetCurrentDeals(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback)
+        public void GetShopItems(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback)
         {
             var obj = JsonConvert.DeserializeObject<DealSetModel>(MockCurrentDeals);
             callback(obj);

@@ -8,6 +8,6 @@ namespace SaberQuest.Providers.ApiProvider
     internal interface ISaberQuestApiProvider
     {
         public void GetDailyChallenges(Action<ChallengeSetModel> callback, Action<ErrorResponseModel> errorCallback);
-        public void GetCurrentDeals(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback);
+        public void GetShopItems(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback);
     }
 }

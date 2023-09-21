@@ -21,7 +21,7 @@
       <vertical child-align='MiddleCenter' vertical-fit='PreferredSize' spacing='0'>
         <text text='Special Offer!' font-align='Center' font-size='4.5'/>
         <text text='You can spend 20qp to get a random item.' font-align='Center' font-size='2.5' color='#AAAAAA'/>
-        <clickable-image src='https://saberquest.xyz/images/gambling.png' pref-width='80' pref-height='8' preserve-aspect='true' highlight-color='#FFFFFFCC'/>
+        <clickable-image src='https://saberquest.xyz/images/gambling.png' pref-width='80' pref-height='8' preserve-aspect='true' highlight-color='#DDDDDDFF'/>
       </vertical>
     </vertical>
   </vertical>
