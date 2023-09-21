@@ -1,4 +1,5 @@
-﻿using SaberQuest.Models.SaberQuest.API.Data.Challenges;
+﻿using SaberQuest.Models.SaberQuest.API.Data;
+using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Models.SaberQuest.Web;
 using SiraUtil.Logging;
@@ -15,7 +16,7 @@ namespace SaberQuest.Providers.ApiProvider
 {
     internal class SaberQuestApiProvider : ISaberQuestApiProvider
     {
-        private const string BASE_URL = "http://localhost:5000/";
+        private const string BASE_URL = "https://dev.saberquest.xyz/";
         private readonly SiraLog _logger;
         private readonly IHttpService _httpService;
 
@@ -25,11 +26,19 @@ namespace SaberQuest.Providers.ApiProvider
             _httpService = httpService;
         }
 
-        public void GetDailyChallenges(Action<ChallengeSetModel> callback, Action<ErrorResponseModel> errorCallback)
+		public void GetAllItems(Action<List<ItemModel>> callback, Action<ErrorResponseModel> errorCallback)
+		{
+			JsonHttpGetRequest(BASE_URL + "items/all", (res) =>
+			{
+				var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ItemModel>>(res);
+				callback(obj);
+			}, errorCallback);
+		}
+
+		public void GetDailyChallenges(Action<ChallengeSetModel> callback, Action<ErrorResponseModel> errorCallback)
         {
             JsonHttpGetRequest(BASE_URL + "challenge/daily/mod", (res) =>
             {
-                _logger.Info(res);
                 var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<ChallengeSetModel>(res);
                 callback(obj);
             }, errorCallback);
@@ -37,15 +46,24 @@ namespace SaberQuest.Providers.ApiProvider
 
         public void GetShopItems(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback)
         {
-            JsonHttpGetRequest(BASE_URL + "item/shop", (res) =>
+            JsonHttpGetRequest(BASE_URL + "items/shop", (res) =>
             {
-                _logger.Info(res);
                 var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<DealSetModel>(res);
                 callback(obj);
             }, errorCallback);
         }
 
-        private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
+		public UserModel GetUser(int user, Action<ErrorResponseModel> errorCallback)
+		{
+            UserModel userObj = null;
+			JsonHttpGetRequest(BASE_URL + "profile/" + user, (res) =>
+			{
+				userObj = Newtonsoft.Json.JsonConvert.DeserializeObject<UserModel>(res);
+			}, errorCallback);
+            return userObj;
+		}
+
+		private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
         {
             Task.Run(async () =>
             {

@@ -8,6 +8,7 @@ using SaberQuest.UI.SaberQuest.Shop;
 using SaberQuest.UI.SaberQuest.Views;
 using UnityEngine;
 using Zenject;
+using SaberQuest.Stores;
 
 namespace SaberQuest.Installers
 {
@@ -15,13 +16,13 @@ namespace SaberQuest.Installers
     {
         public override void InstallBindings()
         {
-#if DEBUG
-            Container.BindInterfacesTo<MockSaberQuestApiProvider>().AsSingle().NonLazy();
-#else
 			Container.BindInterfacesTo<SaberQuestApiProvider>().AsSingle().NonLazy();
-#endif
-            Container.Bind<CraftView>().FromNewComponentAsViewController().AsSingle().NonLazy();
-            Container.Bind<SaberQuestCraftFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+
+			Container.Bind<UserStore>().AsSingle().NonLazy();
+            Container.Bind<ItemStore>().AsSingle().NonLazy();
+
+			Container.Bind<CraftView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+			Container.Bind<SaberQuestCraftFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
             Container.Bind<ShopView>().FromNewComponentAsViewController().AsSingle().NonLazy();
             Container.Bind<SaberQuestShopFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();

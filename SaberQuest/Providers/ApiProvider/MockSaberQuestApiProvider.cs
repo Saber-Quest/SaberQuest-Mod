@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using SaberQuest.Models.SaberQuest.API.Data;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Models.SaberQuest.Web;
 using SiraUtil.Logging;
 using SiraUtil.Web;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,5 +37,15 @@ namespace SaberQuest.Providers.ApiProvider
             var obj = JsonConvert.DeserializeObject<DealSetModel>(MockCurrentDeals);
             callback(obj);
         }
-    }
+
+		public UserModel GetUser(int user, Action<ErrorResponseModel> errorCallback)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void GetAllItems(Action<List<ItemModel>> callback, Action<ErrorResponseModel> errorCallback)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

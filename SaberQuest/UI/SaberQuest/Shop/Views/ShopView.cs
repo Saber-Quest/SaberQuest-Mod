@@ -5,6 +5,7 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Config.Data;
 using IPA.Utilities;
+using Newtonsoft.Json;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Providers.ApiProvider;
@@ -23,7 +24,7 @@ using Zenject;
 namespace SaberQuest.UI.SaberQuest.Shop.Views
 {
     [HotReload(RelativePathToLayout = @"ShopView.bsml")]
-    [ViewDefinition("SaberQuest.UI.SaberQuest.Shop.Views.ShopView.bsml")]
+    [ViewDefinition("SaberQuest.UI.SaberQuest.Shop.Views.ShopView")]
     internal class ShopView : BSMLAutomaticViewController, TableView.IDataSource
     {
         //Dependencies
@@ -79,7 +80,8 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
             {
                 _apiProvider.GetShopItems((x) =>
                 {
-                    ApplyShopItems(x);
+					Console.WriteLine(JsonConvert.SerializeObject(x));
+					ApplyShopItems(x);
                 }, async (error) =>
                 {
                     //TODO: Show Error Modal here

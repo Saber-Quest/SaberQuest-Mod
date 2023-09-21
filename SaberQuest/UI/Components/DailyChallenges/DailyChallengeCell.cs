@@ -73,7 +73,7 @@ namespace SaberQuest.UI.Components.DailyChallenges
 
             ColorUtility.TryParseHtmlString(_challengeModel.Color, out var col);
             colorSet[0] = col.ColorWithAlpha(0.35f);
-            colorSet[1] = col.ColorWithAlpha(0.7f);
+            colorSet[1] = col.ColorWithAlpha(0.85f);
             colorSet[2] = new Color(0.4f, 0.55f, 0.95f);
 
             if (cell.GetComponent<CellBehaviour>() == null)
@@ -84,8 +84,8 @@ namespace SaberQuest.UI.Components.DailyChallenges
                 behaviour.enabled = true;
             }
 
-            difficultyText.text = _challengeSet.Description;
-            shortNameText.text = _challengeSet.Name;
+            difficultyText.text = challenge.Name;
+            shortNameText.text = _challengeSet.Name.Replace(" Challenge", "");
 
             return this;
         }

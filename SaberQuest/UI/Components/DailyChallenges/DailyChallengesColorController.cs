@@ -15,7 +15,7 @@ namespace SaberQuest.UI.Components.DailyChallenges
 
         private void Update()
         {
-            image.color = Color.Lerp(image.color, targetColor, Time.deltaTime * 6f);
+            image.color = Color.Lerp(image.color, targetColor, Time.deltaTime * 8f);
         }
     }
 }

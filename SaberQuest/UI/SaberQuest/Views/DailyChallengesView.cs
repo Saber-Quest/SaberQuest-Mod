@@ -19,7 +19,7 @@ using Zenject;
 namespace SaberQuest.UI.SaberQuest.Views
 {
     [HotReload(RelativePathToLayout = @"DailyChallengesView.bsml")]
-    [ViewDefinition("SaberQuest.UI.SaberQuest.Views.DailyChallengesView.bsml")]
+    [ViewDefinition("SaberQuest.UI.SaberQuest.Views.DailyChallengesView")]
     internal class DailyChallengesView : BSMLAutomaticViewController, TableView.IDataSource
     {
         //Dependencies
@@ -132,7 +132,7 @@ namespace SaberQuest.UI.SaberQuest.Views
             });
         }
 
-        public float CellSize() => 14.4f;
+        public float CellSize() => 19f;
 
         public int NumberOfCells() => challenges.Count;
 

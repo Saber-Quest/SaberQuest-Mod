@@ -5,6 +5,7 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Loader;
 using IPA.Utilities;
+using SaberQuest.Stores;
 using SaberQuest.UI.SaberQuest.Crafting;
 using SaberQuest.UI.SaberQuest.Shop;
 using SiraUtil.Web.SiraSync;

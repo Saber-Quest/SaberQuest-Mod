@@ -6,6 +6,7 @@ using IPA.Utilities;
 using SaberQuest.Configuration;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
+using SaberQuest.Stores;
 using SaberQuest.Utils;
 using System.Linq;
 using System.Reflection;
@@ -67,8 +68,9 @@ namespace SaberQuest.UI.Components.Shop
         public ShopItemListTableCell PopulateWithShopItemData(DealModel deal)
         {
             _dealModel = deal;
+            var item = ItemStore.Get().GetItem(_dealModel.Id);
 
-            if (!UIConsts.RarityColors.TryGetValue(_dealModel.Rarity, out Color defaultColor))
+            if (!UIConsts.RarityColors.TryGetValue(item.Rarity, out Color defaultColor))
             {
                 defaultColor = UIConsts.RarityColors["Common"];
             }
@@ -81,8 +83,8 @@ namespace SaberQuest.UI.Components.Shop
                 behaviour.enabled = true;
             }
 
-            image.SetImage(_dealModel.ImageURL);
-            nameText.text = _dealModel.Name;
+            image.SetImage(item.Image);
+            nameText.text = item.Name;
 
             return this;
         }

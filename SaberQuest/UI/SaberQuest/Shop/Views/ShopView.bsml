@@ -16,7 +16,7 @@
       </horizontal>
       <text text='Current Deals' font-size='7' font-align='Center'/>
       <vertical pref-width="95" pad-left="3" pad-right="1">
-        <list id="shopList" stick-scrolling="true" pref-height="25" list-height="25" list-direction="Horizontal" cell-size='18' clickable-cells="true" vertical-fit="Unconstrained"/>
+        <list id="shopList" stick-scrolling="true" pref-height="20" list-height="25" list-direction="Horizontal" cell-size='18' clickable-cells="true" vertical-fit="Unconstrained"/>
       </vertical>
       <vertical child-align='MiddleCenter' vertical-fit='PreferredSize' spacing='0'>
         <text text='Special Offer!' font-align='Center' font-size='4.5'/>

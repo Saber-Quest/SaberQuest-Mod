@@ -30,7 +30,7 @@ using Zenject;
 namespace SaberQuest.UI.SaberQuest.Crafting.Views
 {
     [HotReload(RelativePathToLayout = @"CraftView.bsml")]
-    [ViewDefinition("SaberQuest.UI.SaberQuest.Crafting.Views.CraftView.bsml")]
+    [ViewDefinition("SaberQuest.UI.SaberQuest.Crafting.Views.CraftView")]
     internal class CraftView : BSMLAutomaticViewController, TableView.IDataSource
     {
         //Dependencies
