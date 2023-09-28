@@ -56,6 +56,7 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
             _pool = pool;
 			_itemParent = itemParent;
             _items = items;
+            var targets = cells.ConvertAll(x => x.targetObject);
             cells = cells.ConvertAll<CraftItemCell>(x => {
                 return null;
             });
@@ -63,7 +64,8 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 			{
 				var visuals = _pool.Get();
 				visuals.cellManager = manager;
-                var cell = (cells[y] == null ? new CraftItemCell() : cells[y]).PopulateWithItemData(x, visuals);
+                var cell = new CraftItemCell().PopulateWithItemData(x, visuals);
+                cell.targetObject = targets[y];
 				visuals.SetCell(cell);
 				return cell;
 			}).ToList();

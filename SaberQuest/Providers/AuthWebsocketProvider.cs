@@ -37,7 +37,7 @@ namespace SaberQuest.Providers
 		{
 			protected override void OnMessage(MessageEventArgs e)
 			{
-				_instance._recieveToken(JsonConvert.DeserializeObject<TokenResult>(e.Data).ToString());
+				_instance._recieveToken(JsonConvert.DeserializeObject<TokenResult>(e.Data).Token);
 			}
 			private class TokenResult
 			{

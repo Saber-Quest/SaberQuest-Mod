@@ -25,6 +25,6 @@ namespace SaberQuest.Stores
 			}
 		}
 
-		public void SetUser() => CurrentUser = ApiProvider.GetUser(76561198343533017, (err) => Logger.Error($"Failed to get user with token because of error: {err?.Message}"));
+		public void SetUser() => CurrentUser = ApiProvider.GetUser(-1, (err) => Logger.Error($"Failed to get user with token because of error: {err?.Message}"));
 	}
 }

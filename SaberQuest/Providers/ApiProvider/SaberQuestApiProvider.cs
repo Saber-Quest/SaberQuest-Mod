@@ -76,7 +76,7 @@ namespace SaberQuest.Providers.ApiProvider
 
 		public void ProvideToken(string token)
 		{
-            _httpService.Token = "Bearer " + token;
+            _httpService.Token = token;
 		}
 
 		private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
