@@ -9,6 +9,9 @@ using SaberQuest.UI.SaberQuest.Views;
 using UnityEngine;
 using Zenject;
 using SaberQuest.Stores;
+using SaberQuest.UI.Auth;
+using SaberQuest.UI.Auth.Views;
+using SaberQuest.Providers.BSChallenger.Providers;
 
 namespace SaberQuest.Installers
 {
@@ -18,8 +21,10 @@ namespace SaberQuest.Installers
         {
 			Container.BindInterfacesTo<SaberQuestApiProvider>().AsSingle().NonLazy();
 
+			Container.Bind<TokenStorageProvider>().AsSingle().NonLazy();
+
 			Container.Bind<UserStore>().AsSingle().NonLazy();
-            Container.Bind<ItemStore>().AsSingle().NonLazy();
+			Container.Bind<ItemStore>().AsSingle().NonLazy();
 
 			Container.Bind<CraftView>().FromNewComponentAsViewController().AsSingle().NonLazy();
 			Container.Bind<SaberQuestCraftFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
@@ -27,7 +32,10 @@ namespace SaberQuest.Installers
             Container.Bind<ShopView>().FromNewComponentAsViewController().AsSingle().NonLazy();
             Container.Bind<SaberQuestShopFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 
-            Container.Bind<DailyChallengesView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+			Container.Bind<AuthView>().FromNewComponentAsViewController().AsSingle().NonLazy();
+			Container.Bind<SaberQuestAuthenticationFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
+
+			Container.Bind<DailyChallengesView>().FromNewComponentAsViewController().AsSingle().NonLazy();
             Container.Bind<MainView>().FromNewComponentAsViewController().AsSingle().NonLazy();
             Container.Bind<SaberQuestFlowCoordinator>().FromNewComponentOnNewGameObject().AsSingle().NonLazy();
 

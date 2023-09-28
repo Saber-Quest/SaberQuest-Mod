@@ -1,5 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using HMUI;
+using SaberQuest.UI.Auth;
 using SaberQuest.UI.SaberQuest.Crafting.Views;
 using Zenject;
 

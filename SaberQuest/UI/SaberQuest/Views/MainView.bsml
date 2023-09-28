@@ -3,10 +3,10 @@
 	>
     <horizontal vertical-fit='PreferredSize' pref-height='15' spacing='0' anchor-pos-y='28' child-align='MiddleCenter' horizontal-fit='PreferredSize' pad-left='5'>
       <img pref-width='5' preserve-aspect='true' src='https://i.stack.imgur.com/PYlN8.png' id='avatar-mask' anchor-pos-x='-43' ignore-layout='true' size-delta-y='15'>
-        <img src='https://cdn.discordapp.com/attachments/1109205575507640472/1136092819505827961/IMG_2836.png' size-delta-x='15' preserve-aspect='true' anchor-pos-x='0'/>
+        <img src='https://cdn.discordapp.com/attachments/1124877745348952177/1149127553534148658/ayesha.jpg' id='profile-picture' size-delta-x='15' preserve-aspect='true' anchor-pos-x='0'/>
       </img>
-      <img src='https://cdn.discordapp.com/attachments/1109205575507640472/1138231499594936350/test.gif' size-delta-x='25' size-delta-y='25' preserve-aspect='true' ignore-layout='true' anchor-pos-x='-43'/>
-      <text text='Welcome, FutureMapper!' font-size='8' font-align='Center'/>
+      <img src='https://cdn.discordapp.com/attachments/1124896209472073749/1138287539715837983/bruh.png' id='border' size-delta-x='25' size-delta-y='25' preserve-aspect='true' ignore-layout='true' anchor-pos-x='-43'/>
+      <text text='Loading User...' id='welcome-text' font-size='8' font-align='Center'/>
     </horizontal>
     <bg bg='panel-top' size-delta-x='-50' size-delta-y='-38' anchor-pos-y='-3'>
       <vertical pad-top='1' id='container-background' >

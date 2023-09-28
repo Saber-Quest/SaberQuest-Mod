@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json;
 using SaberQuest.Models.SaberQuest.API.Data;
+using SaberQuest.Utils;
 using System.Collections.Generic;
+using System.Linq;
 using Zenject;
 
 namespace SaberQuest.Stores
@@ -15,19 +17,25 @@ namespace SaberQuest.Stores
 			{
 				Items.Clear();
 				Items.AddRange(items);
-				Logger.Info(JsonConvert.SerializeObject(items));
 			}, (err) =>
 			{
 				Logger.Error($"Failed to populate item store due to error: {err.Message}");
 			});
 		}
 
-		public ItemModel GetItem(string id)
+		public Result<ItemModel> GetItem(string id)
 		{
-			Logger.Info(id);
-			var item = Items.Find(x => x.Id == id);
-			Logger.Info(item.Id);
-			return item;
+			var item = Items.FirstOrDefault(x => x.Id == id);
+			if(item != null)
+			{
+				return Result.Ok(item);
+			}
+			else
+			{
+				return Result.Fail<ItemModel>("Item does not exist!");
+			}
 		}
+
+		public List<ItemModel> GetItems() => Items;
 	}
 }

@@ -10,6 +10,7 @@ using SaberQuest.UI.SaberQuest.Crafting;
 using SaberQuest.UI.SaberQuest.Shop;
 using SiraUtil.Web.SiraSync;
 using SiraUtil.Zenject;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
@@ -34,8 +35,11 @@ namespace SaberQuest.UI.SaberQuest.Views
 		[UIObject("avatar-mask")] private GameObject avatarMask;
         [UIObject("container-background")] private GameObject containerBackground;
         [UIComponent("version-text")] private TextMeshProUGUI versionText;
+        [UIComponent("border")] private ImageView borderPic;
+        [UIComponent("profile-picture")] private ImageView profilePic;
+		[UIComponent("welcome-text")] private TextMeshProUGUI welcomeText;
 
-        [Inject]
+		[Inject]
         private void Construct(SaberQuestFlowCoordinator mainFlowCoordinator, SaberQuestShopFlowCoordinator shopFlowCoordinator, SaberQuestCraftFlowCoordinator craftFlowCoordinator, ISiraSyncService siraSyncService, UBinder<Plugin, PluginMetadata> metadata)
         {
             _mainFlow = mainFlowCoordinator;

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SaberQuest.Models.SaberQuest.API.Data;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
+using SaberQuest.Models.SaberQuest.API.Data.Crafting;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Models.SaberQuest.Web;
 using SiraUtil.Logging;
@@ -38,12 +39,22 @@ namespace SaberQuest.Providers.ApiProvider
             callback(obj);
         }
 
-		public UserModel GetUser(int user, Action<ErrorResponseModel> errorCallback)
+		public UserModel GetUser(long user, Action<ErrorResponseModel> errorCallback)
 		{
 			throw new NotImplementedException();
 		}
 
 		public void GetAllItems(Action<List<ItemModel>> callback, Action<ErrorResponseModel> errorCallback)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void GetAllRecipes(Action<List<RecipeModel>> callback, Action<ErrorResponseModel> errorCallback)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ProvideToken(string token)
 		{
 			throw new NotImplementedException();
 		}

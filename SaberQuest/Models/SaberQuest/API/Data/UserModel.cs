@@ -8,7 +8,7 @@ namespace SaberQuest.Models.SaberQuest.API.Data
 {
 	public class UserModel
     {
-		public UserInfo UserInfo { get; set; }
+		public UserInfoModel UserInfo { get; set; }
 		public StatsModel Stats { get; set; }
 		public TodayModel Today { get; set; }
 	}

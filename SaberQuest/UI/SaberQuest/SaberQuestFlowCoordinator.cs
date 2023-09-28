@@ -16,12 +16,6 @@ namespace SaberQuest.UI.SaberQuest
         {
             _mainView = mainViewController;
             _challengesView = challengesView;
-            MenuButtons.instance.RegisterButton(
-                new MenuButton("Saber Quest", () =>
-                {
-                    BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(this);
-                }
-            ));
         }
 
         public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)

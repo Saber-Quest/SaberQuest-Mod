@@ -30,7 +30,7 @@ namespace SaberQuest.UI.Components.Shop
 
                 tableCell.reuseIdentifier = ReuseIdentifier;
                 BSMLParser.instance.Parse(
-                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Shop.ShopItemCell.bsml"),
+                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Shop.ShopItemCell"),
                     tableCell.gameObject, tableCell
                 );
             }
@@ -68,25 +68,33 @@ namespace SaberQuest.UI.Components.Shop
         public ShopItemListTableCell PopulateWithShopItemData(DealModel deal)
         {
             _dealModel = deal;
-            var item = ItemStore.Get().GetItem(_dealModel.Id);
-
-            if (!UIConsts.RarityColors.TryGetValue(item.Rarity, out Color defaultColor))
+            var itemStore = ItemStore.Get();
+            if (!itemStore.IsFailure)
             {
-                defaultColor = UIConsts.RarityColors["Common"];
-            }
+                var item = itemStore.Value.GetItem(_dealModel.Id).Value;
 
-            if (cell.GetComponent<CellBehaviour>() == null)
+                if (!UIConsts.RarityColors.TryGetValue(item.Rarity, out Color defaultColor))
+                {
+                    defaultColor = UIConsts.RarityColors["Common"];
+                }
+
+                if (cell.GetComponent<CellBehaviour>() == null)
+                {
+                    var behaviour = cell.AddComponent<CellBehaviour>();
+                    behaviour.enabled = false;
+                    behaviour.Construct(this, bg, new Color(0.8f, 0.3f, 1f), defaultColor * 1.2f, defaultColor, true, ImageView.GradientDirection.Vertical);
+                    behaviour.enabled = true;
+                }
+
+                image.SetImage(item.Image);
+                nameText.text = item.Name;
+
+                return this;
+            }
+            else
             {
-                var behaviour = cell.AddComponent<CellBehaviour>();
-                behaviour.enabled = false;
-                behaviour.Construct(this, bg, new Color(0.8f, 0.3f, 1f), defaultColor * 1.2f, defaultColor, true, ImageView.GradientDirection.Vertical);
-                behaviour.enabled = true;
+                return null;
             }
-
-            image.SetImage(item.Image);
-            nameText.text = item.Name;
-
-            return this;
         }
     }
 }

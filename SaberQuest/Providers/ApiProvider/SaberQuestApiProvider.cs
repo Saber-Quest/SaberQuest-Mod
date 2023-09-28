@@ -1,5 +1,6 @@
 ﻿using SaberQuest.Models.SaberQuest.API.Data;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
+using SaberQuest.Models.SaberQuest.API.Data.Crafting;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
 using SaberQuest.Models.SaberQuest.Web;
 using SiraUtil.Logging;
@@ -35,6 +36,15 @@ namespace SaberQuest.Providers.ApiProvider
 			}, errorCallback);
 		}
 
+		public void GetAllRecipes(Action<List<RecipeModel>> callback, Action<ErrorResponseModel> errorCallback)
+		{
+			JsonHttpGetRequest(BASE_URL + "crafting/recipes", (res) =>
+			{
+				var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<List<RecipeModel>>(res);
+				callback(obj);
+			}, errorCallback);
+		}
+
 		public void GetDailyChallenges(Action<ChallengeSetModel> callback, Action<ErrorResponseModel> errorCallback)
         {
             JsonHttpGetRequest(BASE_URL + "challenge/daily/mod", (res) =>
@@ -53,14 +63,20 @@ namespace SaberQuest.Providers.ApiProvider
             }, errorCallback);
         }
 
-		public UserModel GetUser(int user, Action<ErrorResponseModel> errorCallback)
+		public UserModel GetUser(long user, Action<ErrorResponseModel> errorCallback)
 		{
             UserModel userObj = null;
-			JsonHttpGetRequest(BASE_URL + "profile/" + user, (res) =>
+			JsonHttpGetRequest(BASE_URL + "profile/" + user + (user == -1 ? "?code=true" : ""), (res) =>
 			{
+                Console.WriteLine(res);
 				userObj = Newtonsoft.Json.JsonConvert.DeserializeObject<UserModel>(res);
 			}, errorCallback);
             return userObj;
+		}
+
+		public void ProvideToken(string token)
+		{
+            _httpService.Token = "Bearer " + token;
 		}
 
 		private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
@@ -70,7 +86,8 @@ namespace SaberQuest.Providers.ApiProvider
                 var res = await _httpService.GetAsync(url);
                 if (!res.Successful)
                 {
-                    errorCallback.Invoke(new ErrorResponseModel(res));
+					Console.WriteLine(res.Error().Result);
+					errorCallback.Invoke(new ErrorResponseModel(res));
                 }
                 var stringRes = await res.ReadAsStringAsync();
                 callback(stringRes);

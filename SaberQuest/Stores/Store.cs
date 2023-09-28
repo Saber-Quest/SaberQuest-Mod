@@ -1,4 +1,5 @@
 ﻿using SaberQuest.Providers.ApiProvider;
+using SaberQuest.Utils;
 using SiraUtil.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,14 @@ namespace SaberQuest.Stores
 			Logger = logger;
 		}
 
-		public static T Get()
+		public static Result<T> Get()
 		{
 			if(Instance == null)
 			{
 				Console.Error.WriteLine($"Failed to get {typeof(T).Name} as it has not been constructed yet!");
+				return Result.Fail<T>("Uninitialized");
 			}
-			return Instance;
+			return Result.Ok(Instance);
 		}
 	}
 }

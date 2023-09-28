@@ -30,7 +30,7 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
 
                 tableCell.reuseIdentifier = ReuseIdentifier;
                 BSMLParser.instance.Parse(
-                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.GroupCell.CraftingGroupCell.bsml"),
+                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.GroupCell.CraftItemGroupListTableData"),
                     tableCell.gameObject, tableCell
                 );
             }

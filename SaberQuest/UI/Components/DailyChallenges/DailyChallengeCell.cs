@@ -28,7 +28,7 @@ namespace SaberQuest.UI.Components.DailyChallenges
 
                 tableCell.reuseIdentifier = ReuseIdentifier;
                 BSMLParser.instance.Parse(
-                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.DailyChallenges.DailyChallengeCell.bsml"),
+                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.DailyChallenges.DailyChallengesListTableData"),
                     tableCell.gameObject, tableCell
                 );
             }
