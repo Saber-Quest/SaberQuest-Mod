@@ -1,7 +1,7 @@
 ﻿<vertical bg='panel-top' pref-width='19' pref-height='30' vertical-fit='PreferredSize'>
   <vertical pad-top='1' horizontal-fit='Unconstrained'>
-    <text text='Red Note Pieces' font-align='Center' word-wrapping='true'/>
-    <image src='https://saberquest.xyz/images/red_cube_pieces_icon.png' preserver-aspect='true' pref-width='19' pref-height='19' min-height='19' min-width='19'/>
+    <text id='name' font-align='Center' word-wrapping='true'/>
+    <image id='image' preserver-aspect='true' pref-width='19' pref-height='19' min-height='19' min-width='19'/>
   </vertical>
   <horizontal ignore-layout='true' bg='panel-top-gradient' horizontal-fit='PreferredSize' pad-left='2' pad-right='2' anchor-pos-y='2.75' bg-color='#FFAAAA'>
     <text text='Count: 1' font-size='2'/>

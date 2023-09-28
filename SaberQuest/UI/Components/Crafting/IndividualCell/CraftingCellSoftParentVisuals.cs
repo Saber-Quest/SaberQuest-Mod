@@ -5,6 +5,7 @@ using HMUI;
 using IPA.Utilities;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +23,10 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
         private NoTransitionsButton button;
 
-        private Color normal = Color.white.ColorWithAlpha(0.4f);
+        [UIComponent("name")] private TMP_Text Name;
+		[UIComponent("image")] private ImageView Image;
+
+		private Color normal = Color.white.ColorWithAlpha(0.4f);
         private Color highlight = new Color(0.25f, 0.4f, 0.5f).ColorWithAlpha(1.0f);
 
         internal static CraftingCellSoftParentVisuals GetVisualCell(Transform itemsParent)
@@ -38,7 +42,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
             (cell.transform as RectTransform).sizeDelta = new Vector2(19f, 30f);
 
             BSMLParser.instance.Parse(
-                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.IndividualCell.CraftingCell"),
+                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.IndividualCell.CraftItemCell"),
                     cell, visuals);
 
             return visuals;
@@ -79,7 +83,9 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
         internal void SetCell(CraftItemCell cell)
         {
             linkedCell = cell;
-        }
+            Name.text = cell.itemModel.Name;
+            Image.SetImage(cell.itemModel.Image);
+		}
 
         private void OnDestroy()
         {

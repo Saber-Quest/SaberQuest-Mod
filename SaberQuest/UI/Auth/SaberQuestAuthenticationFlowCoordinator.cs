@@ -43,19 +43,8 @@ namespace SaberQuest.UI.Auth
         {
             HMMainThreadDispatcher.instance.Enqueue(() =>
             {
-                StartCoroutine(Goto());
-            });
-		}
-
-        private IEnumerator Goto()
-        {
-			BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this);
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForEndOfFrame();
-			BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(_mainFlow);
+				BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this, () => BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(_mainFlow));
+			});
 		}
 
 		public override void BackButtonWasPressed(ViewController topViewController)

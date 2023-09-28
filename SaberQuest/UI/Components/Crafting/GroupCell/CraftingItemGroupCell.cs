@@ -17,7 +17,7 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
     {
         const string ReuseIdentifier = "REUSECraftItemGroupListTableCell";
 
-        public static CraftItemGroupListTableCell GetCell(int idx, TableView tableView, List<ItemModel> items, Transform itemParent, CellManager manager)
+        public static CraftItemGroupListTableCell GetCell(int idx, VisualCellPool pool, TableView tableView, List<ItemModel> items, Transform itemParent, CellManager manager)
         {
             var tableCell = tableView.DequeueReusableCellForIdentifier(ReuseIdentifier);
 
@@ -26,7 +26,7 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
                 tableCell = new GameObject("CraftItemGroupListTableCell", typeof(Touchable)).AddComponent<CraftItemGroupListTableCell>();
 
                 //We need to populate the list of sub cells for the foreach macro
-                (tableCell as CraftItemGroupListTableCell).PopulateWithItems(items, itemParent, manager);
+                (tableCell as CraftItemGroupListTableCell).PopulateWithItems(pool, items, itemParent, manager);
 
                 tableCell.reuseIdentifier = ReuseIdentifier;
                 BSMLParser.instance.Parse(
@@ -36,7 +36,7 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
             }
             else
             {
-                (tableCell as CraftItemGroupListTableCell).PopulateWithItems(items, itemParent, manager);
+                (tableCell as CraftItemGroupListTableCell).PopulateWithItems(pool, items, itemParent, manager);
             }
 
             return (CraftItemGroupListTableCell)tableCell;
@@ -46,71 +46,41 @@ namespace SaberQuest.UI.Components.Crafting.GroupCell
     class CraftItemGroupListTableCell : TableCell
     {
         private Transform _itemParent;
+        private VisualCellPool _pool;
         private List<ItemModel> _items;
 
-        [UIValue("cells")] internal List<CraftItemCell> cells;
+        [UIValue("cells")] internal List<CraftItemCell> cells = new List<CraftItemCell>(5);
 
-        public CraftItemGroupListTableCell PopulateWithItems(List<ItemModel> items, Transform itemParent, CellManager manager)
+        public CraftItemGroupListTableCell PopulateWithItems(VisualCellPool pool, List<ItemModel> items, Transform itemParent, CellManager manager)
         {
-            _itemParent = itemParent;
+            _pool = pool;
+			_itemParent = itemParent;
             _items = items;
-            if (cells == null)
-            {
-                cells = items.ConvertAll(x =>
-                {
-                    var visuals = CraftingCellSoftParentVisuals.GetVisualCell(itemParent);
-                    visuals.cellManager = manager;
-                    var cell = new CraftItemCell().PopulateWithItemData(x, visuals);
-                    visuals.SetCell(cell);
-                    return cell;
-                });
-            }
-            else
-            {
-                for (int i = 0; i < items.Count; i++)
-                {
-                    if (i < cells.Count && cells[i] != null)
-                    {
-                        if (!cells[i].itemModel.usedInCrafting && cells[i].linkedVisuals != null)
-                        {
-                            var cellVisuals = cells[i].linkedVisuals;
-                            var row = items[i].row;
-                            if (manager.firstCraftingCellRow != row && manager.secondCraftingCellRow != row)
-                            {
-                                Console.WriteLine("test1");
-                                if (manager.firstCraftingCellVisuals == cellVisuals || manager.secondCraftingCellVisuals == cellVisuals)
-                                {
-                                    Console.WriteLine("test2");
-                                    cellVisuals = CraftingCellSoftParentVisuals.GetVisualCell(itemParent);
-                                    cellVisuals.cellManager = manager;
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("test3");
-                                cellVisuals = manager.firstCraftingCellItem == items[i] ? manager.firstCraftingCellVisuals : manager.secondCraftingCellVisuals;
-                            }
-                            var cell = cells[i].PopulateWithItemData(items[i], cellVisuals);
-                            cellVisuals.SetCell(cell);
-                            cells[i] = cell;
-                        }
-                        else
-                        {
-                            Console.WriteLine("ghj");
-                            var visuals = manager.firstCraftingCellItem == items[i] ? manager.firstCraftingCellVisuals : manager.secondCraftingCellVisuals;
-                            var cell = cells[i].PopulateWithItemData(items[i], visuals);
-                            visuals.SetCell(cell);
-                            cells[i] = cell;
-                        }
-                    }
-                }
-            }
-            return this;
+            cells = cells.ConvertAll<CraftItemCell>(x => {
+                return null;
+            });
+			cells = items.Select((ItemModel x, int y) =>
+			{
+				var visuals = _pool.Get();
+				visuals.cellManager = manager;
+                var cell = (cells[y] == null ? new CraftItemCell() : cells[y]).PopulateWithItemData(x, visuals);
+				visuals.SetCell(cell);
+				return cell;
+			}).ToList();
+			return this;
         }
 
         [UIAction("#post-parse")]
         internal void PostParse()
         {
+        }
+
+        private void OnDisable()
+        {
+            foreach (var cell in cells)
+            {
+                _pool.Dequeue(cell.linkedVisuals);
+            }
         }
     }
 }

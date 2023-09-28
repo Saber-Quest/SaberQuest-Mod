@@ -25,7 +25,7 @@ namespace SaberQuest.Stores
 
 		public Result<ItemModel> GetItem(string id)
 		{
-			var item = Items.FirstOrDefault(x => x.Id == id);
+			var item = Items.Find(x => x.Id == id);
 			if(item != null)
 			{
 				return Result.Ok(item);

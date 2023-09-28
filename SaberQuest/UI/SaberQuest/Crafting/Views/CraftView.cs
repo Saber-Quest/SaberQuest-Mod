@@ -10,7 +10,9 @@ using SaberQuest.Providers.ApiProvider;
 using SaberQuest.Stores;
 using SaberQuest.UI.Components.Crafting;
 using SaberQuest.UI.Components.Crafting.GroupCell;
+using SaberQuest.UI.Components.Crafting.IndividualCell;
 using SiraUtil.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -42,6 +44,8 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 		private List<ItemModel> items;
 		private List<List<ItemModel>> chunkedItems;
 
+		private VisualCellPool _pool;
+
 		[Inject]
 		private void Construct(ISaberQuestApiProvider apiProvider, SiraLog siraLog)
 		{
@@ -54,6 +58,9 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 		{
 			if (gameObject.GetComponent<Touchable>() == null)
 				gameObject.AddComponent<Touchable>();
+
+			_pool = _itemParent.gameObject.AddComponent<VisualCellPool>();
+			_pool.Initialize(_itemParent.transform);
 
 			cellManager = gameObject.AddComponent<CellManager>();
 			cellManager.firstSlot = _firstSlot;
@@ -99,13 +106,12 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 			craftList.transform.parent.parent.gameObject.GetComponent<ImageView>().raycastTarget = false;
 
 			_itemParent.transform.SetParent(craftList.transform, false);
-
 		}
 
 		public float CellSize() => 32f;
 
 		public int NumberOfCells() => chunkedItems.Count;
 
-		public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(idx, tableView, chunkedItems[idx], _itemParent.transform, cellManager);
+		public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(idx, _pool, tableView, chunkedItems[idx], _itemParent.transform, cellManager);
 	}
 }
