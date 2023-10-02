@@ -41,10 +41,7 @@ namespace SaberQuest.UI.Auth
 
         public void GoToMainFlow()
         {
-            HMMainThreadDispatcher.instance.Enqueue(() =>
-            {
-				BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this, () => BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(_mainFlow));
-			});
+			BeatSaberUI.MainFlowCoordinator.DismissFlowCoordinator(this, () => BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(_mainFlow), ViewController.AnimationDirection.Horizontal, true);
 		}
 
 		public override void BackButtonWasPressed(ViewController topViewController)

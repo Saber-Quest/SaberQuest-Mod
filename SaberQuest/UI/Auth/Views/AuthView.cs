@@ -1,7 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.Components;
-using BeatSaberMarkupLanguage.MenuButtons;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Utilities;
@@ -26,7 +25,7 @@ namespace SaberQuest.UI.Auth.Views
 		private ISaberQuestApiProvider _apiProvider = null;
 
 		[Inject]
-        internal void Construct(SaberQuestAuthenticationFlowCoordinator authFlow, TokenStorageProvider tokenStorageProvider, ISaberQuestApiProvider apiProvider)
+		internal void Construct(SaberQuestAuthenticationFlowCoordinator authFlow, TokenStorageProvider tokenStorageProvider, ISaberQuestApiProvider apiProvider)
 		{
 			_authFlow = authFlow;
 			_tokenStorageProvider = tokenStorageProvider;
@@ -54,49 +53,55 @@ namespace SaberQuest.UI.Auth.Views
 		{
 			base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
 
+			//Action because uhhhh
+			var getNewToken = () =>
+			{
+				var websocket = new AuthWebsocketProvider();
+				websocket.Initialize((x) =>
+				{
+					Console.WriteLine("Token recieved, storing");
+					_tokenStorageProvider.StoreToken(x);
+					_apiProvider.ProvideToken(x);
+					Console.WriteLine("Getting new user");
+					var userStore = UserStore.Get();
+					if (!userStore.IsFailure)
+					{
+						Console.WriteLine("Setting new user");
+						userStore.Value.SetUser(async _ => {
+							await Task.Delay(500);
+							HMMainThreadDispatcher.instance.Enqueue(() =>
+							{
+								_authFlow.GoToMainFlow();
+							});
+						}, () => { });
+					}
+				});
+				Console.WriteLine("Opening auth url");
+				Application.OpenURL("https://dev.saberquest.xyz/login/mod/beatleader");
+			};
+
 			Console.WriteLine("Starting AuthView");
 			var token = _tokenStorageProvider.GetToken();
-			Console.WriteLine("Checking existing token");
+
 			if (!string.IsNullOrEmpty(token))
 			{
 				Console.WriteLine("Existing token exists");
 				_apiProvider.ProvideToken(token);
 				var userStore = UserStore.Get();
-				userStore.Value.SetUser();
+				userStore.Value.SetUser(async _ =>
+				{
+					await Task.Delay(500);
+					HMMainThreadDispatcher.instance.Enqueue(() =>
+					{
+						_authFlow.GoToMainFlow();
+					});
+				}, () => getNewToken());
 				Console.WriteLine("Set Current User");
 			}
-			if (UserStore.Get().Value.GetCurentUser().Success)
+			else
 			{
-				Console.WriteLine("User exists for current token");
-				_authFlow.GoToMainFlow();
-				return;
+				getNewToken();
 			}
-			Console.WriteLine("x3");
-			Console.WriteLine("Starting auth socket");
-			var websocket = new AuthWebsocketProvider();
-			websocket.Initialize((x) =>
-			{
-				Console.WriteLine("Token recieved, storing");
-				_tokenStorageProvider.StoreToken(x);
-				_apiProvider.ProvideToken(x);
-				Console.WriteLine("Getting new user");
-				var userStore = UserStore.Get();
-				if(!userStore.IsFailure)
-				{
-					try
-					{
-						Console.WriteLine("Setting new user");
-						userStore.Value.SetUser();
-					}
-					finally
-					{
-						Console.WriteLine("Going to mainview");
-						_authFlow.GoToMainFlow();
-					}
-				}
-			});
-			Console.WriteLine("Opening auth url");
-			Application.OpenURL("https://dev.saberquest.xyz/login/mod/beatleader");
 		}
 	}
 }
