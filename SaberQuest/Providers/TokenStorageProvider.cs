@@ -34,6 +34,7 @@ namespace SaberQuest.Providers
 
 			internal string GetToken()
 			{
+				if (!File.Exists(TokenPath)) return "";
 				var zippedBytes = File.ReadAllBytes(TokenPath);
 				using (var memoryStream = new MemoryStream(zippedBytes))
 				{

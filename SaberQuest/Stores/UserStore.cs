@@ -2,6 +2,7 @@
 using SaberQuest.Utils;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,17 @@ namespace SaberQuest.Stores
 			}
 		}
 
-		public void SetUser() => CurrentUser = ApiProvider.GetUser(-1, (err) => Logger.Error($"Failed to get user with token because of error: {err?.Message}"));
+		public void SetUser(Action<UserModel> OnResult, Action OnError)
+		{
+			ApiProvider.GetUser(-1, (x) =>
+			{
+				CurrentUser = x;
+				OnResult(x);
+			}, (err) =>
+			{
+				OnError();
+				Logger.Error($"Failed to get user with token because of error: {err?.ToString()}");
+			});
+		}
 	}
 }

@@ -15,7 +15,6 @@ namespace SaberQuest.Providers.ApiProvider
 		public void GetShopItems(Action<DealSetModel> callback, Action<ErrorResponseModel> errorCallback);
         public void GetAllItems(Action<List<ItemModel>> callback, Action<ErrorResponseModel> errorCallback);
         public void GetAllRecipes(Action<List<RecipeModel>> callback, Action<ErrorResponseModel> errorCallback);
-		//blocks because lazy
-		public UserModel GetUser(long user, Action<ErrorResponseModel> errorCallback);
+		public void GetUser(long user, Action<UserModel> callback, Action<ErrorResponseModel> errorCallback);
 	}
 }

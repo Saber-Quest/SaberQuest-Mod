@@ -39,7 +39,7 @@ namespace SaberQuest.Providers.ApiProvider
             callback(obj);
         }
 
-		public UserModel GetUser(long user, Action<ErrorResponseModel> errorCallback)
+		public void GetUser(long user, Action<UserModel> callback, Action<ErrorResponseModel> errorCallback)
 		{
 			throw new NotImplementedException();
 		}

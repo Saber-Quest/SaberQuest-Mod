@@ -9,6 +9,7 @@ using SaberQuest.Providers;
 using SaberQuest.Providers.ApiProvider;
 using SaberQuest.Providers.BSChallenger.Providers;
 using SaberQuest.Stores;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -53,26 +54,49 @@ namespace SaberQuest.UI.Auth.Views
 		{
 			base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
 
-			Task.Run(async () =>
+			Console.WriteLine("Starting AuthView");
+			var token = _tokenStorageProvider.GetToken();
+			Console.WriteLine("Checking existing token");
+			if (!string.IsNullOrEmpty(token))
 			{
-				var websocket = new AuthWebsocketProvider();
-				websocket.Initialize((x) =>
+				Console.WriteLine("Existing token exists");
+				_apiProvider.ProvideToken(token);
+				var userStore = UserStore.Get();
+				userStore.Value.SetUser();
+				Console.WriteLine("Set Current User");
+			}
+			if (UserStore.Get().Value.GetCurentUser().Success)
+			{
+				Console.WriteLine("User exists for current token");
+				_authFlow.GoToMainFlow();
+				return;
+			}
+			Console.WriteLine("x3");
+			Console.WriteLine("Starting auth socket");
+			var websocket = new AuthWebsocketProvider();
+			websocket.Initialize((x) =>
+			{
+				Console.WriteLine("Token recieved, storing");
+				_tokenStorageProvider.StoreToken(x);
+				_apiProvider.ProvideToken(x);
+				Console.WriteLine("Getting new user");
+				var userStore = UserStore.Get();
+				if(!userStore.IsFailure)
 				{
-					_tokenStorageProvider.StoreToken(x);
-					_apiProvider.ProvideToken(x);
-					var userStore = UserStore.Get();
-					if(!userStore.IsFailure)
+					try
 					{
+						Console.WriteLine("Setting new user");
 						userStore.Value.SetUser();
+					}
+					finally
+					{
+						Console.WriteLine("Going to mainview");
 						_authFlow.GoToMainFlow();
 					}
-				});
-				while (!websocket.started)
-				{
-					await Task.Delay(100);
 				}
-				Application.OpenURL("https://dev.saberquest.xyz/login/mod/beatleader");
 			});
+			Console.WriteLine("Opening auth url");
+			Application.OpenURL("https://dev.saberquest.xyz/login/mod/beatleader");
 		}
 	}
 }

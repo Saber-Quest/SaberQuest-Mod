@@ -63,20 +63,21 @@ namespace SaberQuest.Providers.ApiProvider
             }, errorCallback);
         }
 
-		public UserModel GetUser(long user, Action<ErrorResponseModel> errorCallback)
+		public void GetUser(long user, Action<UserModel> callback, Action<ErrorResponseModel> errorCallback)
 		{
-            UserModel userObj = null;
-			JsonHttpGetRequest(BASE_URL + "profile/" + user + (user == -1 ? "?code=true" : ""), (res) =>
+            string url = user != -1 ? BASE_URL + "profile/" + user : BASE_URL + "profile/mod";
+			JsonHttpGetRequest(url, (res) =>
 			{
                 Console.WriteLine(res);
-				userObj = Newtonsoft.Json.JsonConvert.DeserializeObject<UserModel>(res);
+				var userObj = Newtonsoft.Json.JsonConvert.DeserializeObject<UserModel>(res);
+                callback(userObj);
 			}, errorCallback);
-            return userObj;
 		}
 
 		public void ProvideToken(string token)
 		{
-            _httpService.Token = token;
+			Console.WriteLine($"providing token: {token}");
+			_httpService.Token = token;
 		}
 
 		private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
