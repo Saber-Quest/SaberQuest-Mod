@@ -85,6 +85,17 @@ namespace SaberQuest.UI.SaberQuest.Views
                     }
 				});
             });
+
+            var userRes = UserStore.Get().Value.GetCurentUser();
+            if (userRes.TryGetValue(out var user))
+            {
+                profilePic.SetImage(user.UserInfo.Images.Avatar);
+                welcomeText.text = $"Welcome, {user.UserInfo.Username}!";
+            }
+            else
+            {
+                welcomeText.text = "Failed to load user";
+            }
 		}
 
         [UIAction("present-shop")]

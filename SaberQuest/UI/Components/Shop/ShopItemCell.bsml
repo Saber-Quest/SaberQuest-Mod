@@ -1,8 +1,8 @@
 ﻿<bg xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='https://monkeymanboy.github.io/BSML-Docs/ https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
 	>
-  <vertical id="cell" bg="panel-top" pref-height="20" pref-width="16" pad-bottom="2">
-    <text id="name-text" font-align="Center" font-size="3"/>
+  <vertical id="cell" bg="panel-top" pref-height="20" pref-width="16" pad-bottom="2" vertical-fit="PreferredSize">
+    <text id="name-text" font-align="Center" font-size="3" />
     <img id="image" pref-height="10" pref-width="10" preserve-aspect="true"/>
   </vertical>
 </bg>

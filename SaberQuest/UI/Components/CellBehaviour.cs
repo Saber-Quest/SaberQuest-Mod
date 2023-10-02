@@ -17,8 +17,9 @@ namespace SaberQuest.UI.Components
         private RectTransform bgRect;
         private Vector2 startingMin;
         private Vector2 startingMax;
+        private bool rotate;
 
-        internal void Construct(TableCell cell, ImageView bg, Color selectedColor, Color highlightedColor, Color defaultColor, bool gradient, ImageView.GradientDirection gradientDirection)
+        internal void Construct(TableCell cell, ImageView bg, Color selectedColor, Color highlightedColor, Color defaultColor, bool gradient, ImageView.GradientDirection gradientDirection, bool rotateOnHover)
         {
             this.cell = cell;
             this.bg = bg;
@@ -27,7 +28,9 @@ namespace SaberQuest.UI.Components
             this.defaultColor = defaultColor;
             this.gradient = gradient;
             this.gradientDirection = gradientDirection;
-            bgRect = bg.transform as RectTransform;
+            this.rotate = rotateOnHover;
+
+			bgRect = bg.transform as RectTransform;
             startingMin = bgRect.anchorMin;
             startingMax = bgRect.anchorMax;
         }
@@ -71,6 +74,11 @@ namespace SaberQuest.UI.Components
             {
                 bgRect.anchorMin = Vector2.Lerp(bgRect.anchorMin, startingMin + targetAnchor, Time.deltaTime * 6f);
                 bgRect.anchorMax = Vector2.Lerp(bgRect.anchorMax, startingMax + targetAnchor, Time.deltaTime * 6f);
+            }
+
+            if (rotate)
+            {
+                bgRect.rotation = Quaternion.Slerp(bgRect.rotation, cell.selected ? Quaternion.Euler(0f, 0f, -6f) : Quaternion.identity, Time.deltaTime * 6f);
             }
         }
     }

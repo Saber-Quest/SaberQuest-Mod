@@ -51,6 +51,12 @@ namespace SaberQuest.Utils
 			Value = value;
 		}
 
+		public bool TryGetValue(out T result)
+		{
+			result = Value;
+			return Success;
+		}
+
 		public T Value { get; set; }
 	}
 }

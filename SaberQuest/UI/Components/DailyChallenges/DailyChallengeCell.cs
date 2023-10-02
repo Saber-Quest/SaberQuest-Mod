@@ -80,7 +80,7 @@ namespace SaberQuest.UI.Components.DailyChallenges
             {
                 var behaviour = cell.AddComponent<CellBehaviour>();
                 behaviour.enabled = false;
-                behaviour.Construct(this, bg, colorSet[2], colorSet[1], colorSet[0], true, 0);
+                behaviour.Construct(this, bg, colorSet[2], colorSet[1], colorSet[0], true, 0, false);
                 behaviour.enabled = true;
             }
 

@@ -30,7 +30,7 @@ namespace SaberQuest.UI.Components.Shop
 
                 tableCell.reuseIdentifier = ReuseIdentifier;
                 BSMLParser.instance.Parse(
-                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Shop.ShopItemCell"),
+                    Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Shop.ShopItemListTableData"),
                     tableCell.gameObject, tableCell
                 );
             }
@@ -82,11 +82,12 @@ namespace SaberQuest.UI.Components.Shop
                 {
                     var behaviour = cell.AddComponent<CellBehaviour>();
                     behaviour.enabled = false;
-                    behaviour.Construct(this, bg, new Color(0.8f, 0.3f, 1f), defaultColor * 1.2f, defaultColor, true, ImageView.GradientDirection.Vertical);
+                    behaviour.Construct(this, bg, new Color(0.8f, 0.3f, 1f), defaultColor * 1.2f, defaultColor.ColorWithAlpha(0.6f), true, ImageView.GradientDirection.Vertical, true);
                     behaviour.enabled = true;
                 }
 
                 image.SetImage(item.Image);
+                nameText.lineSpacing = -50f;
                 nameText.text = item.Name;
 
                 return this;
