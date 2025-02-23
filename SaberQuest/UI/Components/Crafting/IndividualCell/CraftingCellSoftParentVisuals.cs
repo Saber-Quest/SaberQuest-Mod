@@ -41,7 +41,7 @@ namespace SaberQuest.UI.Components.Crafting.IndividualCell
 
             (cell.transform as RectTransform).sizeDelta = new Vector2(19f, 30f);
 
-            BSMLParser.instance.Parse(
+            BSMLParser.Instance.Parse(
                     Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Crafting.IndividualCell.CraftItemCell"),
                     cell, visuals);
 

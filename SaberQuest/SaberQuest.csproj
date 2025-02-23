@@ -35,13 +35,64 @@
     <None Remove="UI\SaberQuest\Views\MainView.bsml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="BeatSaber.ViewSystem">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BeatSaber.ViewSystem.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <Publicize>True</Publicize>
+    </Reference>
+    <Reference Include="BGLib.UnityExtension">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.UnityExtension.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="BGNetCore">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BGNetCore.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="BSML">
+      <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
+      <Private>False</Private>
+      <Publicize>True</Publicize>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Colors">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Colors.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Core">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Core.dll</HintPath>
       <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
+      <Publicize>True</Publicize>
+    </Reference>
+    <Reference Include="DataModels">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\DataModels.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Helpers">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Helpers.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Hive.Versioning">
-      <HintPath>C:\Users\Owens\OneDrive\Documents\BSManager\BSInstances\bs\Libs\Hive.Versioning.dll</HintPath>
+      <HintPath>$(BeatSaberDir)\Libs\Hive.Versioning.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Interactable">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Interactable.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <Publicize>True</Publicize>
+    </Reference>
+    <Reference Include="PlatformUserModel">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\PlatformUserModel.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="0Harmony, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -56,10 +107,7 @@
     <Reference Include="HMUI" Publicize="true">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\HMUI.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="BSML" Publicize="true">
-      <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
-      <Private>False</Private>
+      <Publicize>True</Publicize>
     </Reference>
     <Reference Include="IPA.Loader">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\IPA.Loader.dll</HintPath>
@@ -68,6 +116,12 @@
     <Reference Include="Main">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
       <Private>False</Private>
+      <Publicize>True</Publicize>
+    </Reference>
+    <Reference Include="Tweening">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Tweening.dll</HintPath>
+      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Unity.TextMeshPro.dll</HintPath>
@@ -134,6 +188,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
     <None Include="Directory.Build.targets" Condition="Exists('Directory.Build.targets')" />
     <None Include="SaberQuest.csproj.user" Condition="Exists('SaberQuest.csproj.user')" />

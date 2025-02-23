@@ -16,5 +16,7 @@ namespace SaberQuest.Providers.ApiProvider
         public void GetAllItems(Action<List<ItemModel>> callback, Action<ErrorResponseModel> errorCallback);
         public void GetAllRecipes(Action<List<RecipeModel>> callback, Action<ErrorResponseModel> errorCallback);
 		public void GetUser(long user, Action<UserModel> callback, Action<ErrorResponseModel> errorCallback);
-	}
+        public void Authenticate(string username, string userId, string token, string platform, Action<UserModel> callback, Action<ErrorResponseModel> errorCallback);
+
+    }
 }

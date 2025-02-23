@@ -29,7 +29,7 @@ namespace SaberQuest.UI.Components.Shop
                 tableCell.interactable = true;
 
                 tableCell.reuseIdentifier = ReuseIdentifier;
-                BSMLParser.instance.Parse(
+                BSMLParser.Instance.Parse(
                     Utilities.GetResourceContent(Assembly.GetExecutingAssembly(), "SaberQuest.UI.Components.Shop.ShopItemListTableData"),
                     tableCell.gameObject, tableCell
                 );

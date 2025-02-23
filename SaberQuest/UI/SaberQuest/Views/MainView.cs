@@ -5,6 +5,7 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Loader;
 using IPA.Utilities;
+using IPA.Utilities.Async;
 using SaberQuest.Stores;
 using SaberQuest.UI.SaberQuest.Crafting;
 using SaberQuest.UI.SaberQuest.Shop;
@@ -72,7 +73,7 @@ namespace SaberQuest.UI.SaberQuest.Views
 
             Task.Run(async () => {
                 var latest = await _siraSyncService.LatestVersion();
-				HMMainThreadDispatcher.instance.Enqueue(() => {
+				UnityMainThreadTaskScheduler.Factory.StartNew(() => {
 					if (latest > _metadata.HVersion || true)
 					{
                         versionText.text = $"Your version of SaberQuest is out of date! Latest: v{latest}, Current: v{_metadata.HVersion}";

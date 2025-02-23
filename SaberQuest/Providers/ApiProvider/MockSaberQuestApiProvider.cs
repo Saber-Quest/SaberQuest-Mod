@@ -58,5 +58,10 @@ namespace SaberQuest.Providers.ApiProvider
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+        public void Authenticate(string username, string userId, string token, string platform, Action<UserModel> callback, Action<ErrorResponseModel> errorCallback)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

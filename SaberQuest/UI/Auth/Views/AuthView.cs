@@ -4,13 +4,17 @@ using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Utilities;
+using IPA.Utilities.Async;
 using SaberQuest.Providers;
 using SaberQuest.Providers.ApiProvider;
 using SaberQuest.Providers.BSChallenger.Providers;
 using SaberQuest.Stores;
+using SiraUtil.Web;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -23,8 +27,9 @@ namespace SaberQuest.UI.Auth.Views
 		private SaberQuestAuthenticationFlowCoordinator _authFlow = null;
 		private TokenStorageProvider _tokenStorageProvider = null;
 		private ISaberQuestApiProvider _apiProvider = null;
+		[Inject] private IPlatformUserModel _platformUserModel = null;
 
-		[Inject]
+        [Inject]
 		internal void Construct(SaberQuestAuthenticationFlowCoordinator authFlow, TokenStorageProvider tokenStorageProvider, ISaberQuestApiProvider apiProvider)
 		{
 			_authFlow = authFlow;
@@ -49,59 +54,39 @@ namespace SaberQuest.UI.Auth.Views
 			}
 		}
 
-		public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
+		[UIComponent("text")]
+        private TextMeshProUGUI _text = null;
+
+		[UIObject("loading")]
+		private GameObject _loading = null;
+
+        public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
 		{
 			base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
 
-			//Action because uhhhh
-			var getNewToken = () =>
-			{
-				var websocket = new AuthWebsocketProvider();
-				websocket.Initialize((x) =>
-				{
-					Console.WriteLine("Token recieved, storing");
-					_tokenStorageProvider.StoreToken(x);
-					_apiProvider.ProvideToken(x);
-					Console.WriteLine("Getting new user");
-					var userStore = UserStore.Get();
-					if (!userStore.IsFailure)
-					{
-						Console.WriteLine("Setting new user");
-						userStore.Value.SetUser(async _ => {
-							await Task.Delay(500);
-							HMMainThreadDispatcher.instance.Enqueue(() =>
-							{
-								_authFlow.GoToMainFlow();
-							});
-						}, () => { });
-					}
-				});
-				Console.WriteLine("Opening auth url");
-				Application.OpenURL("https://dev.saberquest.xyz/login/mod/beatleader");
-			};
+            Task.Run(async() =>
+            {
+                UserInfo userInfo = await _platformUserModel.GetUserInfo(CancellationToken.None);
+                XPlatformAccessTokenData tokendata = await _platformUserModel.RequestXPlatformAccessToken(CancellationToken.None);
 
-			Console.WriteLine("Starting AuthView");
-			var token = _tokenStorageProvider.GetToken();
+                string username = userInfo.userName;
+                string userId = userInfo.platformUserId;
+                string platform = userInfo.platform.ToString().ToUpper();
+                string token = tokendata.token;
 
-			if (!string.IsNullOrEmpty(token))
-			{
-				Console.WriteLine("Existing token exists");
-				_apiProvider.ProvideToken(token);
-				var userStore = UserStore.Get();
-				userStore.Value.SetUser(async _ =>
+                UnityMainThreadTaskScheduler.Factory.StartNew(() =>
 				{
-					await Task.Delay(500);
-					HMMainThreadDispatcher.instance.Enqueue(() =>
-					{
-						_authFlow.GoToMainFlow();
-					});
-				}, () => getNewToken());
-				Console.WriteLine("Set Current User");
-			}
-			else
-			{
-				getNewToken();
-			}
-		}
+                    _apiProvider.Authenticate(username, userId, token, platform, (user) =>
+                    {
+                        _authFlow.GoToMainFlow();
+                    }, (err) =>
+                    {
+                        Console.WriteLine($"Failed to authenticate user because of error: {err?.ToString()}");
+                        _text.text = "Failed to authenticate!\nReport this to the developers!";
+                        _loading.SetActive(false);
+                    });
+                });
+            });
+        }
 	}
 }

@@ -4,6 +4,7 @@ using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Utilities;
+using IPA.Utilities.Async;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Providers.ApiProvider;
 using SaberQuest.UI.Components.DailyChallenges;
@@ -116,7 +117,7 @@ namespace SaberQuest.UI.SaberQuest.Views
         internal void ApplyChallengeSet(ChallengeSetModel challengeSet)
         {
             _selectedChallengeSet = challengeSet;
-            HMMainThreadDispatcher.instance.Enqueue(() =>
+            UnityMainThreadTaskScheduler.Factory.StartNew(() =>
             {
                 _logger.Info("hola");
                 _logger.Info(challengeSet.Difficulties.Count);
@@ -137,5 +138,10 @@ namespace SaberQuest.UI.SaberQuest.Views
         public int NumberOfCells() => challenges.Count;
 
         public TableCell CellForIdx(TableView tableView, int idx) => DailyChallengesListTableData.GetCell(tableView).PopulateWithChallengeData(challenges[idx], _selectedChallengeSet);
+
+        public float CellSize(int idx)
+        {
+            return 19f;
+        }
     }
 }

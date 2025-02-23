@@ -5,6 +5,7 @@ using BeatSaberMarkupLanguage.ViewControllers;
 using HMUI;
 using IPA.Config.Data;
 using IPA.Utilities;
+using IPA.Utilities.Async;
 using Newtonsoft.Json;
 using SaberQuest.Models.SaberQuest.API.Data.Challenges;
 using SaberQuest.Models.SaberQuest.API.Data.Deals;
@@ -106,7 +107,7 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
 
         private void ApplyShopItems(DealSetModel deals)
         {
-            HMMainThreadDispatcher.instance.Enqueue(() =>
+            UnityMainThreadTaskScheduler.Factory.StartNew(() =>
             {
                 if (!(deals?.Items?.Count > 0))
                 {
@@ -124,5 +125,10 @@ namespace SaberQuest.UI.SaberQuest.Shop.Views
         public int NumberOfCells() => CurrentDeals.Count;
 
         public TableCell CellForIdx(TableView tableView, int idx) => ShopItemListTableData.GetCell(tableView).PopulateWithShopItemData(CurrentDeals[idx]);
+
+        public float CellSize(int idx)
+        {
+            return 18f;
+        }
     }
 }

@@ -80,6 +80,27 @@ namespace SaberQuest.Providers.ApiProvider
 			_httpService.Token = token;
 		}
 
+        public void Authenticate(string username, string userId, string token, string platform, Action<UserModel> callback, Action<ErrorResponseModel> errorCallback)
+        {
+            string url = "https://api.saberquest.xyz/login?";
+            url += $"id={userId}";
+            url += $"&username={username}";
+            url += $"&platform={platform}";
+            url += $"&token={token}";
+            Task.Run(async () =>
+            {
+                IHttpResponse httpResponse = await _httpService.GetAsync(url);
+                string res = await httpResponse.ReadAsStringAsync();
+                if (!httpResponse.Successful)
+                {
+                    errorCallback.Invoke(new ErrorResponseModel(httpResponse));
+                    return;
+                }
+                UserModel user = Newtonsoft.Json.JsonConvert.DeserializeObject<UserModel>(res);
+                callback.Invoke(user);
+            });
+        }
+
 		private void JsonHttpGetRequest(string url, Action<string> callback, Action<ErrorResponseModel> errorCallback)
         {
             Task.Run(async () =>

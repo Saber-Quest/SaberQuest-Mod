@@ -21,7 +21,7 @@ namespace SaberQuest.UI.Auth
         {
             _authView = authView;
             _mainFlow = mainFlow;
-            MenuButtons.instance.RegisterButton(
+            MenuButtons.Instance.RegisterButton(
                 new MenuButton("Saber Quest", () =>
                 {
                     BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(this);

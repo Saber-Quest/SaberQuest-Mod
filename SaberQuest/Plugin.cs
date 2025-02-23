@@ -27,7 +27,7 @@ namespace SaberQuest
         [OnStart]
         public void OnApplicationStart()
         {
-			harmony.PatchAll(typeof(MenuButtonRedecoratePatch));
+			//harmony.PatchAll(typeof(MenuButtonRedecoratePatch));
 		}
 
         [OnExit]

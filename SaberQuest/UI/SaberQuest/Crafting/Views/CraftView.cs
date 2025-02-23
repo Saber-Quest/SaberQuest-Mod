@@ -113,5 +113,10 @@ namespace SaberQuest.UI.SaberQuest.Crafting.Views
 		public int NumberOfCells() => chunkedItems.Count;
 
 		public TableCell CellForIdx(TableView tableView, int idx) => CraftItemGroupListTableData.GetCell(idx, _pool, tableView, chunkedItems[idx], _itemParent.transform, cellManager);
-	}
+
+        public float CellSize(int idx)
+        {
+            return 32f;
+        }
+    }
 }
